@@ -9,7 +9,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 16px; /* Explicit base font size */
+  font-size: 16px;
 }
 
 body {
@@ -18,11 +18,32 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  font-size: 1rem; /* Consistent base */
+  font-size: 1rem;
+}
+
+#root {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.brand-header {
+  position: fixed;
+  top: 10px;
+  left: 15px;
+  zIndex: 2000;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  font-family: 'Noto Serif Devanagari', serif;
+  background-color: rgba(203, 148, 66, 0.8);
+  padding: 3px 8px;
+  border-radius: 5px;
 }
 
 h1 {
-  font-size: 1.8em; /* Reduced from 3.2em (28.8px) */
+  font-size: 1.8em;
   line-height: 1.1;
 }
 
@@ -58,7 +79,6 @@ button:focus-visible {
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   h1 {
     font-size: 1.5em;
@@ -67,13 +87,23 @@ button:focus-visible {
     font-size: 0.9em;
     padding: 0.5em 1em;
   }
+  #root {
+    transform: scale(0.85);
+  }
+  .brand-header {
+    font-size: 1.2rem;
+    padding: 2px 6px;
+  }
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   :root {
-    font-size: 14px; /* Smaller base for high-DPI */
+    font-size: 14px;
   }
   h1 {
     font-size: 1.6em;
+  }
+  #root {
+    transform: scale(0.85);
   }
 }
