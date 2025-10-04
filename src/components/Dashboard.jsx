@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import {
   Home,
@@ -190,10 +189,11 @@ const Dashboard = () => {
       width: 100vw;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
+      justify-content: center;
+      align-items: center;
       padding: 0 0.5rem;
-      margin: 0;
+      margin: 0 auto;
+      max-width: 1100px;
       position: relative;
       transform: ${isLoaded ? "translateY(0)" : "translateY(30px)"};
       opacity: ${isLoaded ? 1 : 0};
@@ -380,7 +380,7 @@ const Dashboard = () => {
     .main-content {
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: flex-start;
       gap: 1.2rem;
       width: 100%;
@@ -464,7 +464,7 @@ const Dashboard = () => {
     }
 
     .card-icon {
-      font-size: 2.2rem;
+      font-size: 2rem; /* Reduced from 2.2rem to avoid magnification */
       margin-bottom: 0.5rem;
       color: #fff;
       filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
@@ -473,11 +473,11 @@ const Dashboard = () => {
 
     @keyframes iconFloat {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(5deg); }
+      50% { transform: translateY(-10px) rotate(5deg); } /* Reduced from -15px */
     }
 
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1rem; /* Reduced from 1.05rem */
       font-weight: 600;
       color: #fff;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -503,7 +503,7 @@ const Dashboard = () => {
       background: transparent;
       border: none;
       color: #fff;
-      font-size: 1.8rem;
+      font-size: 1.5rem; /* Reduced from 1.8rem */
       font-weight: 700;
       cursor: pointer;
       outline: none;
@@ -514,7 +514,7 @@ const Dashboard = () => {
 
     @keyframes playGlow {
       from { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
-      to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 2px 10px rgba(0, 0, 0, 0.5); }
+      to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 2px 10px rgba(0, 0, 0, 0.5); } /* Reduced glow intensity */
     }
 
     .play-icon {
@@ -523,7 +523,7 @@ const Dashboard = () => {
 
     @keyframes playPulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); }
+      50% { transform: scale(1.1); } /* Reduced from 1.3 */
     }
 
     .sidebar {
@@ -576,7 +576,7 @@ const Dashboard = () => {
     }
 
     .widget-title {
-      font-size: 1.05rem;
+      font-size: 1rem; /* Reduced from 1.05rem */
       font-weight: 600;
       color: #fff;
       margin-bottom: 0.7rem;
@@ -615,7 +615,7 @@ const Dashboard = () => {
     }
 
     .progress-bar:hover {
-      transform: scale(1.1);
+      transform: scale(1.05); /* Reduced from 1.1 */
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
@@ -812,10 +812,6 @@ const Dashboard = () => {
     navigate(item.path, { state: { fromGame: true, score } });
   };
 
-  const handleBackToHero = () => {
-    navigate("/hero");
-  };
-
   const handleLogout = () => {
     tokenManager.removeToken();
     navigate("/");
@@ -853,37 +849,6 @@ const Dashboard = () => {
       <style>{styles}</style>
       <div className="parallax-bg" />
       <div className="dashboard-container">
-        <div
-          className="scroll-to-top"
-          onClick={handleBackToHero}
-          style={{
-            position: "fixed",
-            top: "30px",
-            right: "30px",
-            zIndex: 1000,
-            background: "rgba(255, 255, 255, 0.1)",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            borderRadius: "25px",
-            padding: "10px 20px",
-            color: "white",
-            cursor: "pointer",
-            fontSize: "1rem",
-            transition: "all 0.3s ease",
-            animation: "bounce 2s infinite",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.background = "rgba(255, 255, 255, 0.2)";
-            e.target.style.transform = "scale(1.05)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.background = "rgba(255, 255, 255, 0.1)";
-            e.target.style.transform = "scale(1)";
-          }}
-        >
-          🏛️ Back to Hero
-        </div>
-
         <div className="header">
           <div className="profile-section">
             <div className="avatar">👵🏻</div>
