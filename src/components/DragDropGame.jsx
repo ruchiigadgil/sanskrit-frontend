@@ -446,6 +446,7 @@ const updateScore = async (scoreIncrement) => {
         boxShadow: "0 0 20px rgba(0,0,0,0.2)",
         transform: "scale(0.85)",
         transformOrigin: "top center",
+        marginTop:"20"
       }}
     >
       <div
