@@ -42,6 +42,8 @@ const DragDropGame = () => {
     localStorage.removeItem("dragDropGameScore");
     setSessionScore(0);
     initGame();
+    // Reset scroll position to top on mount
+    window.scrollTo(0, 0);
   }, []);
 
   const shuffleArray = (array) => {
@@ -53,55 +55,29 @@ const DragDropGame = () => {
     return newArray;
   };
 
-  // const updateScore = async (scoreIncrement) => {
-  //   try {
-  //     const token = tokenManager.getToken();
-  //     if (!token) {
-  //       throw new Error("No token found, please log in again");
-  //     }
-  //     const userData = JSON.parse(localStorage.getItem("user") || "{}");
-  //     if (!userData || !userData.id) {
-  //       throw new Error("No user data found, please log in again");
-  //     }
-  //     // Fetch current global score
-  //     const profileResponse = await authAPI.getProfile({ user_id: userData.id });
-  //     const currentGlobalScore = profileResponse.score || 0;
-  //     // Calculate new global score by adding sessionScore increment
-  //     const newGlobalScore = currentGlobalScore + scoreIncrement;
-  //     const response = await authAPI.updateScore({
-  //       user_id: userData.id,
-  //       score: newGlobalScore, // Send the new total
-  //       game_type: "drag_drop_game",
-  //     });
-  //     return response.score;
-  //   } catch (err) {
-  //     setFeedback(`Error updating score: ${err.message}`);
-  //     setFeedbackColor("#dc2626");
-  //     throw err;
-  //   }
-  // };
-const updateScore = async (scoreIncrement) => {
-  try {
-    const token = tokenManager.getToken();
-    if (!token) {
-      throw new Error("No token found, please log in again");
+  const updateScore = async (scoreIncrement) => {
+    try {
+      const token = tokenManager.getToken();
+      if (!token) {
+        throw new Error("No token found, please log in again");
+      }
+      const userData = JSON.parse(localStorage.getItem("user") || "{}");
+      if (!userData || !userData.id) {
+        throw new Error("No user data found, please log in again");
+      }
+      const response = await authAPI.updateScore({
+        user_id: userData.id,
+        score: scoreIncrement, // Send increment instead of total
+        game_type: "drag_drop_game",
+      });
+      return response.score;
+    } catch (err) {
+      setFeedback(`Error updating score: ${err.message}`);
+      setFeedbackColor("#dc2626");
+      throw err;
     }
-    const userData = JSON.parse(localStorage.getItem("user") || "{}");
-    if (!userData || !userData.id) {
-      throw new Error("No user data found, please log in again");
-    }
-    const response = await authAPI.updateScore({
-      user_id: userData.id,
-      score: scoreIncrement, // Send increment instead of total
-      game_type: "drag_drop_game",
-    });
-    return response.score;
-  } catch (err) {
-    setFeedback(`Error updating score: ${err.message}`);
-    setFeedbackColor("#dc2626");
-    throw err;
-  }
-};
+  };
+
   const initGame = async () => {
     clearDropZones();
     setIsScored(false);
@@ -186,7 +162,7 @@ const updateScore = async (scoreIncrement) => {
 
   const handleDrop = (e, dropZone) => {
     e.preventDefault();
-    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1  )";
+    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
     e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
 
     const word = e.dataTransfer.getData("text/plain");
@@ -434,19 +410,19 @@ const updateScore = async (scoreIncrement) => {
         background:
           "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
         color: "#fff8dc",
-        padding: "2rem",
+        padding: "1.5rem", // Reduced padding
         fontFamily: "'Noto Sans Devanagari', sans-serif",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         maxWidth: "800px",
         margin: "0 auto",
-        minHeight: "100vh",
-        overflow:"auto",
+        height: "100vh",
+        overflow: "hidden",
         boxShadow: "0 0 20px rgba(0,0,0,0.2)",
         transform: "scale(0.85)",
         transformOrigin: "top center",
-        marginTop:"20"
+        marginTop: "30px", // Reduced margin
       }}
     >
       <div
@@ -454,16 +430,16 @@ const updateScore = async (scoreIncrement) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "1rem",
+          marginBottom: "0.75rem", // Reduced margin
         }}
       >
         <div
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.2)",
             backdropFilter: "blur(10px)",
-            padding: "0.5rem 1rem",
-            borderRadius: "0.5rem",
-            fontSize: "1.2rem",
+            padding: "0.4rem 0.8rem", // Reduced padding
+            borderRadius: "0.4rem", // Reduced radius
+            fontSize: "1.1rem", // Reduced font size
             fontWeight: "bold",
             boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
             color: "#fff8dc",
@@ -476,8 +452,8 @@ const updateScore = async (scoreIncrement) => {
             style={{
               backgroundColor: "#f4d4a8",
               backdropFilter: "blur(12px)",
-              padding: "0.5rem 1rem",
-              borderRadius: "0.75rem",
+              padding: "0.4rem 0.8rem", // Reduced padding
+              borderRadius: "0.6rem", // Reduced radius
               boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
               border: "2px solid rgba(255, 255, 255, 0.3)",
             }}
@@ -486,13 +462,17 @@ const updateScore = async (scoreIncrement) => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "0.4rem", // Reduced gap
                 color: "#8b5a2b",
                 fontWeight: "bold",
               }}
             >
-              <Award style={{ width: "1.2rem", height: "1.2rem" }} />
-              <span style={{ fontSize: "1rem" }}>Score: {sessionScore}</span>
+              <Award style={{ width: "1rem", height: "1rem" }} />{" "}
+              {/* Reduced size */}
+              <span style={{ fontSize: "0.9rem" }}>
+                Score: {sessionScore}
+              </span>{" "}
+              {/* Reduced font size */}
             </div>
           </div>
         )}
@@ -503,15 +483,17 @@ const updateScore = async (scoreIncrement) => {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          overflow: "auto",
+          overflow: "hidden",
         }}
       >
-        <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "0.75rem" }}>
+          {" "}
+          {/* Reduced margin */}
           <h1
             style={{
-              fontSize: "2.2rem",
+              fontSize: "1.8rem", // Reduced font size
               fontWeight: "700",
-              marginBottom: "1rem",
+              marginBottom: "0.75rem", // Reduced margin
               color: "#fff8dc",
               textShadow: "0 0 10px rgba(255, 255, 255, 0.4)",
             }}
@@ -521,26 +503,26 @@ const updateScore = async (scoreIncrement) => {
           <div
             style={{
               display: "flex",
-              gap: "1rem",
+              gap: "0.75rem", // Reduced gap
               justifyContent: "center",
-              marginBottom: "1rem",
+              marginBottom: "0.75rem", // Reduced margin
             }}
           >
             <button
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.25rem",
+                gap: "0.2rem", // Reduced gap
                 backgroundColor: "#cd853f",
                 color: "#fff",
-                padding: "0.8rem 1.5rem",
-                borderRadius: "10px",
+                padding: "0.6rem 1.2rem", // Reduced padding
+                borderRadius: "8px", // Reduced radius
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 transition: "background 0.3s ease",
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "1rem",
+                fontSize: "0.9rem", // Reduced font size
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = "#b86b2c";
@@ -550,23 +532,25 @@ const updateScore = async (scoreIncrement) => {
               }}
               onClick={() => window.history.back()}
             >
-              <ArrowLeft style={{ width: "1rem", height: "1rem" }} /> Back
+              <ArrowLeft style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
+              {/* Reduced size */}
+              Back
             </button>
             <button
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.25rem",
+                gap: "0.2rem", // Reduced gap
                 backgroundColor: "#cd853f",
                 color: "#fff",
-                padding: "0.8rem 1.5rem",
-                borderRadius: "10px",
+                padding: "0.6rem 1.2rem", // Reduced padding
+                borderRadius: "8px", // Reduced radius
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 transition: "background 0.3s ease",
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "1.2rem",
+                fontSize: "1rem", // Slightly reduced
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = "#b86b2c";
@@ -576,7 +560,9 @@ const updateScore = async (scoreIncrement) => {
               }}
               onClick={() => window.history.back()}
             >
-              <BookOpen style={{ width: "1rem", height: "1rem" }} /> Learning
+              <BookOpen style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
+              {/* Reduced size */}
+              Learning
             </button>
           </div>
         </div>
@@ -586,9 +572,9 @@ const updateScore = async (scoreIncrement) => {
             style={{
               backgroundColor: "rgba(244, 212, 168, 0.3)",
               backdropFilter: "blur(10px)",
-              borderRadius: "0.5rem",
-              padding: "0.5rem",
-              marginBottom: "0.5rem",
+              borderRadius: "0.4rem", // Reduced radius
+              padding: "0.4rem", // Reduced padding
+              marginBottom: "0.4rem", // Reduced margin
               boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
               border: "1px solid rgba(255, 255, 255, 0.2)",
             }}
@@ -596,7 +582,7 @@ const updateScore = async (scoreIncrement) => {
             <div
               style={{
                 textAlign: "center",
-                fontSize: "1.5rem",
+                fontSize: "1.3rem", // Reduced font size
                 fontWeight: "bold",
                 color: "#fff8dc",
               }}
@@ -610,29 +596,29 @@ const updateScore = async (scoreIncrement) => {
           <div
             style={{
               backgroundColor: "#f4d4a8",
-              borderRadius: "1rem",
-              padding: "2rem",
+              borderRadius: "0.8rem", // Reduced radius
+              padding: "1.5rem", // Reduced padding
               textAlign: "center",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
               margin: "0 auto",
-              maxWidth: "20rem",
+              maxWidth: "18rem", // Reduced width
             }}
           >
             <h2
               style={{
-                fontSize: "1.5rem",
+                fontSize: "1.3rem", // Reduced font size
                 fontWeight: "bold",
                 color: "#8b5a2b",
-                marginBottom: "0.75rem",
+                marginBottom: "0.6rem", // Reduced margin
               }}
             >
               Round Complete!
             </h2>
             <p
               style={{
-                fontSize: "1.25rem",
+                fontSize: "1.1rem", // Reduced font size
                 color: "#8b5a2b",
-                marginBottom: "1.5rem",
+                marginBottom: "1.2rem", // Reduced margin
               }}
             >
               Final Score: {sessionScore} / {TOTAL_QUESTIONS}
@@ -641,11 +627,11 @@ const updateScore = async (scoreIncrement) => {
               style={{
                 backgroundColor: "#cd853f",
                 color: "#fff",
-                padding: "0.75rem 1.5rem",
-                borderRadius: "0.75rem",
+                padding: "0.6rem 1.2rem", // Reduced padding
+                borderRadius: "0.6rem", // Reduced radius
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 transition: "background 0.3s ease",
-                fontSize: "1rem",
+                fontSize: "0.9rem", // Reduced font size
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
@@ -667,21 +653,21 @@ const updateScore = async (scoreIncrement) => {
               display: "flex",
               flexDirection: "column",
               flex: 1,
-              overflow: "auto",
+              overflow: "hidden",
             }}
           >
             <div
               style={{
                 backgroundColor: "#f4d4a8",
-                borderRadius: "0.75rem",
-                padding: "0.75rem",
-                marginBottom: "0.5rem",
+                borderRadius: "0.6rem", // Reduced radius
+                padding: "0.6rem", // Reduced padding
+                marginBottom: "0.4rem", // Reduced margin
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
               }}
             >
               <p
                 style={{
-                  fontSize: "1.5rem",
+                  fontSize: "1.3rem", // Reduced font size
                   textAlign: "center",
                   color: "#8b5a2b",
                   fontWeight: "bold",
@@ -696,19 +682,20 @@ const updateScore = async (scoreIncrement) => {
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
                 backdropFilter: "blur(10px)",
-                borderRadius: "0.75rem",
-                padding: "0.75rem",
-                marginBottom: "0.5rem",
-                minHeight: "60px",
+                borderRadius: "0.6rem", // Reduced radius
+                padding: "0.6rem", // Reduced padding
+                marginBottom: "0.4rem", // Reduced margin
+                minHeight: "50px", // Reduced height
                 border: "2px solid rgba(255, 255, 255, 0.2)",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+                overflow: "hidden",
               }}
             >
               <div
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "0.75rem",
+                  gap: "0.6rem", // Reduced gap
                   justifyContent: "center",
                 }}
               >
@@ -721,21 +708,21 @@ const updateScore = async (scoreIncrement) => {
                     }}
                     onDragEnd={handleDragEnd}
                     style={{
-                      background: "rgba(255, 255, 255, 0.5)", // Increased visibility
+                      background: "rgba(255, 255, 255, 0.5)",
                       color: "#8b5a2b",
-                      padding: "1rem 1.5rem",
-                      borderRadius: "12px",
+                      padding: "0.8rem 1.2rem", // Reduced padding
+                      borderRadius: "10px", // Reduced radius
                       cursor: "grab",
                       boxShadow: "0 5px 20px rgba(0,0,0,0.3)",
                       transition: "transform 0.2s ease, background 0.3s",
-                      fontSize: "1.2rem",
+                      fontSize: "1.1rem", // Reduced font size
                       fontWeight: "600",
                       userSelect: "none",
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.background =
                         "rgba(255, 255, 255, 0.6)";
-                      e.currentTarget.style.transform = "scale(1.1)";
+                      e.currentTarget.style.transform = "scale(1.05)"; // Reduced scale
                     }}
                     onMouseOut={(e) => {
                       e.currentTarget.style.background =
@@ -753,8 +740,9 @@ const updateScore = async (scoreIncrement) => {
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "1rem",
-                marginBottom: "1rem",
+                gap: "0.8rem", // Reduced gap
+                marginBottom: "0.8rem", // Reduced margin
+                overflow: "hidden",
               }}
             >
               {["subject", "object", "verb"].map((zone) => (
@@ -766,20 +754,21 @@ const updateScore = async (scoreIncrement) => {
                   style={{
                     background: "rgba(255, 255, 255, 0.1)",
                     border: "1px solid rgba(255, 255, 255, 0.2)",
-                    borderRadius: "12px",
-                    padding: "1rem 1.5rem",
+                    borderRadius: "10px", // Reduced radius
+                    padding: "0.8rem 1.2rem", // Reduced padding
                     transition: "all 0.3s ease",
                     boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
                     display: "flex",
                     flexDirection: "column",
+                    overflow: "hidden",
                   }}
                 >
                   <h3
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: "1.3rem", // Reduced font size
                       fontWeight: "bold",
                       textAlign: "center",
-                      marginBottom: "0.75rem",
+                      marginBottom: "0.6rem", // Reduced margin
                       textTransform: "capitalize",
                       color: "#fff8dc",
                     }}
@@ -791,12 +780,12 @@ const updateScore = async (scoreIncrement) => {
                       style={{
                         backgroundColor: "#cd853f",
                         color: "#fff",
-                        padding: "0.75rem 1.25rem",
-                        borderRadius: "12px",
+                        padding: "0.6rem 1rem", // Reduced padding
+                        borderRadius: "10px", // Reduced radius
                         textAlign: "center",
-                        fontSize: "1.2rem",
+                        fontSize: "1.1rem", // Reduced font size
                         fontWeight: "600",
-                        marginBottom: "0.75rem",
+                        marginBottom: "0.6rem", // Reduced margin
                         boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                         width: "100%",
                       }}
@@ -807,11 +796,11 @@ const updateScore = async (scoreIncrement) => {
                   {hints[zone] && (
                     <p
                       style={{
-                        fontSize: "0.9rem",
+                        fontSize: "0.8rem", // Reduced font size
                         color: "rgba(255, 255, 255, 0.8)",
                         fontStyle: "italic",
                         textAlign: "center",
-                        marginBottom: "0.75rem",
+                        marginBottom: "0.6rem", // Reduced margin
                       }}
                     >
                       {hints[zone]}
@@ -822,15 +811,16 @@ const updateScore = async (scoreIncrement) => {
                       width: "100%",
                       backgroundColor: "#e69950",
                       color: "#fff",
-                      padding: "0.6rem 1rem",
-                      borderRadius: "10px",
+                      padding: "0.5rem 0.8rem", // Reduced padding
+                      borderRadius: "8px", // Reduced radius
                       transition: "background 0.3s ease",
-                      fontSize: "0.9rem",
+                      fontSize: "0.8rem", // Reduced font size
                       fontWeight: "600",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                       marginTop: "auto",
                       border: "none",
                       cursor: "pointer",
+                      marginBottom:'1rem'
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.backgroundColor = "#d68840";
@@ -859,9 +849,9 @@ const updateScore = async (scoreIncrement) => {
               <div
                 style={{
                   textAlign: "center",
-                  fontSize: "1.2rem",
+                  fontSize: "1.1rem", // Reduced font size
                   fontWeight: "bold",
-                  marginBottom: "1rem",
+                  marginBottom: "0.8rem", // Reduced margin
                   textShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   color: feedbackColor,
                 }}
@@ -873,19 +863,20 @@ const updateScore = async (scoreIncrement) => {
             <div
               style={{
                 display: "flex",
-                gap: "1rem",
+                gap: "0.8rem", // Reduced gap
                 justifyContent: "center",
+                overflow: "hidden",
               }}
             >
               <button
                 style={{
                   backgroundColor: "#16a34a",
                   color: "#fff",
-                  padding: "0.8rem 1.5rem",
-                  borderRadius: "10px",
+                  padding: "0.6rem 1.2rem", // Reduced padding
+                  borderRadius: "8px", // Reduced radius
                   boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                   transition: "background 0.3s ease",
-                  fontSize: "1rem",
+                  fontSize: "0.9rem", // Reduced font size
                   fontWeight: "600",
                   border: "none",
                   cursor: "pointer",
@@ -905,14 +896,14 @@ const updateScore = async (scoreIncrement) => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.25rem",
+                    gap: "0.2rem", // Reduced gap
                     backgroundColor: "#dc2626",
                     color: "#fff",
-                    padding: "0.8rem 1.5rem",
-                    borderRadius: "10px",
+                    padding: "0.6rem 1.2rem", // Reduced padding
+                    borderRadius: "8px", // Reduced radius
                     boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                     transition: "background 0.3s ease",
-                    fontSize: "1rem",
+                    fontSize: "0.9rem", // Reduced font size
                     fontWeight: "600",
                     border: "none",
                     cursor: "pointer",
@@ -925,18 +916,20 @@ const updateScore = async (scoreIncrement) => {
                   }}
                   onClick={handleReset}
                 >
-                  <RotateCcw style={{ width: "1rem", height: "1rem" }} /> Reset
+                  <RotateCcw style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
+                  {/* Reduced size */}
+                  Reset
                 </button>
               )}
               <button
                 style={{
                   backgroundColor: "#cd853f",
                   color: "#fff",
-                  padding: "0.8rem 1.5rem",
-                  borderRadius: "10px",
+                  padding: "0.6rem 1.2rem", // Reduced padding
+                  borderRadius: "8px", // Reduced radius
                   boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                   transition: "background 0.3s ease",
-                  fontSize: "1rem",
+                  fontSize: "0.9rem", // Reduced font size
                   fontWeight: "600",
                   border: "none",
                   cursor: "pointer",
@@ -974,11 +967,11 @@ const updateScore = async (scoreIncrement) => {
           <div
             style={{
               backgroundColor: "white",
-              borderRadius: "1rem",
-              padding: "1.5rem",
-              maxWidth: "40rem",
+              borderRadius: "0.8rem", // Reduced radius
+              padding: "1.2rem", // Reduced padding
+              maxWidth: "38rem", // Reduced width
               width: "100%",
-              maxHeight: "80vh",
+              maxHeight: "75vh", // Reduced height
               overflowY: "auto",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
               position: "relative",
@@ -988,10 +981,10 @@ const updateScore = async (scoreIncrement) => {
             <button
               style={{
                 position: "absolute",
-                top: "0.5rem",
-                right: "0.75rem",
+                top: "0.4rem", // Reduced margin
+                right: "0.6rem", // Reduced margin
                 color: "#6b7280",
-                fontSize: "2rem",
+                fontSize: "1.8rem", // Reduced font size
                 fontWeight: "bold",
                 lineHeight: 1,
                 border: "none",
@@ -1011,11 +1004,11 @@ const updateScore = async (scoreIncrement) => {
             </button>
             <h2
               style={{
-                fontSize: "1.25rem",
+                fontSize: "1.1rem", // Reduced font size
                 fontWeight: "bold",
                 color: "#8b5a2b",
-                marginBottom: "1rem",
-                margin: "0 0 1rem 0",
+                marginBottom: "0.8rem", // Reduced margin
+                margin: "0 0 0.8rem 0",
               }}
             >
               {wordAnalysisType} Analysis: {currentWordAnalysis?.form}
@@ -1023,9 +1016,9 @@ const updateScore = async (scoreIncrement) => {
             <div
               style={{
                 backgroundColor: "#f4f4f4",
-                borderRadius: "0.5rem",
-                padding: "1rem",
-                marginBottom: "1rem",
+                borderRadius: "0.4rem", // Reduced radius
+                padding: "0.8rem", // Reduced padding
+                marginBottom: "0.8rem", // Reduced margin
                 boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
               }}
             >
@@ -1034,12 +1027,12 @@ const updateScore = async (scoreIncrement) => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginBottom: "1rem",
+                  marginBottom: "0.6rem", // Reduced margin
                 }}
               >
                 <h3
                   style={{
-                    fontSize: "1.1rem",
+                    fontSize: "1rem", // Reduced font size
                     fontWeight: "600",
                     color: "#4a5568",
                   }}
@@ -1049,7 +1042,7 @@ const updateScore = async (scoreIncrement) => {
                 </h3>
                 <span
                   style={{
-                    fontSize: "1rem",
+                    fontSize: "0.9rem", // Reduced font size
                     fontWeight: "bold",
                     color: "#2d3748",
                   }}
@@ -1061,7 +1054,7 @@ const updateScore = async (scoreIncrement) => {
                 style={{
                   display: "flex",
                   borderBottom: "2px solid #e2e8f0",
-                  marginBottom: "1rem",
+                  marginBottom: "0.6rem", // Reduced margin
                 }}
               >
                 {[
@@ -1074,7 +1067,7 @@ const updateScore = async (scoreIncrement) => {
                     key={tab}
                     style={{
                       flex: 1,
-                      padding: "0.5rem 0.75rem",
+                      padding: "0.4rem 0.6rem", // Reduced padding
                       textAlign: "center",
                       fontWeight: "600",
                       color: activeTab === tab ? "#fff" : "#4a5568",
@@ -1082,10 +1075,10 @@ const updateScore = async (scoreIncrement) => {
                       cursor: "pointer",
                       backgroundColor:
                         activeTab === tab ? "#4a90e2" : "#edf2f7",
-                      borderRadius: "0.375rem 0.375rem 0 0",
+                      borderRadius: "0.3rem 0.3rem 0 0", // Reduced radius
                       marginRight: "2px",
                       border: "none",
-                      fontSize: "0.875rem",
+                      fontSize: "0.8rem", // Reduced font size
                     }}
                     onMouseOver={(e) => {
                       if (activeTab !== tab) {
@@ -1115,7 +1108,7 @@ const updateScore = async (scoreIncrement) => {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "0.75rem",
+                  gap: "0.6rem", // Reduced gap
                   justifyContent: "center",
                 }}
               >
@@ -1123,8 +1116,8 @@ const updateScore = async (scoreIncrement) => {
                   <button
                     key={`${activeTab}-${option}-${index}`}
                     style={{
-                      padding: "0.5rem 1rem",
-                      borderRadius: "0.5rem",
+                      padding: "0.4rem 0.8rem", // Reduced padding
+                      borderRadius: "0.4rem", // Reduced radius
                       fontWeight: "600",
                       transition: "all 0.3s ease",
                       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -1135,7 +1128,7 @@ const updateScore = async (scoreIncrement) => {
                           : "#3498db",
                       color: "#fff",
                       border: "none",
-                      fontSize: "0.875rem",
+                      fontSize: "0.8rem", // Reduced font size
                     }}
                     onMouseOver={(e) => {
                       if (mcqAnswers[activeTab] !== option) {
@@ -1157,13 +1150,13 @@ const updateScore = async (scoreIncrement) => {
                 <p
                   style={{
                     textAlign: "center",
-                    marginTop: "0.75rem",
-                    fontSize: "0.875rem",
+                    marginTop: "0.6rem", // Reduced margin
+                    fontSize: "0.8rem", // Reduced font size
                     fontWeight: "600",
                     color: mcqFeedback[activeTab].includes("Correct")
                       ? "#2ecc71"
                       : "#e74c3c",
-                    margin: "0.75rem 0 0 0",
+                    margin: "0.6rem 0 0 0",
                   }}
                 >
                   {mcqFeedback[activeTab]}
@@ -1173,11 +1166,11 @@ const updateScore = async (scoreIncrement) => {
                 <p
                   style={{
                     textAlign: "center",
-                    marginTop: "0.5rem",
-                    fontSize: "0.75rem",
+                    marginTop: "0.4rem", // Reduced margin
+                    fontSize: "0.7rem", // Reduced font size
                     fontStyle: "italic",
                     color: "#7f8c8d",
-                    margin: "0.5rem 0 0 0",
+                    margin: "0.4rem 0 0 0",
                   }}
                 >
                   {mcqHints[activeTab]}
