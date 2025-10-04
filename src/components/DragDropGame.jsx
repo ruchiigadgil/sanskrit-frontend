@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Award, BookOpen, RotateCcw } from "lucide-react";
 
 const TOTAL_QUESTIONS = 5;
-const API_URL = "https://sanskrit-learning-system.vercel.app/api/get-sentence-game";
+const API_URL = "https://sanskrit-backend-4cpp.onrender.com/api/get-sentence-game";
 
 const DragDropGame = () => {
   const [sessionScore, setSessionScore] = useState(0);
