@@ -434,17 +434,18 @@ const updateScore = async (scoreIncrement) => {
         background:
           "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
         color: "#fff8dc",
-        padding: "1rem",
+        padding: "2rem",
         fontFamily: "'Noto Sans Devanagari', sans-serif",
         display: "flex",
         flexDirection: "column",
-        justifyContent:"center",
+        justifyContent: "center",
         maxWidth: "800px",
         margin: "0 auto",
         minHeight: "100vh",
+        overflow:"auto",
         boxShadow: "0 0 20px rgba(0,0,0,0.2)",
-        transform: "scale(0.9)",
-        transformOrigin: "center"
+        transform: "scale(0.8)",
+        transformOrigin: "center",
       }}
     >
       <div
@@ -514,7 +515,7 @@ const updateScore = async (scoreIncrement) => {
               textShadow: "0 0 10px rgba(255, 255, 255, 0.4)",
             }}
           >
-            Sanskrit Sentence Analyzer
+            Drag & Drop Each Word Where It Belongs
           </h1>
           <div
             style={{
@@ -564,7 +565,7 @@ const updateScore = async (scoreIncrement) => {
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "1rem",
+                fontSize: "1.2rem",
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = "#b86b2c";
@@ -594,7 +595,7 @@ const updateScore = async (scoreIncrement) => {
             <div
               style={{
                 textAlign: "center",
-                fontSize: "1rem",
+                fontSize: "1.5rem",
                 fontWeight: "bold",
                 color: "#fff8dc",
               }}
@@ -774,7 +775,7 @@ const updateScore = async (scoreIncrement) => {
                 >
                   <h3
                     style={{
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
                       fontWeight: "bold",
                       textAlign: "center",
                       marginBottom: "0.75rem",
