@@ -434,7 +434,7 @@ const updateScore = async (scoreIncrement) => {
         background:
           "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
         color: "#fff8dc",
-        padding: "2rem",
+        padding: "1rem",
         fontFamily: "'Noto Sans Devanagari', sans-serif",
         display: "flex",
         flexDirection: "column",
@@ -442,6 +442,8 @@ const updateScore = async (scoreIncrement) => {
         margin: "0 auto",
         minHeight: "100vh",
         boxShadow: "0 0 20px rgba(0,0,0,0.2)",
+        transform: "scale(0.9)",
+        transformOrigin: "top center",
       }}
     >
       <div
