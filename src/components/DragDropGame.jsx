@@ -267,123 +267,377 @@ const DragDropGame = () => {
     setMcqHints((prev) => ({ ...prev, [tab]: "" }));
   };
 
-  const handleMcqSelect = (tab, option) => {
-    if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
-    let isCorrect = false;
-    let hint = "";
-    const isVerb = wordAnalysisType === "Verb";
-    let normalizedOption = option;
-    let normalizedCorrectValue = currentWordAnalysis[tab];
+  // const handleMcqSelect = (tab, option) => {
+  //   if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
 
-    // Reverse maps for display to internal value
-    const personDisplayToValue = {
-      "first person": "1",
-      "second person": "2",
-      "third person": "3",
-    };
-    const numberDisplayToValue = {
-      singular: "sg",
-      dual: "du",
-      plural: "pl",
-    };
-    const genderDisplayToValue = {
-      masculine: "masc",
-      feminine: "fem",
-      neuter: "neut",
-      "no gender": "",
-    };
+  //   let isCorrect = false;
+  //   let hint = "";
+  //   const isVerb = wordAnalysisType === "Verb";
+  //   let normalizedOption = option;
+  //   let normalizedCorrectValue = currentWordAnalysis[tab];
 
-    // Map display to value for comparison
-    if (tab === "person") {
-      normalizedOption = personDisplayToValue[option] || option;
-      normalizedCorrectValue = currentWordAnalysis[tab];
-    } else if (tab === "number") {
-      normalizedOption = numberDisplayToValue[option] || option;
-      normalizedCorrectValue = currentWordAnalysis[tab];
-    } else if (tab === "gender") {
-      normalizedOption = genderDisplayToValue[option] || option;
-      normalizedCorrectValue = currentWordAnalysis[tab] || "";
-    }
+  //   // Ensure currentWordAnalysis[tab] is defined
+  //   if (!currentWordAnalysis || currentWordAnalysis[tab] === undefined) {
+  //     return; // Exit if no valid data
+  //   }
 
-    switch (tab) {
-      case "root":
-        isCorrect = String(option) === String(currentWordAnalysis.root);
-        hint = isVerb
-          ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
-          : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
-        break;
-      case "person":
-        isCorrect = String(normalizedOption) === String(normalizedCorrectValue);
-        const personValueToDisplay = {
-          1: "first person",
-          2: "second person",
-          3: "third person",
-        };
-        const correctDisplay =
-          personValueToDisplay[normalizedCorrectValue] ||
-          normalizedCorrectValue;
-        hint = isVerb
-          ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
-          : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
-        break;
-      case "number":
-        isCorrect = String(normalizedOption) === String(normalizedCorrectValue);
-        const numberValueToDisplay = {
-          sg: "singular",
-          du: "dual",
-          pl: "plural",
-        };
-        const correctDisplayNumber =
-          numberValueToDisplay[normalizedCorrectValue] ||
-          normalizedCorrectValue;
-        hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
-        break;
-      case "gender":
-        isCorrect = String(normalizedOption) === String(normalizedCorrectValue);
-        const genderValueToDisplay = {
-          masc: "masculine",
-          fem: "feminine",
-          neut: "neuter",
-          "": "no gender",
-        };
-        const correctDisplayGender =
-          genderValueToDisplay[normalizedCorrectValue] ||
-          normalizedCorrectValue;
-        hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
-        break;
-      case "tense":
-        isCorrect = String(option) === String(currentSentence.tense);
-        hint = `The tense indicates the time of the action: past, present, or future. Correct: ${currentSentence.tense}.`;
-        break;
-      default:
-        break;
-    }
+  //   // Reverse maps for display to internal value
+  //   const personDisplayToValue = {
+  //     "first person": "1",
+  //     "second person": "2",
+  //     "third person": "3",
+  //   };
+  //   const numberDisplayToValue = {
+  //     singular: "sg",
+  //     dual: "du",
+  //     plural: "pl",
+  //   };
+  //   const genderDisplayToValue = {
+  //     masculine: "masc",
+  //     feminine: "fem",
+  //     neuter: "neut",
+  //     "no gender": "",
+  //   };
 
-    setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option })); // Track selected answer
-    setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
-    setMcqFeedback((prev) => ({
-      ...prev,
-      [tab]: isCorrect
-        ? "Correct! Well done!"
-        : "Incorrect. Try again or check the hint.",
-    }));
-    setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
+  //   // Map display to value for comparison
+  //   if (tab === "person") {
+  //     normalizedOption = personDisplayToValue[option] || option;
+  //     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
+  //   } else if (tab === "number") {
+  //     normalizedOption = numberDisplayToValue[option] || option;
+  //     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
+  //   } else if (tab === "gender") {
+  //     normalizedOption = genderDisplayToValue[option] || option;
+  //     normalizedCorrectValue = String(currentWordAnalysis[tab] || ""); // Default to empty string if undefined
+  //   } else if (tab === "tense" && isVerb) {
+  //     normalizedCorrectValue = String(currentSentence.tense || ""); // Ensure string for comparison
+  //   }
 
-    if (isCorrect && !selectedMcqAnswers[tab]) {
-      setSessionScore((prev) => prev + 1);
-      updateScore(1); // Increment global score by 1 per correct MCQ answer
-    }
+  //   // Validation logic
+  //   switch (tab) {
+  //     case "root":
+  //       isCorrect = String(option) === String(currentWordAnalysis.root);
+  //       hint = isVerb
+  //         ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
+  //         : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
+  //       break;
+  //     case "person":
+  //       isCorrect = normalizedOption === normalizedCorrectValue;
+  //       const personValueToDisplay = {
+  //         1: "first person",
+  //         2: "second person",
+  //         3: "third person",
+  //       };
+  //       const correctDisplay =
+  //         personValueToDisplay[normalizedCorrectValue] ||
+  //         normalizedCorrectValue;
+  //       hint = isVerb
+  //         ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
+  //         : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
+  //       break;
+  //     case "number":
+  //       isCorrect = normalizedOption === normalizedCorrectValue;
+  //       const numberValueToDisplay = {
+  //         sg: "singular",
+  //         du: "dual",
+  //         pl: "plural",
+  //       };
+  //       const correctDisplayNumber =
+  //         numberValueToDisplay[normalizedCorrectValue] ||
+  //         normalizedCorrectValue;
+  //       hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
+  //       break;
+  //     case "gender":
+  //       isCorrect = normalizedOption === normalizedCorrectValue;
+  //       const genderValueToDisplay = {
+  //         masc: "masculine",
+  //         fem: "feminine",
+  //         neut: "neuter",
+  //         null: "no gender",
+  //       };
+  //       const correctDisplayGender =
+  //         genderValueToDisplay[normalizedCorrectValue] ||
+  //         normalizedCorrectValue;
+  //       hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
+  //       break;
+  //     case "tense":
+  //       isCorrect = String(option) === normalizedCorrectValue;
+  //       hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+
+  //   // Update states
+  //   setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
+  //   setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
+  //   setMcqFeedback((prev) => ({
+  //     ...prev,
+  //     [tab]: isCorrect
+  //       ? "Correct! Well done!"
+  //       : "Incorrect. Try again or check the hint.",
+  //   }));
+  //   setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
+
+  //   // Update score only if the answer is correct and not previously selected
+  //   if (isCorrect && !selectedMcqAnswers[tab]) {
+  //     setSessionScore((prev) => prev + 1);
+  //     updateScore(1); // Increment global score by 1 per correct MCQ answer
+  //   }
+  // };
+// const handleMcqSelect = (tab, option) => {
+//   if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
+
+//   let isCorrect = false;
+//   let hint = "";
+//   const isVerb = wordAnalysisType === "Verb";
+//   let normalizedOption = option;
+//   let normalizedCorrectValue = currentWordAnalysis[tab];
+
+//   // Ensure currentWordAnalysis[tab] is defined
+//   if (!currentWordAnalysis || currentWordAnalysis[tab] === undefined) {
+//     return; // Exit if no valid data
+//   }
+
+//   // Reverse maps for display to internal value
+//   const personDisplayToValue = {
+//     "first person": "1",
+//     "second person": "2",
+//     "third person": "3",
+//   };
+//   const numberDisplayToValue = {
+//     singular: "sg",
+//     dual: "du",
+//     plural: "pl",
+//   };
+//   const genderDisplayToValue = {
+//     masculine: "masc",
+//     feminine: "fem",
+//     neuter: "neut",
+//     "no gender": null, // Map "no gender" to null to match backend
+//   };
+
+//   // Map display to value for comparison
+//   if (tab === "person") {
+//     normalizedOption = personDisplayToValue[option] || option;
+//     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
+//   } else if (tab === "number") {
+//     normalizedOption = numberDisplayToValue[option] || option;
+//     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
+//   } else if (tab === "gender") {
+//     normalizedOption = genderDisplayToValue[option];
+//     normalizedCorrectValue = currentWordAnalysis[tab]; // Keep as is to handle null
+//   } else if (tab === "tense" && isVerb) {
+//     normalizedCorrectValue = String(currentSentence.tense || ""); // Ensure string for comparison
+//   }
+
+//   // Validation logic
+//   switch (tab) {
+//     case "root":
+//       isCorrect = String(option) === String(currentWordAnalysis.root);
+//       hint = isVerb
+//         ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
+//         : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
+//       break;
+//     case "person":
+//       isCorrect = normalizedOption === normalizedCorrectValue;
+//       const personValueToDisplay = {
+//         1: "first person",
+//         2: "second person",
+//         3: "third person",
+//       };
+//       const correctDisplay =
+//         personValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
+//       hint = isVerb
+//         ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
+//         : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
+//       break;
+//     case "number":
+//       isCorrect = normalizedOption === normalizedCorrectValue;
+//       const numberValueToDisplay = {
+//         sg: "singular",
+//         du: "dual",
+//         pl: "plural",
+//       };
+//       const correctDisplayNumber =
+//         numberValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
+//       hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
+//       break;
+//     case "gender":
+//       isCorrect =
+//         normalizedOption === normalizedCorrectValue ||
+//         (normalizedOption === null && normalizedCorrectValue === null); // Handle null for "no gender"
+//       const genderValueToDisplay = {
+//         masc: "masculine",
+//         fem: "feminine",
+//         neut: "neuter",
+//         null: "no gender",
+//       };
+//       const correctDisplayGender =
+//         genderValueToDisplay[normalizedCorrectValue] ||
+//         normalizedCorrectValue ||
+//         "no gender";
+//       hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
+//       break;
+//     case "tense":
+//       isCorrect = String(option) === normalizedCorrectValue;
+//       hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
+//       break;
+//     default:
+//       break;
+//   }
+
+//   // Update states
+//   setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
+//   setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
+//   setMcqFeedback((prev) => ({
+//     ...prev,
+//     [tab]: isCorrect
+//       ? "Correct! Well done!"
+//       : "Incorrect. Try again or check the hint.",
+//   }));
+//   setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
+
+//   // Update score only if the answer is correct and not previously selected
+//   if (isCorrect && !selectedMcqAnswers[tab]) {
+//     setSessionScore((prev) => prev + 1);
+//     updateScore(1); // Increment global score by 1 per correct MCQ answer
+//   }
+// };
+const handleMcqSelect = (tab, option) => {
+  if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
+
+  let isCorrect = false;
+  let hint = "";
+  const isVerb = wordAnalysisType === "Verb";
+  let normalizedOption = option;
+  let normalizedCorrectValue = currentWordAnalysis[tab];
+
+  // Ensure currentWordAnalysis[tab] is defined
+  if (!currentWordAnalysis || currentWordAnalysis[tab] === undefined) {
+    return; // Exit if no valid data
+  }
+
+  // Reverse maps for display to internal value
+  const personDisplayToValue = {
+    "first person": "1",
+    "second person": "2",
+    "third person": "3",
+  };
+  const numberDisplayToValue = {
+    singular: "sg",
+    dual: "du",
+    plural: "pl",
+  };
+  const genderDisplayToValue = {
+    masculine: "masc",
+    feminine: "fem",
+    neuter: "neut",
+    "no gender": null, // Map "no gender" to null to match backend
   };
 
+  // Map display to value for comparison
+  if (tab === "person") {
+    normalizedOption = personDisplayToValue[option] || option;
+    // Override person check if the form is a pronoun like asmad or yushmad
+    if (currentWordAnalysis.form && currentWordAnalysis.form.includes("asmad")) {
+      normalizedCorrectValue = "1"; // Force first person for asmad
+    } else if (currentWordAnalysis.form && currentWordAnalysis.form.includes("yushmad")) {
+      normalizedCorrectValue = "2"; // Force second person for yushmad
+    } else {
+      normalizedCorrectValue = String(currentWordAnalysis[tab] || ""); // Default to stored value
+    }
+  } else if (tab === "number") {
+    normalizedOption = numberDisplayToValue[option] || option;
+    normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
+  } else if (tab === "gender") {
+    normalizedOption = genderDisplayToValue[option];
+    normalizedCorrectValue = currentWordAnalysis[tab]; // Keep as is to handle null
+  } else if (tab === "tense" && isVerb) {
+    normalizedCorrectValue = String(currentSentence.tense || ""); // Ensure string for comparison
+  }
+
+  // Validation logic
+  switch (tab) {
+    case "root":
+      isCorrect = String(option) === String(currentWordAnalysis.root);
+      hint = isVerb
+        ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
+        : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
+      break;
+    case "person":
+      isCorrect = normalizedOption === normalizedCorrectValue;
+      const personValueToDisplay = {
+        1: "first person",
+        2: "second person",
+        3: "third person",
+      };
+      const correctDisplay =
+        personValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
+      hint = isVerb
+        ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
+        : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
+      break;
+    case "number":
+      isCorrect = normalizedOption === normalizedCorrectValue;
+      const numberValueToDisplay = {
+        sg: "singular",
+        du: "dual",
+        pl: "plural",
+      };
+      const correctDisplayNumber =
+        numberValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
+      hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
+      break;
+    case "gender":
+      isCorrect =
+        normalizedOption === normalizedCorrectValue ||
+        (normalizedOption === null && normalizedCorrectValue === null); // Handle null for "no gender"
+      const genderValueToDisplay = {
+        masc: "masculine",
+        fem: "feminine",
+        neut: "neuter",
+        null: "no gender",
+      };
+      const correctDisplayGender =
+        genderValueToDisplay[normalizedCorrectValue] ||
+        normalizedCorrectValue ||
+        "no gender";
+      hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
+      break;
+    case "tense":
+      isCorrect = String(option) === normalizedCorrectValue;
+      hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
+      break;
+    default:
+      break;
+  }
+
+  // Update states
+  setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
+  setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
+  setMcqFeedback((prev) => ({
+    ...prev,
+    [tab]: isCorrect
+      ? "Correct! Well done!"
+      : "Incorrect. Try again or check the hint.",
+  }));
+  setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
+
+  // Update score only if the answer is correct and not previously selected
+  if (isCorrect && !selectedMcqAnswers[tab]) {
+    setSessionScore((prev) => prev + 1);
+    updateScore(1); // Increment global score by 1 per correct MCQ answer
+  }
+};
   const getMcqOptions = (tab) => {
     const isVerb = wordAnalysisType === "Verb";
     if (tab === "root") {
       const rootOptions =
         currentSentence.mcq_options?.[wordAnalysisType.toLowerCase()] || [];
-      // Use sentence words as fallback if mcq_options is insufficient
       if (rootOptions.length < 3) {
         const additionalOptions = words
-          .filter((w) => w !== currentWordAnalysis.form)
+          .filter((w) => w !== currentWordAnalysis?.form)
           .slice(0, 3 - rootOptions.length);
         return shuffleArray([...rootOptions, ...additionalOptions]);
       }
@@ -410,7 +664,7 @@ const DragDropGame = () => {
         background:
           "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
         color: "#fff8dc",
-        padding: "1.5rem", // Reduced padding
+        padding: "1.5rem",
         fontFamily: "'Noto Sans Devanagari', sans-serif",
         display: "flex",
         flexDirection: "column",
@@ -422,7 +676,7 @@ const DragDropGame = () => {
         boxShadow: "0 0 20px rgba(0,0,0,0.2)",
         transform: "scale(0.85)",
         transformOrigin: "top center",
-        marginTop: "30px", // Reduced margin
+        marginTop: "30px",
       }}
     >
       <div
@@ -430,16 +684,16 @@ const DragDropGame = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "0.75rem", // Reduced margin
+          marginBottom: "0.75rem",
         }}
       >
         <div
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.2)",
             backdropFilter: "blur(10px)",
-            padding: "0.4rem 0.8rem", // Reduced padding
-            borderRadius: "0.4rem", // Reduced radius
-            fontSize: "1.1rem", // Reduced font size
+            padding: "0.4rem 0.8rem",
+            borderRadius: "0.4rem",
+            fontSize: "1.1rem",
             fontWeight: "bold",
             boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
             color: "#fff8dc",
@@ -452,8 +706,8 @@ const DragDropGame = () => {
             style={{
               backgroundColor: "#f4d4a8",
               backdropFilter: "blur(12px)",
-              padding: "0.4rem 0.8rem", // Reduced padding
-              borderRadius: "0.6rem", // Reduced radius
+              padding: "0.4rem 0.8rem",
+              borderRadius: "0.6rem",
               boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
               border: "2px solid rgba(255, 255, 255, 0.3)",
             }}
@@ -462,17 +716,13 @@ const DragDropGame = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.4rem", // Reduced gap
+                gap: "0.4rem",
                 color: "#8b5a2b",
                 fontWeight: "bold",
               }}
             >
-              <Award style={{ width: "1rem", height: "1rem" }} />{" "}
-              {/* Reduced size */}
-              <span style={{ fontSize: "0.9rem" }}>
-                Score: {sessionScore}
-              </span>{" "}
-              {/* Reduced font size */}
+              <Award style={{ width: "1rem", height: "1rem" }} />
+              <span style={{ fontSize: "0.9rem" }}>Score: {sessionScore}</span>
             </div>
           </div>
         )}
@@ -487,13 +737,11 @@ const DragDropGame = () => {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "0.75rem" }}>
-          {" "}
-          {/* Reduced margin */}
           <h1
             style={{
-              fontSize: "1.8rem", // Reduced font size
+              fontSize: "1.8rem",
               fontWeight: "700",
-              marginBottom: "0.75rem", // Reduced margin
+              marginBottom: "0.75rem",
               color: "#fff8dc",
               textShadow: "0 0 10px rgba(255, 255, 255, 0.4)",
             }}
@@ -503,26 +751,26 @@ const DragDropGame = () => {
           <div
             style={{
               display: "flex",
-              gap: "0.75rem", // Reduced gap
+              gap: "0.75rem",
               justifyContent: "center",
-              marginBottom: "0.75rem", // Reduced margin
+              marginBottom: "0.75rem",
             }}
           >
             <button
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.2rem", // Reduced gap
+                gap: "0.2rem",
                 backgroundColor: "#cd853f",
                 color: "#fff",
-                padding: "0.6rem 1.2rem", // Reduced padding
-                borderRadius: "8px", // Reduced radius
+                padding: "0.6rem 1.2rem",
+                borderRadius: "8px",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 transition: "background 0.3s ease",
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "0.9rem", // Reduced font size
+                fontSize: "0.9rem",
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = "#b86b2c";
@@ -532,25 +780,23 @@ const DragDropGame = () => {
               }}
               onClick={() => window.history.back()}
             >
-              <ArrowLeft style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
-              {/* Reduced size */}
-              Back
+              <ArrowLeft style={{ width: "0.9rem", height: "0.9rem" }} /> Back
             </button>
             <button
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.2rem", // Reduced gap
+                gap: "0.2rem",
                 backgroundColor: "#cd853f",
                 color: "#fff",
-                padding: "0.6rem 1.2rem", // Reduced padding
-                borderRadius: "8px", // Reduced radius
+                padding: "0.6rem 1.2rem",
+                borderRadius: "8px",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 transition: "background 0.3s ease",
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "1rem", // Slightly reduced
+                fontSize: "1rem",
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = "#b86b2c";
@@ -561,7 +807,6 @@ const DragDropGame = () => {
               onClick={() => window.history.back()}
             >
               <BookOpen style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
-              {/* Reduced size */}
               Learning
             </button>
           </div>
@@ -572,9 +817,9 @@ const DragDropGame = () => {
             style={{
               backgroundColor: "rgba(244, 212, 168, 0.3)",
               backdropFilter: "blur(10px)",
-              borderRadius: "0.4rem", // Reduced radius
-              padding: "0.4rem", // Reduced padding
-              marginBottom: "0.4rem", // Reduced margin
+              borderRadius: "0.4rem",
+              padding: "0.4rem",
+              marginBottom: "0.4rem",
               boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
               border: "1px solid rgba(255, 255, 255, 0.2)",
             }}
@@ -582,7 +827,7 @@ const DragDropGame = () => {
             <div
               style={{
                 textAlign: "center",
-                fontSize: "1.3rem", // Reduced font size
+                fontSize: "1.3rem",
                 fontWeight: "bold",
                 color: "#fff8dc",
               }}
@@ -596,29 +841,29 @@ const DragDropGame = () => {
           <div
             style={{
               backgroundColor: "#f4d4a8",
-              borderRadius: "0.8rem", // Reduced radius
-              padding: "1.5rem", // Reduced padding
+              borderRadius: "0.8rem",
+              padding: "1.5rem",
               textAlign: "center",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
               margin: "0 auto",
-              maxWidth: "18rem", // Reduced width
+              maxWidth: "18rem",
             }}
           >
             <h2
               style={{
-                fontSize: "1.3rem", // Reduced font size
+                fontSize: "1.3rem",
                 fontWeight: "bold",
                 color: "#8b5a2b",
-                marginBottom: "0.6rem", // Reduced margin
+                marginBottom: "0.6rem",
               }}
             >
               Round Complete!
             </h2>
             <p
               style={{
-                fontSize: "1.1rem", // Reduced font size
+                fontSize: "1.1rem",
                 color: "#8b5a2b",
-                marginBottom: "1.2rem", // Reduced margin
+                marginBottom: "1.2rem",
               }}
             >
               Final Score: {sessionScore} / {TOTAL_QUESTIONS}
@@ -627,11 +872,11 @@ const DragDropGame = () => {
               style={{
                 backgroundColor: "#cd853f",
                 color: "#fff",
-                padding: "0.6rem 1.2rem", // Reduced padding
-                borderRadius: "0.6rem", // Reduced radius
+                padding: "0.6rem 1.2rem",
+                borderRadius: "0.6rem",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 transition: "background 0.3s ease",
-                fontSize: "0.9rem", // Reduced font size
+                fontSize: "0.9rem",
                 fontWeight: "600",
                 border: "none",
                 cursor: "pointer",
@@ -659,15 +904,15 @@ const DragDropGame = () => {
             <div
               style={{
                 backgroundColor: "#f4d4a8",
-                borderRadius: "0.6rem", // Reduced radius
-                padding: "0.6rem", // Reduced padding
-                marginBottom: "0.4rem", // Reduced margin
+                borderRadius: "0.6rem",
+                padding: "0.6rem",
+                marginBottom: "0.4rem",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
               }}
             >
               <p
                 style={{
-                  fontSize: "1.3rem", // Reduced font size
+                  fontSize: "1.3rem",
                   textAlign: "center",
                   color: "#8b5a2b",
                   fontWeight: "bold",
@@ -682,10 +927,10 @@ const DragDropGame = () => {
               style={{
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
                 backdropFilter: "blur(10px)",
-                borderRadius: "0.6rem", // Reduced radius
-                padding: "0.6rem", // Reduced padding
-                marginBottom: "0.4rem", // Reduced margin
-                minHeight: "50px", // Reduced height
+                borderRadius: "0.6rem",
+                padding: "0.6rem",
+                marginBottom: "0.4rem",
+                minHeight: "50px",
                 border: "2px solid rgba(255, 255, 255, 0.2)",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                 overflow: "hidden",
@@ -695,7 +940,7 @@ const DragDropGame = () => {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "0.6rem", // Reduced gap
+                  gap: "0.6rem",
                   justifyContent: "center",
                 }}
               >
@@ -710,19 +955,19 @@ const DragDropGame = () => {
                     style={{
                       background: "rgba(255, 255, 255, 0.5)",
                       color: "#8b5a2b",
-                      padding: "0.8rem 1.2rem", // Reduced padding
-                      borderRadius: "10px", // Reduced radius
+                      padding: "0.8rem 1.2rem",
+                      borderRadius: "10px",
                       cursor: "grab",
                       boxShadow: "0 5px 20px rgba(0,0,0,0.3)",
                       transition: "transform 0.2s ease, background 0.3s",
-                      fontSize: "1.1rem", // Reduced font size
+                      fontSize: "1.1rem",
                       fontWeight: "600",
                       userSelect: "none",
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.background =
                         "rgba(255, 255, 255, 0.6)";
-                      e.currentTarget.style.transform = "scale(1.05)"; // Reduced scale
+                      e.currentTarget.style.transform = "scale(1.05)";
                     }}
                     onMouseOut={(e) => {
                       e.currentTarget.style.background =
@@ -740,8 +985,8 @@ const DragDropGame = () => {
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "0.8rem", // Reduced gap
-                marginBottom: "0.8rem", // Reduced margin
+                gap: "0.8rem",
+                marginBottom: "0.8rem",
                 overflow: "hidden",
               }}
             >
@@ -754,8 +999,8 @@ const DragDropGame = () => {
                   style={{
                     background: "rgba(255, 255, 255, 0.1)",
                     border: "1px solid rgba(255, 255, 255, 0.2)",
-                    borderRadius: "10px", // Reduced radius
-                    padding: "0.8rem 1.2rem", // Reduced padding
+                    borderRadius: "10px",
+                    padding: "0.8rem 1.2rem",
                     transition: "all 0.3s ease",
                     boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
                     display: "flex",
@@ -765,10 +1010,10 @@ const DragDropGame = () => {
                 >
                   <h3
                     style={{
-                      fontSize: "1.3rem", // Reduced font size
+                      fontSize: "1.3rem",
                       fontWeight: "bold",
                       textAlign: "center",
-                      marginBottom: "0.6rem", // Reduced margin
+                      marginBottom: "0.6rem",
                       textTransform: "capitalize",
                       color: "#fff8dc",
                     }}
@@ -780,12 +1025,12 @@ const DragDropGame = () => {
                       style={{
                         backgroundColor: "#cd853f",
                         color: "#fff",
-                        padding: "0.6rem 1rem", // Reduced padding
-                        borderRadius: "10px", // Reduced radius
+                        padding: "0.6rem 1rem",
+                        borderRadius: "10px",
                         textAlign: "center",
-                        fontSize: "1.1rem", // Reduced font size
+                        fontSize: "1.1rem",
                         fontWeight: "600",
-                        marginBottom: "0.6rem", // Reduced margin
+                        marginBottom: "0.6rem",
                         boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                         width: "100%",
                       }}
@@ -796,11 +1041,11 @@ const DragDropGame = () => {
                   {hints[zone] && (
                     <p
                       style={{
-                        fontSize: "0.8rem", // Reduced font size
+                        fontSize: "0.8rem",
                         color: "rgba(255, 255, 255, 0.8)",
                         fontStyle: "italic",
                         textAlign: "center",
-                        marginBottom: "0.6rem", // Reduced margin
+                        marginBottom: "0.6rem",
                       }}
                     >
                       {hints[zone]}
@@ -811,16 +1056,16 @@ const DragDropGame = () => {
                       width: "100%",
                       backgroundColor: "#e69950",
                       color: "#fff",
-                      padding: "0.5rem 0.8rem", // Reduced padding
-                      borderRadius: "8px", // Reduced radius
+                      padding: "0.5rem 0.8rem",
+                      borderRadius: "8px",
                       transition: "background 0.3s ease",
-                      fontSize: "0.8rem", // Reduced font size
+                      fontSize: "0.8rem",
                       fontWeight: "600",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                       marginTop: "auto",
                       border: "none",
                       cursor: "pointer",
-                      marginBottom:'1rem'
+                      marginBottom: "1.5rem", // Increased bottom margin
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.backgroundColor = "#d68840";
@@ -849,9 +1094,9 @@ const DragDropGame = () => {
               <div
                 style={{
                   textAlign: "center",
-                  fontSize: "1.1rem", // Reduced font size
+                  fontSize: "1.1rem",
                   fontWeight: "bold",
-                  marginBottom: "0.8rem", // Reduced margin
+                  marginBottom: "0.8rem",
                   textShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   color: feedbackColor,
                 }}
@@ -863,7 +1108,7 @@ const DragDropGame = () => {
             <div
               style={{
                 display: "flex",
-                gap: "0.8rem", // Reduced gap
+                gap: "0.8rem",
                 justifyContent: "center",
                 overflow: "hidden",
               }}
@@ -872,11 +1117,11 @@ const DragDropGame = () => {
                 style={{
                   backgroundColor: "#16a34a",
                   color: "#fff",
-                  padding: "0.6rem 1.2rem", // Reduced padding
-                  borderRadius: "8px", // Reduced radius
+                  padding: "0.6rem 1.2rem",
+                  borderRadius: "8px",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                   transition: "background 0.3s ease",
-                  fontSize: "0.9rem", // Reduced font size
+                  fontSize: "0.9rem",
                   fontWeight: "600",
                   border: "none",
                   cursor: "pointer",
@@ -896,14 +1141,14 @@ const DragDropGame = () => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.2rem", // Reduced gap
+                    gap: "0.2rem",
                     backgroundColor: "#dc2626",
                     color: "#fff",
-                    padding: "0.6rem 1.2rem", // Reduced padding
-                    borderRadius: "8px", // Reduced radius
+                    padding: "0.6rem 1.2rem",
+                    borderRadius: "8px",
                     boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                     transition: "background 0.3s ease",
-                    fontSize: "0.9rem", // Reduced font size
+                    fontSize: "0.9rem",
                     fontWeight: "600",
                     border: "none",
                     cursor: "pointer",
@@ -917,7 +1162,6 @@ const DragDropGame = () => {
                   onClick={handleReset}
                 >
                   <RotateCcw style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
-                  {/* Reduced size */}
                   Reset
                 </button>
               )}
@@ -925,11 +1169,11 @@ const DragDropGame = () => {
                 style={{
                   backgroundColor: "#cd853f",
                   color: "#fff",
-                  padding: "0.6rem 1.2rem", // Reduced padding
-                  borderRadius: "8px", // Reduced radius
+                  padding: "0.6rem 1.2rem",
+                  borderRadius: "8px",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
                   transition: "background 0.3s ease",
-                  fontSize: "0.9rem", // Reduced font size
+                  fontSize: "0.9rem",
                   fontWeight: "600",
                   border: "none",
                   cursor: "pointer",
@@ -961,17 +1205,18 @@ const DragDropGame = () => {
             justifyContent: "center",
             zIndex: 40,
             padding: "1rem",
+            marginBottom: "1rem",
           }}
           onClick={() => setModalOpen(false)}
         >
           <div
             style={{
               backgroundColor: "white",
-              borderRadius: "0.8rem", // Reduced radius
-              padding: "1.2rem", // Reduced padding
-              maxWidth: "38rem", // Reduced width
+              borderRadius: "0.8rem",
+              padding: "1.2rem",
+              maxWidth: "38rem",
               width: "100%",
-              maxHeight: "75vh", // Reduced height
+              maxHeight: "75vh",
               overflowY: "auto",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
               position: "relative",
@@ -981,10 +1226,10 @@ const DragDropGame = () => {
             <button
               style={{
                 position: "absolute",
-                top: "0.4rem", // Reduced margin
-                right: "0.6rem", // Reduced margin
+                top: "0.4rem",
+                right: "0.6rem",
                 color: "#6b7280",
-                fontSize: "1.8rem", // Reduced font size
+                fontSize: "1.8rem",
                 fontWeight: "bold",
                 lineHeight: 1,
                 border: "none",
@@ -1004,10 +1249,10 @@ const DragDropGame = () => {
             </button>
             <h2
               style={{
-                fontSize: "1.1rem", // Reduced font size
+                fontSize: "1.1rem",
                 fontWeight: "bold",
                 color: "#8b5a2b",
-                marginBottom: "0.8rem", // Reduced margin
+                marginBottom: "0.8rem",
                 margin: "0 0 0.8rem 0",
               }}
             >
@@ -1016,9 +1261,9 @@ const DragDropGame = () => {
             <div
               style={{
                 backgroundColor: "#f4f4f4",
-                borderRadius: "0.4rem", // Reduced radius
-                padding: "0.8rem", // Reduced padding
-                marginBottom: "0.8rem", // Reduced margin
+                borderRadius: "0.4rem",
+                padding: "0.8rem",
+                marginBottom: "0.8rem",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
               }}
             >
@@ -1027,12 +1272,12 @@ const DragDropGame = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginBottom: "0.6rem", // Reduced margin
+                  marginBottom: "0.6rem",
                 }}
               >
                 <h3
                   style={{
-                    fontSize: "1rem", // Reduced font size
+                    fontSize: "1rem",
                     fontWeight: "600",
                     color: "#4a5568",
                   }}
@@ -1042,7 +1287,7 @@ const DragDropGame = () => {
                 </h3>
                 <span
                   style={{
-                    fontSize: "0.9rem", // Reduced font size
+                    fontSize: "0.9rem",
                     fontWeight: "bold",
                     color: "#2d3748",
                   }}
@@ -1054,7 +1299,7 @@ const DragDropGame = () => {
                 style={{
                   display: "flex",
                   borderBottom: "2px solid #e2e8f0",
-                  marginBottom: "0.6rem", // Reduced margin
+                  marginBottom: "0.6rem",
                 }}
               >
                 {[
@@ -1067,7 +1312,7 @@ const DragDropGame = () => {
                     key={tab}
                     style={{
                       flex: 1,
-                      padding: "0.4rem 0.6rem", // Reduced padding
+                      padding: "0.4rem 0.6rem",
                       textAlign: "center",
                       fontWeight: "600",
                       color: activeTab === tab ? "#fff" : "#4a5568",
@@ -1075,10 +1320,10 @@ const DragDropGame = () => {
                       cursor: "pointer",
                       backgroundColor:
                         activeTab === tab ? "#4a90e2" : "#edf2f7",
-                      borderRadius: "0.3rem 0.3rem 0 0", // Reduced radius
+                      borderRadius: "0.3rem 0.3rem 0 0",
                       marginRight: "2px",
                       border: "none",
-                      fontSize: "0.8rem", // Reduced font size
+                      fontSize: "0.8rem",
                     }}
                     onMouseOver={(e) => {
                       if (activeTab !== tab) {
@@ -1108,7 +1353,7 @@ const DragDropGame = () => {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "0.6rem", // Reduced gap
+                  gap: "0.6rem",
                   justifyContent: "center",
                 }}
               >
@@ -1116,8 +1361,8 @@ const DragDropGame = () => {
                   <button
                     key={`${activeTab}-${option}-${index}`}
                     style={{
-                      padding: "0.4rem 0.8rem", // Reduced padding
-                      borderRadius: "0.4rem", // Reduced radius
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: "0.4rem",
                       fontWeight: "600",
                       transition: "all 0.3s ease",
                       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -1128,7 +1373,7 @@ const DragDropGame = () => {
                           : "#3498db",
                       color: "#fff",
                       border: "none",
-                      fontSize: "0.8rem", // Reduced font size
+                      fontSize: "0.8rem",
                     }}
                     onMouseOver={(e) => {
                       if (mcqAnswers[activeTab] !== option) {
@@ -1150,8 +1395,8 @@ const DragDropGame = () => {
                 <p
                   style={{
                     textAlign: "center",
-                    marginTop: "0.6rem", // Reduced margin
-                    fontSize: "0.8rem", // Reduced font size
+                    marginTop: "0.6rem",
+                    fontSize: "0.8rem",
                     fontWeight: "600",
                     color: mcqFeedback[activeTab].includes("Correct")
                       ? "#2ecc71"
@@ -1166,8 +1411,8 @@ const DragDropGame = () => {
                 <p
                   style={{
                     textAlign: "center",
-                    marginTop: "0.4rem", // Reduced margin
-                    fontSize: "0.7rem", // Reduced font size
+                    marginTop: "0.4rem",
+                    fontSize: "0.7rem",
                     fontStyle: "italic",
                     color: "#7f8c8d",
                     margin: "0.4rem 0 0 0",
