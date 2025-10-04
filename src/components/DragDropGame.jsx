@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Award, BookOpen, RotateCcw } from "lucide-react";
-
+import { authAPI, tokenManager } from "../services/api";
 const TOTAL_QUESTIONS = 5;
-const API_URL = "https://sanskrit-backend-4cpp.onrender.com/api/get-sentence-game";
+const API_URL =
+  "https://sanskrit-backend-4cpp.onrender.com/api/get-sentence-game";
 
 const DragDropGame = () => {
   const [sessionScore, setSessionScore] = useState(0);
@@ -33,6 +34,7 @@ const DragDropGame = () => {
   });
   const [isScored, setIsScored] = useState(false);
   const [showReset, setShowReset] = useState(false);
+  const [selectedMcqAnswers, setSelectedMcqAnswers] = useState({}); // Track selected MCQ answers
 
   const draggedElement = useRef(null);
 
@@ -51,6 +53,55 @@ const DragDropGame = () => {
     return newArray;
   };
 
+  // const updateScore = async (scoreIncrement) => {
+  //   try {
+  //     const token = tokenManager.getToken();
+  //     if (!token) {
+  //       throw new Error("No token found, please log in again");
+  //     }
+  //     const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  //     if (!userData || !userData.id) {
+  //       throw new Error("No user data found, please log in again");
+  //     }
+  //     // Fetch current global score
+  //     const profileResponse = await authAPI.getProfile({ user_id: userData.id });
+  //     const currentGlobalScore = profileResponse.score || 0;
+  //     // Calculate new global score by adding sessionScore increment
+  //     const newGlobalScore = currentGlobalScore + scoreIncrement;
+  //     const response = await authAPI.updateScore({
+  //       user_id: userData.id,
+  //       score: newGlobalScore, // Send the new total
+  //       game_type: "drag_drop_game",
+  //     });
+  //     return response.score;
+  //   } catch (err) {
+  //     setFeedback(`Error updating score: ${err.message}`);
+  //     setFeedbackColor("#dc2626");
+  //     throw err;
+  //   }
+  // };
+const updateScore = async (scoreIncrement) => {
+  try {
+    const token = tokenManager.getToken();
+    if (!token) {
+      throw new Error("No token found, please log in again");
+    }
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    if (!userData || !userData.id) {
+      throw new Error("No user data found, please log in again");
+    }
+    const response = await authAPI.updateScore({
+      user_id: userData.id,
+      score: scoreIncrement, // Send increment instead of total
+      game_type: "drag_drop_game",
+    });
+    return response.score;
+  } catch (err) {
+    setFeedback(`Error updating score: ${err.message}`);
+    setFeedbackColor("#dc2626");
+    throw err;
+  }
+};
   const initGame = async () => {
     clearDropZones();
     setIsScored(false);
@@ -86,7 +137,8 @@ const DragDropGame = () => {
     initGame();
   };
 
-  const handlePlayAgain = () => {
+  const handlePlayAgain = async () => {
+    await updateScore(sessionScore); // Add total sessionScore to global score
     setSessionScore(0);
     setQCount(1);
     setRoundFinished(false);
@@ -134,7 +186,7 @@ const DragDropGame = () => {
 
   const handleDrop = (e, dropZone) => {
     e.preventDefault();
-    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.4)";
+    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1  )";
     e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
 
     const word = e.dataTransfer.getData("text/plain");
@@ -160,8 +212,13 @@ const DragDropGame = () => {
     e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
   };
 
-  const checkCompletion = (droppedWordsState) => {
-    if (droppedWordsState.subject && droppedWordsState.verb) {
+  const checkCompletion = async (droppedWordsState) => {
+    const hasObject = correctAnswers.object !== null;
+    if (
+      droppedWordsState.subject &&
+      droppedWordsState.verb &&
+      (!hasObject || droppedWordsState.object)
+    ) {
       const isSubjectCorrect =
         droppedWordsState.subject ===
         (correctAnswers.subject ? correctAnswers.subject.form : null);
@@ -173,12 +230,25 @@ const DragDropGame = () => {
         droppedWordsState.verb ===
         (correctAnswers.verb ? correctAnswers.verb.form : null);
 
-      if (isSubjectCorrect && isObjectCorrect && isVerbCorrect && !isScored) {
-        showFeedback("Correct! Well done!", "#16a34a");
+      if (
+        isSubjectCorrect &&
+        isVerbCorrect &&
+        (!hasObject || isObjectCorrect) &&
+        !isScored
+      ) {
+        showFeedback("All parts are correct! Well done!", "#16a34a");
         setSessionScore((prev) => prev + 1);
         setIsScored(true);
-      } else if (!isSubjectCorrect || !isObjectCorrect || !isVerbCorrect) {
-        showFeedback("Not quite right. Try again or check hints.", "#dc2626");
+        await updateScore(1); // Increment global score by 1 per correct completion
+      } else if (
+        !isSubjectCorrect ||
+        !isVerbCorrect ||
+        (hasObject && !isObjectCorrect)
+      ) {
+        showFeedback(
+          "Not all parts are correct. Please try again or check hints.",
+          "#dc2626"
+        );
       }
     }
   };
@@ -211,6 +281,7 @@ const DragDropGame = () => {
     setMcqAnswers({});
     setMcqFeedback({});
     setMcqHints({});
+    setSelectedMcqAnswers({}); // Reset selected answers
     setModalOpen(true);
   };
 
@@ -221,9 +292,42 @@ const DragDropGame = () => {
   };
 
   const handleMcqSelect = (tab, option) => {
+    if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
     let isCorrect = false;
     let hint = "";
     const isVerb = wordAnalysisType === "Verb";
+    let normalizedOption = option;
+    let normalizedCorrectValue = currentWordAnalysis[tab];
+
+    // Reverse maps for display to internal value
+    const personDisplayToValue = {
+      "first person": "1",
+      "second person": "2",
+      "third person": "3",
+    };
+    const numberDisplayToValue = {
+      singular: "sg",
+      dual: "du",
+      plural: "pl",
+    };
+    const genderDisplayToValue = {
+      masculine: "masc",
+      feminine: "fem",
+      neuter: "neut",
+      "no gender": "",
+    };
+
+    // Map display to value for comparison
+    if (tab === "person") {
+      normalizedOption = personDisplayToValue[option] || option;
+      normalizedCorrectValue = currentWordAnalysis[tab];
+    } else if (tab === "number") {
+      normalizedOption = numberDisplayToValue[option] || option;
+      normalizedCorrectValue = currentWordAnalysis[tab];
+    } else if (tab === "gender") {
+      normalizedOption = genderDisplayToValue[option] || option;
+      normalizedCorrectValue = currentWordAnalysis[tab] || "";
+    }
 
     switch (tab) {
       case "root":
@@ -233,18 +337,43 @@ const DragDropGame = () => {
           : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
         break;
       case "person":
-        isCorrect = String(option) === String(currentWordAnalysis.person);
+        isCorrect = String(normalizedOption) === String(normalizedCorrectValue);
+        const personValueToDisplay = {
+          1: "first person",
+          2: "second person",
+          3: "third person",
+        };
+        const correctDisplay =
+          personValueToDisplay[normalizedCorrectValue] ||
+          normalizedCorrectValue;
         hint = isVerb
-          ? `The person indicates who is performing the action: 1st (I/we), 2nd (you), 3rd (he/she/they). Correct: ${currentWordAnalysis.person}.`
-          : `The person indicates the grammatical person: 1st (I/we), 2nd (you), 3rd (he/she/they). Correct: ${currentWordAnalysis.person}.`;
+          ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
+          : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
         break;
       case "number":
-        isCorrect = String(option) === String(currentWordAnalysis.number);
-        hint = `The number indicates singular, dual, or plural. Correct: ${currentWordAnalysis.number}.`;
+        isCorrect = String(normalizedOption) === String(normalizedCorrectValue);
+        const numberValueToDisplay = {
+          sg: "singular",
+          du: "dual",
+          pl: "plural",
+        };
+        const correctDisplayNumber =
+          numberValueToDisplay[normalizedCorrectValue] ||
+          normalizedCorrectValue;
+        hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
         break;
       case "gender":
-        isCorrect = String(option) === String(currentWordAnalysis.gender);
-        hint = `The gender is masculine, feminine, or neuter. Correct: ${currentWordAnalysis.gender}.`;
+        isCorrect = String(normalizedOption) === String(normalizedCorrectValue);
+        const genderValueToDisplay = {
+          masc: "masculine",
+          fem: "feminine",
+          neut: "neuter",
+          "": "no gender",
+        };
+        const correctDisplayGender =
+          genderValueToDisplay[normalizedCorrectValue] ||
+          normalizedCorrectValue;
+        hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
         break;
       case "tense":
         isCorrect = String(option) === String(currentSentence.tense);
@@ -254,26 +383,47 @@ const DragDropGame = () => {
         break;
     }
 
-    setMcqAnswers((prev) => ({ ...prev, [tab]: option }));
+    setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option })); // Track selected answer
+    setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
     setMcqFeedback((prev) => ({
       ...prev,
-      [tab]: isCorrect ? "Correct! Well done!" : "Incorrect. Try again or check the hint.",
+      [tab]: isCorrect
+        ? "Correct! Well done!"
+        : "Incorrect. Try again or check the hint.",
     }));
     setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
 
-    if (isCorrect) {
+    if (isCorrect && !selectedMcqAnswers[tab]) {
       setSessionScore((prev) => prev + 1);
+      updateScore(1); // Increment global score by 1 per correct MCQ answer
     }
   };
 
   const getMcqOptions = (tab) => {
     const isVerb = wordAnalysisType === "Verb";
     if (tab === "root") {
-      return currentSentence.mcq_options?.[wordAnalysisType.toLowerCase()] || [];
+      const rootOptions =
+        currentSentence.mcq_options?.[wordAnalysisType.toLowerCase()] || [];
+      // Use sentence words as fallback if mcq_options is insufficient
+      if (rootOptions.length < 3) {
+        const additionalOptions = words
+          .filter((w) => w !== currentWordAnalysis.form)
+          .slice(0, 3 - rootOptions.length);
+        return shuffleArray([...rootOptions, ...additionalOptions]);
+      }
+      return shuffleArray(rootOptions);
     }
-    if (tab === "person") return ["1", "2", "3"];
-    if (tab === "number") return ["sg", "du", "pl"];
-    if (tab === "gender") return ["masc", "fem", "neut"];
+    if (tab === "person")
+      return ["first person", "second person", "third person"];
+    if (tab === "number") return ["singular", "dual", "plural"];
+    if (tab === "gender") {
+      if (!currentWordAnalysis?.gender) {
+        return shuffleArray(["masculine", "feminine", "neuter"])
+          .slice(0, 2)
+          .concat("no gender");
+      }
+      return ["masculine", "feminine", "neuter"];
+    }
     if (tab === "tense" && isVerb) return ["past", "present", "future"];
     return [];
   };
@@ -281,7 +431,8 @@ const DragDropGame = () => {
   return (
     <div
       style={{
-        background: "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
+        background:
+          "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
         color: "#fff8dc",
         padding: "2rem",
         fontFamily: "'Noto Sans Devanagari', sans-serif",
@@ -386,8 +537,12 @@ const DragDropGame = () => {
                 cursor: "pointer",
                 fontSize: "1rem",
               }}
-              onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#b86b2c"; }}
-              onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#cd853f"; }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = "#b86b2c";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = "#cd853f";
+              }}
               onClick={() => window.history.back()}
             >
               <ArrowLeft style={{ width: "1rem", height: "1rem" }} /> Back
@@ -408,8 +563,12 @@ const DragDropGame = () => {
                 cursor: "pointer",
                 fontSize: "1rem",
               }}
-              onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#b86b2c"; }}
-              onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#cd853f"; }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = "#b86b2c";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = "#cd853f";
+              }}
               onClick={() => window.history.back()}
             >
               <BookOpen style={{ width: "1rem", height: "1rem" }} /> Learning
@@ -486,8 +645,12 @@ const DragDropGame = () => {
                 border: "none",
                 cursor: "pointer",
               }}
-              onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#b86b2c"; }}
-              onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#cd853f"; }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = "#b86b2c";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = "#cd853f";
+              }}
               onClick={handlePlayAgain}
             >
               Play Again
@@ -550,27 +713,28 @@ const DragDropGame = () => {
                     draggable
                     onDragStart={(e) => {
                       handleDragStart(e, word);
-                      e.currentTarget.style.opacity = "0.5";
                     }}
                     onDragEnd={handleDragEnd}
                     style={{
-                      background: "rgba(255, 255, 255, 0.1)",
-                      color: "#f5deb3",
+                      background: "rgba(255, 255, 255, 0.5)", // Increased visibility
+                      color: "#8b5a2b",
                       padding: "1rem 1.5rem",
                       borderRadius: "12px",
                       cursor: "grab",
-                      boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
+                      boxShadow: "0 5px 20px rgba(0,0,0,0.3)",
                       transition: "transform 0.2s ease, background 0.3s",
                       fontSize: "1.2rem",
                       fontWeight: "600",
                       userSelect: "none",
                     }}
                     onMouseOver={(e) => {
-                      e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
-                      e.currentTarget.style.transform = "scale(1.05)";
+                      e.currentTarget.style.background =
+                        "rgba(255, 255, 255, 0.6)";
+                      e.currentTarget.style.transform = "scale(1.1)";
                     }}
                     onMouseOut={(e) => {
-                      e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+                      e.currentTarget.style.background =
+                        "rgba(255, 255, 255, 0.5)";
                       e.currentTarget.style.transform = "scale(1)";
                     }}
                   >
@@ -586,7 +750,6 @@ const DragDropGame = () => {
                 gridTemplateColumns: "repeat(3, 1fr)",
                 gap: "1rem",
                 marginBottom: "1rem",
-                maxHeight: "250px",
               }}
             >
               {["subject", "object", "verb"].map((zone) => (
@@ -604,8 +767,6 @@ const DragDropGame = () => {
                     boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
                     display: "flex",
                     flexDirection: "column",
-                    maxHeight: "200px",
-                    overflowY: "auto",
                   }}
                 >
                   <h3
@@ -666,8 +827,12 @@ const DragDropGame = () => {
                       border: "none",
                       cursor: "pointer",
                     }}
-                    onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#d68840"; }}
-                    onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#e69950"; }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "#d68840";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "#e69950";
+                    }}
                     onClick={() => {
                       const wordData = correctAnswers[zone];
                       if (wordData) {
@@ -720,8 +885,12 @@ const DragDropGame = () => {
                   border: "none",
                   cursor: "pointer",
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#15803d"; }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#16a34a"; }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = "#15803d";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = "#16a34a";
+                }}
                 onClick={handleShowHints}
               >
                 Show Hint
@@ -743,8 +912,12 @@ const DragDropGame = () => {
                     border: "none",
                     cursor: "pointer",
                   }}
-                  onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#b91c1c"; }}
-                  onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#dc2626"; }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = "#b91c1c";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = "#dc2626";
+                  }}
                   onClick={handleReset}
                 >
                   <RotateCcw style={{ width: "1rem", height: "1rem" }} /> Reset
@@ -763,8 +936,12 @@ const DragDropGame = () => {
                   border: "none",
                   cursor: "pointer",
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#b86b2c"; }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#cd853f"; }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = "#b86b2c";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = "#cd853f";
+                }}
                 onClick={handleNextSentence}
               >
                 Next Sentence
@@ -817,8 +994,12 @@ const DragDropGame = () => {
                 cursor: "pointer",
                 padding: "0",
               }}
-              onMouseOver={(e) => { e.currentTarget.style.color = "#374151"; }}
-              onMouseOut={(e) => { e.currentTarget.style.color = "#6b7280"; }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.color = "#374151";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.color = "#6b7280";
+              }}
               onClick={() => setModalOpen(false)}
             >
               ×
@@ -858,7 +1039,8 @@ const DragDropGame = () => {
                     color: "#4a5568",
                   }}
                 >
-                  Guess the {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                  Guess the{" "}
+                  {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                 </h3>
                 <span
                   style={{
@@ -893,7 +1075,8 @@ const DragDropGame = () => {
                       color: activeTab === tab ? "#fff" : "#4a5568",
                       transition: "all 0.3s ease",
                       cursor: "pointer",
-                      backgroundColor: activeTab === tab ? "#4a90e2" : "#edf2f7",
+                      backgroundColor:
+                        activeTab === tab ? "#4a90e2" : "#edf2f7",
                       borderRadius: "0.375rem 0.375rem 0 0",
                       marginRight: "2px",
                       border: "none",
@@ -942,7 +1125,9 @@ const DragDropGame = () => {
                       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                       cursor: "pointer",
                       backgroundColor:
-                        mcqAnswers[activeTab] === option ? "#2ecc71" : "#3498db",
+                        mcqAnswers[activeTab] === option
+                          ? "#2ecc71"
+                          : "#3498db",
                       color: "#fff",
                       border: "none",
                       fontSize: "0.875rem",
@@ -970,7 +1155,9 @@ const DragDropGame = () => {
                     marginTop: "0.75rem",
                     fontSize: "0.875rem",
                     fontWeight: "600",
-                    color: mcqFeedback[activeTab].includes("Correct") ? "#2ecc71" : "#e74c3c",
+                    color: mcqFeedback[activeTab].includes("Correct")
+                      ? "#2ecc71"
+                      : "#e74c3c",
                     margin: "0.75rem 0 0 0",
                   }}
                 >
