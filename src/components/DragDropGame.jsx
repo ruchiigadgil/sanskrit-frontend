@@ -438,12 +438,13 @@ const updateScore = async (scoreIncrement) => {
         fontFamily: "'Noto Sans Devanagari', sans-serif",
         display: "flex",
         flexDirection: "column",
+        justifyContent:"center",
         maxWidth: "800px",
         margin: "0 auto",
         minHeight: "100vh",
         boxShadow: "0 0 20px rgba(0,0,0,0.2)",
         transform: "scale(0.9)",
-        transformOrigin: "top center",
+        transformOrigin: "center"
       }}
     >
       <div
