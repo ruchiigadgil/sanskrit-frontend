@@ -89,7 +89,6 @@ const DragDropGame = () => {
         throw new Error("Failed to fetch sentence game data from API");
       }
       const data = await response.json();
-
       setCurrentSentence(data);
       setWords(shuffleArray(data.words));
       setCorrectAnswers(data.correct_answers);
@@ -267,369 +266,131 @@ const DragDropGame = () => {
     setMcqHints((prev) => ({ ...prev, [tab]: "" }));
   };
 
-  // const handleMcqSelect = (tab, option) => {
-  //   if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
+  const handleMcqSelect = (tab, option) => {
+    if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
 
-  //   let isCorrect = false;
-  //   let hint = "";
-  //   const isVerb = wordAnalysisType === "Verb";
-  //   let normalizedOption = option;
-  //   let normalizedCorrectValue = currentWordAnalysis[tab];
+    let isCorrect = false;
+    let hint = "";
+    const isVerb = wordAnalysisType === "Verb";
+    let normalizedOption = option;
+    let normalizedCorrectValue = currentWordAnalysis[tab];
 
-  //   // Ensure currentWordAnalysis[tab] is defined
-  //   if (!currentWordAnalysis || currentWordAnalysis[tab] === undefined) {
-  //     return; // Exit if no valid data
-  //   }
-
-  //   // Reverse maps for display to internal value
-  //   const personDisplayToValue = {
-  //     "first person": "1",
-  //     "second person": "2",
-  //     "third person": "3",
-  //   };
-  //   const numberDisplayToValue = {
-  //     singular: "sg",
-  //     dual: "du",
-  //     plural: "pl",
-  //   };
-  //   const genderDisplayToValue = {
-  //     masculine: "masc",
-  //     feminine: "fem",
-  //     neuter: "neut",
-  //     "no gender": "",
-  //   };
-
-  //   // Map display to value for comparison
-  //   if (tab === "person") {
-  //     normalizedOption = personDisplayToValue[option] || option;
-  //     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
-  //   } else if (tab === "number") {
-  //     normalizedOption = numberDisplayToValue[option] || option;
-  //     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
-  //   } else if (tab === "gender") {
-  //     normalizedOption = genderDisplayToValue[option] || option;
-  //     normalizedCorrectValue = String(currentWordAnalysis[tab] || ""); // Default to empty string if undefined
-  //   } else if (tab === "tense" && isVerb) {
-  //     normalizedCorrectValue = String(currentSentence.tense || ""); // Ensure string for comparison
-  //   }
-
-  //   // Validation logic
-  //   switch (tab) {
-  //     case "root":
-  //       isCorrect = String(option) === String(currentWordAnalysis.root);
-  //       hint = isVerb
-  //         ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
-  //         : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
-  //       break;
-  //     case "person":
-  //       isCorrect = normalizedOption === normalizedCorrectValue;
-  //       const personValueToDisplay = {
-  //         1: "first person",
-  //         2: "second person",
-  //         3: "third person",
-  //       };
-  //       const correctDisplay =
-  //         personValueToDisplay[normalizedCorrectValue] ||
-  //         normalizedCorrectValue;
-  //       hint = isVerb
-  //         ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
-  //         : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
-  //       break;
-  //     case "number":
-  //       isCorrect = normalizedOption === normalizedCorrectValue;
-  //       const numberValueToDisplay = {
-  //         sg: "singular",
-  //         du: "dual",
-  //         pl: "plural",
-  //       };
-  //       const correctDisplayNumber =
-  //         numberValueToDisplay[normalizedCorrectValue] ||
-  //         normalizedCorrectValue;
-  //       hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
-  //       break;
-  //     case "gender":
-  //       isCorrect = normalizedOption === normalizedCorrectValue;
-  //       const genderValueToDisplay = {
-  //         masc: "masculine",
-  //         fem: "feminine",
-  //         neut: "neuter",
-  //         null: "no gender",
-  //       };
-  //       const correctDisplayGender =
-  //         genderValueToDisplay[normalizedCorrectValue] ||
-  //         normalizedCorrectValue;
-  //       hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
-  //       break;
-  //     case "tense":
-  //       isCorrect = String(option) === normalizedCorrectValue;
-  //       hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-
-  //   // Update states
-  //   setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
-  //   setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
-  //   setMcqFeedback((prev) => ({
-  //     ...prev,
-  //     [tab]: isCorrect
-  //       ? "Correct! Well done!"
-  //       : "Incorrect. Try again or check the hint.",
-  //   }));
-  //   setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
-
-  //   // Update score only if the answer is correct and not previously selected
-  //   if (isCorrect && !selectedMcqAnswers[tab]) {
-  //     setSessionScore((prev) => prev + 1);
-  //     updateScore(1); // Increment global score by 1 per correct MCQ answer
-  //   }
-  // };
-// const handleMcqSelect = (tab, option) => {
-//   if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
-
-//   let isCorrect = false;
-//   let hint = "";
-//   const isVerb = wordAnalysisType === "Verb";
-//   let normalizedOption = option;
-//   let normalizedCorrectValue = currentWordAnalysis[tab];
-
-//   // Ensure currentWordAnalysis[tab] is defined
-//   if (!currentWordAnalysis || currentWordAnalysis[tab] === undefined) {
-//     return; // Exit if no valid data
-//   }
-
-//   // Reverse maps for display to internal value
-//   const personDisplayToValue = {
-//     "first person": "1",
-//     "second person": "2",
-//     "third person": "3",
-//   };
-//   const numberDisplayToValue = {
-//     singular: "sg",
-//     dual: "du",
-//     plural: "pl",
-//   };
-//   const genderDisplayToValue = {
-//     masculine: "masc",
-//     feminine: "fem",
-//     neuter: "neut",
-//     "no gender": null, // Map "no gender" to null to match backend
-//   };
-
-//   // Map display to value for comparison
-//   if (tab === "person") {
-//     normalizedOption = personDisplayToValue[option] || option;
-//     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
-//   } else if (tab === "number") {
-//     normalizedOption = numberDisplayToValue[option] || option;
-//     normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
-//   } else if (tab === "gender") {
-//     normalizedOption = genderDisplayToValue[option];
-//     normalizedCorrectValue = currentWordAnalysis[tab]; // Keep as is to handle null
-//   } else if (tab === "tense" && isVerb) {
-//     normalizedCorrectValue = String(currentSentence.tense || ""); // Ensure string for comparison
-//   }
-
-//   // Validation logic
-//   switch (tab) {
-//     case "root":
-//       isCorrect = String(option) === String(currentWordAnalysis.root);
-//       hint = isVerb
-//         ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
-//         : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
-//       break;
-//     case "person":
-//       isCorrect = normalizedOption === normalizedCorrectValue;
-//       const personValueToDisplay = {
-//         1: "first person",
-//         2: "second person",
-//         3: "third person",
-//       };
-//       const correctDisplay =
-//         personValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
-//       hint = isVerb
-//         ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
-//         : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
-//       break;
-//     case "number":
-//       isCorrect = normalizedOption === normalizedCorrectValue;
-//       const numberValueToDisplay = {
-//         sg: "singular",
-//         du: "dual",
-//         pl: "plural",
-//       };
-//       const correctDisplayNumber =
-//         numberValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
-//       hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
-//       break;
-//     case "gender":
-//       isCorrect =
-//         normalizedOption === normalizedCorrectValue ||
-//         (normalizedOption === null && normalizedCorrectValue === null); // Handle null for "no gender"
-//       const genderValueToDisplay = {
-//         masc: "masculine",
-//         fem: "feminine",
-//         neut: "neuter",
-//         null: "no gender",
-//       };
-//       const correctDisplayGender =
-//         genderValueToDisplay[normalizedCorrectValue] ||
-//         normalizedCorrectValue ||
-//         "no gender";
-//       hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
-//       break;
-//     case "tense":
-//       isCorrect = String(option) === normalizedCorrectValue;
-//       hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
-//       break;
-//     default:
-//       break;
-//   }
-
-//   // Update states
-//   setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
-//   setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
-//   setMcqFeedback((prev) => ({
-//     ...prev,
-//     [tab]: isCorrect
-//       ? "Correct! Well done!"
-//       : "Incorrect. Try again or check the hint.",
-//   }));
-//   setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
-
-//   // Update score only if the answer is correct and not previously selected
-//   if (isCorrect && !selectedMcqAnswers[tab]) {
-//     setSessionScore((prev) => prev + 1);
-//     updateScore(1); // Increment global score by 1 per correct MCQ answer
-//   }
-// };
-const handleMcqSelect = (tab, option) => {
-  if (selectedMcqAnswers[tab] === option) return; // Prevent multiple clicks on same answer
-
-  let isCorrect = false;
-  let hint = "";
-  const isVerb = wordAnalysisType === "Verb";
-  let normalizedOption = option;
-  let normalizedCorrectValue = currentWordAnalysis[tab];
-
-  // Ensure currentWordAnalysis[tab] is defined
-  if (!currentWordAnalysis || currentWordAnalysis[tab] === undefined) {
-    return; // Exit if no valid data
-  }
-
-  // Reverse maps for display to internal value
-  const personDisplayToValue = {
-    "first person": "1",
-    "second person": "2",
-    "third person": "3",
-  };
-  const numberDisplayToValue = {
-    singular: "sg",
-    dual: "du",
-    plural: "pl",
-  };
-  const genderDisplayToValue = {
-    masculine: "masc",
-    feminine: "fem",
-    neuter: "neut",
-    "no gender": null, // Map "no gender" to null to match backend
-  };
-
-  // Map display to value for comparison
-  if (tab === "person") {
-    normalizedOption = personDisplayToValue[option] || option;
-    // Override person check if the form is a pronoun like asmad or yushmad
-    if (currentWordAnalysis.form && currentWordAnalysis.form.includes("asmad")) {
-      normalizedCorrectValue = "1"; // Force first person for asmad
-    } else if (currentWordAnalysis.form && currentWordAnalysis.form.includes("yushmad")) {
-      normalizedCorrectValue = "2"; // Force second person for yushmad
-    } else {
-      normalizedCorrectValue = String(currentWordAnalysis[tab] || ""); // Default to stored value
+    // Only exit early if not tense tab, since tense uses currentSentence.tense
+    if (tab !== "tense" && (!currentWordAnalysis || currentWordAnalysis[tab] === undefined)) {
+      return; // Exit if no valid data for non-tense tabs
     }
-  } else if (tab === "number") {
-    normalizedOption = numberDisplayToValue[option] || option;
-    normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
-  } else if (tab === "gender") {
-    normalizedOption = genderDisplayToValue[option];
-    normalizedCorrectValue = currentWordAnalysis[tab]; // Keep as is to handle null
-  } else if (tab === "tense" && isVerb) {
-    normalizedCorrectValue = String(currentSentence.tense || ""); // Ensure string for comparison
-  }
 
-  // Validation logic
-  switch (tab) {
-    case "root":
-      isCorrect = String(option) === String(currentWordAnalysis.root);
-      hint = isVerb
-        ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
-        : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
-      break;
-    case "person":
-      isCorrect = normalizedOption === normalizedCorrectValue;
-      const personValueToDisplay = {
-        1: "first person",
-        2: "second person",
-        3: "third person",
-      };
-      const correctDisplay =
-        personValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
-      hint = isVerb
-        ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
-        : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
-      break;
-    case "number":
-      isCorrect = normalizedOption === normalizedCorrectValue;
-      const numberValueToDisplay = {
-        sg: "singular",
-        du: "dual",
-        pl: "plural",
-      };
-      const correctDisplayNumber =
-        numberValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
-      hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
-      break;
-    case "gender":
-      isCorrect =
-        normalizedOption === normalizedCorrectValue ||
-        (normalizedOption === null && normalizedCorrectValue === null); // Handle null for "no gender"
-      const genderValueToDisplay = {
-        masc: "masculine",
-        fem: "feminine",
-        neut: "neuter",
-        null: "no gender",
-      };
-      const correctDisplayGender =
-        genderValueToDisplay[normalizedCorrectValue] ||
-        normalizedCorrectValue ||
-        "no gender";
-      hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
-      break;
-    case "tense":
-      isCorrect = String(option) === normalizedCorrectValue;
-      hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
-      break;
-    default:
-      break;
-  }
+    // Reverse maps for display to internal value
+    const personDisplayToValue = {
+      "first person": "1",
+      "second person": "2",
+      "third person": "3",
+    };
+    const numberDisplayToValue = {
+      singular: "sg",
+      dual: "du",
+      plural: "pl",
+    };
+    const genderDisplayToValue = {
+      masculine: "masc",
+      feminine: "fem",
+      neuter: "neut",
+      "no gender": null, // Map "no gender" to null to match backend
+    };
 
-  // Update states
-  setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
-  setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
-  setMcqFeedback((prev) => ({
-    ...prev,
-    [tab]: isCorrect
-      ? "Correct! Well done!"
-      : "Incorrect. Try again or check the hint.",
-  }));
-  setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
+    // Map display to value for comparison
+    if (tab === "person") {
+      normalizedOption = personDisplayToValue[option] || option;
+      // Override person check if the form is a pronoun like asmad or yushmad
+      if (currentWordAnalysis.form && currentWordAnalysis.form.includes("asmad")) {
+        normalizedCorrectValue = "1"; // Force first person for asmad
+      } else if (currentWordAnalysis.form && currentWordAnalysis.form.includes("yushmad")) {
+        normalizedCorrectValue = "2"; // Force second person for yushmad
+      } else {
+        normalizedCorrectValue = String(currentWordAnalysis[tab] || ""); // Default to stored value
+      }
+    } else if (tab === "number") {
+      normalizedOption = numberDisplayToValue[option] || option;
+      normalizedCorrectValue = String(currentWordAnalysis[tab]); // Ensure string for comparison
+    } else if (tab === "gender") {
+      normalizedOption = genderDisplayToValue[option];
+      normalizedCorrectValue = currentWordAnalysis[tab]; // Keep as is to handle null
+    } else if (tab === "tense" && isVerb) {
+      normalizedCorrectValue = String(currentSentence.tense || "");
+    }
 
-  // Update score only if the answer is correct and not previously selected
-  if (isCorrect && !selectedMcqAnswers[tab]) {
-    setSessionScore((prev) => prev + 1);
-    updateScore(1); // Increment global score by 1 per correct MCQ answer
-  }
-};
+    // Validation logic
+    switch (tab) {
+      case "root":
+        isCorrect = String(option) === String(currentWordAnalysis.root);
+        hint = isVerb
+          ? `The root is the base form of the verb, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`
+          : `The root is the base form of the noun, e.g., "${currentWordAnalysis.root}" for "${currentWordAnalysis.form}".`;
+        break;
+      case "person":
+        isCorrect = normalizedOption === normalizedCorrectValue;
+        const personValueToDisplay = {
+          1: "first person",
+          2: "second person",
+          3: "third person",
+        };
+        const correctDisplay =
+          personValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
+        hint = isVerb
+          ? `The person indicates who is performing the action: first person, second person, third person. Correct: ${correctDisplay}.`
+          : `The person indicates the grammatical person: first person, second person, third person. Correct: ${correctDisplay}.`;
+        break;
+      case "number":
+        isCorrect = normalizedOption === normalizedCorrectValue;
+        const numberValueToDisplay = {
+          sg: "singular",
+          du: "dual",
+          pl: "plural",
+        };
+        const correctDisplayNumber =
+          numberValueToDisplay[normalizedCorrectValue] || normalizedCorrectValue;
+        hint = `The number indicates singular, dual, or plural. Correct: ${correctDisplayNumber}.`;
+        break;
+      case "gender":
+        isCorrect =
+          normalizedOption === normalizedCorrectValue ||
+          (normalizedOption === null && normalizedCorrectValue === null); // Handle null for "no gender"
+        const genderValueToDisplay = {
+          masc: "masculine",
+          fem: "feminine",
+          neut: "neuter",
+          null: "no gender",
+        };
+        const correctDisplayGender =
+          genderValueToDisplay[normalizedCorrectValue] ||
+          normalizedCorrectValue ||
+          "no gender";
+        hint = `The gender is masculine, feminine, or neuter. Correct: ${correctDisplayGender}.`;
+        break;
+      case "tense":
+        isCorrect = String(option) === normalizedCorrectValue;
+        hint = `The tense indicates the time of the action: past, present, or future. Correct: ${normalizedCorrectValue}.`;
+        break;
+      default:
+        break;
+    }
+
+    // Update states
+    setSelectedMcqAnswers((prev) => ({ ...prev, [tab]: option }));
+    setMcqAnswers((prev) => ({ ...prev, [tab]: normalizedOption }));
+    setMcqFeedback((prev) => ({
+      ...prev,
+      [tab]: isCorrect ? "Correct! Well done!" : "Incorrect. Try again or check the hint.",
+    }));
+    setMcqHints((prev) => ({ ...prev, [tab]: isCorrect ? "" : hint }));
+
+    // Update score only if the answer is correct and not previously selected
+    if (isCorrect && !selectedMcqAnswers[tab]) {
+      setSessionScore((prev) => prev + 1);
+      updateScore(1); // Increment global score by 1 per correct MCQ answer
+    }
+  };
+
   const getMcqOptions = (tab) => {
     const isVerb = wordAnalysisType === "Verb";
     if (tab === "root") {
