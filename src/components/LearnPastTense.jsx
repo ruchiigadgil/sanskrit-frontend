@@ -17,21 +17,21 @@ const LearnPastTense = () => {
   const quizzes = [
     {
       question: "What is the correct past tense form: 'I ate'?",
-      options: ["अहम् खादति", "अहम् अखादम् ✅", "अहम् खादामि"],
+      options: ["अहम् खादति", "अहम् अखादम्", "अहम् खादामि"],
       correct: 1,
       explanation:
         "First person singular uses -अम् ending with prefix अ. अहम् अखादम् = I ate",
     },
     {
       question: "Translate: 'They (3+) went'",
-      options: ["ते अगच्छत्", "ते अगच्छतः", "ते अगच्छन् ✅"],
+      options: ["ते अगच्छत्", "ते अगच्छतः", "ते अगच्छन्"],
       correct: 2,
       explanation:
         "Third person plural uses -न् ending with prefix अ. ते अगच्छन् = They went",
     },
     {
       question: "What is 'You both read' in Sanskrit (past)?",
-      options: ["युवाम् अपठ:", "युवाम् अपठतम् ✅", "युवाम् अपठत"],
+      options: ["युवाम् अपठ:", "युवाम् अपठतम्", "युवाम् अपठत"],
       correct: 1,
       explanation:
         "Second person dual uses -तम् ending with prefix अ. युवाम् अपठतम् = You both read",
@@ -69,8 +69,7 @@ const LearnPastTense = () => {
   const styles = {
     container: {
       minHeight: "100vh",
-      background:
-        "linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)",
+      background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
       padding: "20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       boxSizing: "border-box",
@@ -121,11 +120,11 @@ const LearnPastTense = () => {
     },
     progress: {
       height: "100%",
-      background: "linear-gradient(90deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       borderRadius: "5px",
       transition: "width 0.3s ease",
       width: `${((currentSection + 1) / sections.length) * 100}%`,
-      boxShadow: "0 2px 4px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 2px 4px rgba(205, 133, 63, 0.3)",
     },
     navigation: {
       display: "flex",
@@ -175,7 +174,7 @@ const LearnPastTense = () => {
       textShadow: "1px 1px 3px rgba(0, 0, 0, 0.1)",
     },
     keyRule: {
-      background: "linear-gradient(135deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
       padding: "20px 25px",
       borderRadius: "18px",
@@ -183,11 +182,11 @@ const LearnPastTense = () => {
       fontSize: "1.2rem",
       fontWeight: "600",
       marginBottom: "25px",
-      boxShadow: "0 10px 25px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 10px 25px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.5",
     },
     exampleBox: {
-      background: "linear-gradient(135deg, #ff6b35, #ff8a50)",
+      background: "#cd853f",
       color: "white",
       padding: "25px",
       borderRadius: "18px",
@@ -195,11 +194,11 @@ const LearnPastTense = () => {
       fontSize: "1.4rem",
       fontWeight: "600",
       marginBottom: "25px",
-      boxShadow: "0 10px 25px rgba(255, 107, 53, 0.3)",
+      boxShadow: "0 10px 25px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.4",
     },
     formulaBox: {
-      background: "linear-gradient(135deg, #9C27B0, #E91E63)",
+      background: "#cd853f",
       color: "white",
       padding: "25px",
       borderRadius: "18px",
@@ -207,7 +206,7 @@ const LearnPastTense = () => {
       fontSize: "1.4rem",
       fontWeight: "600",
       marginBottom: "25px",
-      boxShadow: "0 10px 25px rgba(156, 39, 176, 0.3)",
+      boxShadow: "0 10px 25px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.4",
     },
     table: {
@@ -268,7 +267,7 @@ const LearnPastTense = () => {
       width: "100%",
       height: "100%",
       backfaceVisibility: "hidden",
-      background: "linear-gradient(135deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
       borderRadius: "18px",
       display: "flex",
@@ -277,7 +276,7 @@ const LearnPastTense = () => {
       justifyContent: "center",
       fontSize: "1.1rem",
       fontWeight: "700",
-      boxShadow: "0 8px 20px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 8px 20px rgba(205, 133, 63, 0.3)",
       padding: "15px",
       border: "2px solid rgba(255, 255, 255, 0.1)",
     },
@@ -287,7 +286,7 @@ const LearnPastTense = () => {
       height: "100%",
       backfaceVisibility: "hidden",
       transform: "rotateY(180deg)",
-      background: "linear-gradient(135deg, #ff6b35, #ff8a50)",
+      background: "#cd853f",
       color: "white",
       borderRadius: "18px",
       display: "flex",
@@ -331,36 +330,36 @@ const LearnPastTense = () => {
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
     },
     correctOption: {
-      background: "linear-gradient(135deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
-      borderColor: "#4CAF50",
-      boxShadow: "0 5px 15px rgba(76, 175, 80, 0.3)",
+      borderColor: "#cd853f",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
     },
     incorrectOption: {
-      background: "linear-gradient(135deg, #f44336, #ff5722)",
+      background: "#cd853f",
       color: "white",
-      borderColor: "#f44336",
-      boxShadow: "0 5px 15px rgba(244, 67, 54, 0.3)",
+      borderColor: "#cd853f",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
     },
     explanation: {
-      background: "rgba(76, 175, 80, 0.1)",
+      background: "rgba(205, 133, 63, 0.1)",
       padding: "18px",
       borderRadius: "12px",
       marginTop: "15px",
-      borderLeft: "4px solid #4CAF50",
+      borderLeft: "4px solid #cd853f",
       fontSize: "1rem",
       lineHeight: "1.5",
       color: "#333333",
     },
     tip: {
-      background: "linear-gradient(135deg, #2196F3, #03A9F4)",
+      background: "#cd853f",
       color: "white",
       padding: "15px 20px",
       borderRadius: "12px",
       margin: "15px 0",
       fontSize: "1rem",
       fontWeight: "500",
-      boxShadow: "0 5px 15px rgba(33, 150, 243, 0.3)",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.4",
     },
     navigationButtons: {
@@ -377,9 +376,9 @@ const LearnPastTense = () => {
       fontSize: "1.1rem",
       fontWeight: "600",
       transition: "all 0.3s ease",
-      background: "linear-gradient(135deg, #8b4513, #a0522d)",
+      background: "#cd853f",
       color: "white",
-      boxShadow: "0 5px 15px rgba(139, 69, 19, 0.3)",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
       minWidth: "120px",
     },
   };
@@ -419,14 +418,14 @@ const LearnPastTense = () => {
 
   const renderIntroSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>⏪ Past Tense - लङ् लकार</h2>
+      <h2 style={styles.sectionTitle}>Past Tense - लङ् लकार</h2>
       <div style={styles.keyRule}>
-        📖 Past Tense = Actions that have happened
+        Past Tense = Actions that have happened
         <br />
-        ➡️ In Sanskrit: <strong>लङ् लकार (Laṅ Lakāra)</strong>
+        In Sanskrit: <strong>लङ् लकार (Laṅ Lakāra)</strong>
       </div>
       <div style={styles.tip}>
-        🎯 <strong>Key Memory Aid:</strong> "Yesterday’s actions are done!"
+        <strong>Key Memory Aid:</strong> "Yesterday's actions are done!"
         (Think: <strong>Past = Back</strong>)
       </div>
       <div style={styles.exampleBox}>
@@ -448,7 +447,7 @@ const LearnPastTense = () => {
 
   const renderFormationSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🔧 How to Form Past Tense</h2>
+      <h2 style={styles.sectionTitle}> How to Form Past Tense</h2>
       <div style={styles.formulaBox}>
         Verb Root + अ + Person Ending = Past Tense
         <br />
@@ -465,13 +464,13 @@ const LearnPastTense = () => {
       </div>
 
       <div style={styles.tip}>
-        📝 <strong>Step 1:</strong> Take the verb root (धातु) - like गम् (to go)
+        <strong>Step 1:</strong> Take the verb root (धातु) - like गम् (to go)
       </div>
       <div style={styles.tip}>
-        📝 <strong>Step 2:</strong> Add अ - गम् becomes अगच्छ
+        <strong>Step 2:</strong> Add अ - गम् becomes अगच्छ
       </div>
       <div style={styles.tip}>
-        📝 <strong>Step 3:</strong> Add person ending - अगच्छ + अम् = अगच्छम् (I
+        <strong>Step 3:</strong> Add person ending - अगच्छ + अम् = अगच्छम् (I
         went)
       </div>
 
@@ -494,7 +493,7 @@ const LearnPastTense = () => {
 
   const renderEndingsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📊 Past Tense Endings</h2>
+      <h2 style={styles.sectionTitle}>Past Tense Endings</h2>
       <table style={styles.table}>
         <thead>
           <tr>
@@ -521,7 +520,7 @@ const LearnPastTense = () => {
         </tbody>
       </table>
       <div style={styles.tip}>
-        ✅ <strong>Memory Trick:</strong> Add अ + unique endings (अम्, थाः, त्
+        <strong>Memory Trick:</strong> Add अ + unique endings (अम्, थाः, त्
         etc.)
       </div>
     </div>
@@ -529,7 +528,7 @@ const LearnPastTense = () => {
 
   const renderExamplesSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>💡 Common Verb Examples</h2>
+      <h2 style={styles.sectionTitle}>Common Verb Examples</h2>
       <div style={styles.cardsContainer}>
         {verbExamples.map((verb, index) => (
           <div
@@ -572,7 +571,7 @@ const LearnPastTense = () => {
         ))}
       </div>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> The अ prefix signals past action across all
+        <strong>Tip:</strong> The अ prefix signals past action across all
         verbs
       </div>
     </div>
@@ -580,7 +579,7 @@ const LearnPastTense = () => {
 
   const renderQuizSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎮 Test Your Knowledge</h2>
+      <h2 style={styles.sectionTitle}>Test Your Knowledge</h2>
       {quizzes.map((quiz, quizIndex) => {
         const currentState = quizStates[quizIndex] || {
           answer: null,
@@ -615,7 +614,7 @@ const LearnPastTense = () => {
                 }
                 disabled={currentState.showAnswer}
               >
-                {option.replace(" ✅", "")}
+                {option}
               </button>
             ))}
             {currentState.showAnswer && (
@@ -631,9 +630,9 @@ const LearnPastTense = () => {
 
   const renderPracticeSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎉 Excellent Progress!</h2>
+      <h2 style={styles.sectionTitle}>Excellent Progress!</h2>
       <div style={styles.keyRule}>
-        ✅ <strong>You've Learned Past Tense!</strong>
+        <strong>You've Learned Past Tense!</strong>
         <br />
         Now you can express actions that happened in Sanskrit!
       </div>
@@ -653,12 +652,12 @@ const LearnPastTense = () => {
       </div>
 
       <div style={styles.tip}>
-        🎯 <strong>Next Steps:</strong> Practice with more verbs • Learn future
+        <strong>Next Steps:</strong> Practice with more verbs • Learn future
         tense • Try storytelling!
       </div>
 
       <div style={styles.tip}>
-        📚 <strong>Pro Tip:</strong> Recall yesterday’s events and convert them
+        <strong>Pro Tip:</strong> Recall yesterday's events and convert them
         to Sanskrit daily!
       </div>
     </div>

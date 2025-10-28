@@ -420,649 +420,633 @@ const DragDropGame = () => {
   };
 
   return (
-    <div
-      style={{
-        background:
-          "linear-gradient(135deg, #d4883f 0%, #d89554 25%, #e0a068 50%, #d89554 75%, #d4883f 100%)",
-        color: "#fff8dc",
-        padding: "1.5rem",
-        fontFamily: "'Noto Sans Devanagari', sans-serif",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        maxWidth: "800px",
-        margin: "0 auto",
-        height: "100vh",
-        overflow: "hidden",
-        boxShadow: "0 0 20px rgba(0,0,0,0.2)",
-        transform: "scale(0.85)",
-        transformOrigin: "top center",
-        marginTop: "30px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "0.75rem",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
-            backdropFilter: "blur(10px)",
-            padding: "0.4rem 0.8rem",
-            borderRadius: "0.4rem",
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-            color: "#fff8dc",
-          }}
-        >
-          संस्कृतमणिः
-        </div>
-        {!roundFinished && (
-          <div
-            style={{
-              backgroundColor: "#f4d4a8",
-              backdropFilter: "blur(12px)",
-              padding: "0.4rem 0.8rem",
-              borderRadius: "0.6rem",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-              border: "2px solid rgba(255, 255, 255, 0.3)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                color: "#8b5a2b",
-                fontWeight: "bold",
-              }}
-            >
-              <Award style={{ width: "1rem", height: "1rem" }} />
-              <span style={{ fontSize: "0.9rem" }}>Score: {sessionScore}</span>
-            </div>
-          </div>
-        )}
-      </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ textAlign: "center", marginBottom: "0.75rem" }}>
-          <h1
-            style={{
-              fontSize: "1.8rem",
-              fontWeight: "700",
-              marginBottom: "0.75rem",
-              color: "#fff8dc",
-              textShadow: "0 0 10px rgba(255, 255, 255, 0.4)",
-            }}
-          >
-            Drag & Drop Each Word Where It Belongs
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              gap: "0.75rem",
-              justifyContent: "center",
-              marginBottom: "0.75rem",
-            }}
-          >
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.2rem",
-                backgroundColor: "#cd853f",
-                color: "#fff",
-                padding: "0.6rem 1.2rem",
-                borderRadius: "8px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                transition: "background 0.3s ease",
-                fontWeight: "600",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "0.9rem",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = "#b86b2c";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = "#cd853f";
-              }}
-              onClick={() => window.history.back()}
-            >
+        body {
+          font-family: 'Noto Sans Devanagari', sans-serif;
+          background: linear-gradient(135deg, #d76d2b, #f0c14b);
+          margin: 0;
+          padding: 0;
+        }
+
+        .drag-drop-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 1rem;
+        }
+
+        .drag-drop-card {
+          background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
+          padding: 2rem;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+          width: 100%;
+          max-width: 900px;
+          color: #2c2c2c;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dd-game-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .dd-title-badge {
+          background-color: rgba(205, 133, 63, 0.2);
+          padding: 0.6rem 1.2rem;
+          border-radius: 8px;
+          font-size: 1.2rem;
+          font-weight: 700;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          color: #2c2c2c;
+        }
+
+        .dd-score-badge {
+          background-color: rgba(205, 133, 63, 0.15);
+          padding: 0.6rem 1.2rem;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-weight: 600;
+          color: #2c2c2c;
+        }
+
+        .dd-main-title {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: #2c2c2c;
+          text-align: center;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dd-controls {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+          flex-wrap: wrap;
+        }
+
+        .dd-control-btn {
+          background-color: #cd853f;
+          color: white;
+          border: none;
+          padding: 0.6rem 1.2rem;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 0.95rem;
+          font-weight: 600;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+        }
+
+        .dd-control-btn:hover {
+          background-color: #b86b2c;
+          transform: scale(1.05);
+        }
+
+        .dd-question-badge {
+          background-color: rgba(205, 133, 63, 0.15);
+          border-radius: 8px;
+          padding: 0.8rem;
+          margin-bottom: 1rem;
+          text-align: center;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #2c2c2c;
+        }
+
+        .dd-sentence-display {
+          font-size: 1.4rem;
+          padding: 1.2rem;
+          background-color: #fffdf5;
+          border: 2px solid #ffd700;
+          border-radius: 10px;
+          text-align: center;
+          color: #2c2c2c;
+          font-weight: 500;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dd-words-container {
+          background-color: rgba(205, 133, 63, 0.1);
+          border-radius: 10px;
+          padding: 1rem;
+          margin-bottom: 1.5rem;
+          min-height: 80px;
+          border: 2px solid rgba(205, 133, 63, 0.3);
+        }
+
+        .dd-words-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.8rem;
+          justify-content: center;
+        }
+
+        .dd-draggable-word {
+          background: white;
+          color: #2c2c2c;
+          padding: 0.8rem 1.2rem;
+          border-radius: 8px;
+          cursor: grab;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+          transition: all 0.2s ease;
+          font-size: 1.1rem;
+          font-weight: 600;
+          user-select: none;
+          border: 2px solid #cd853f;
+        }
+
+        .dd-draggable-word:hover {
+          background: #fffdf5;
+          transform: scale(1.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .dd-draggable-word:active {
+          cursor: grabbing;
+        }
+
+        .dd-drop-zones {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .dd-drop-zone {
+          background: rgba(205, 133, 63, 0.1);
+          border: 2px dashed #cd853f;
+          border-radius: 10px;
+          padding: 1rem;
+          transition: all 0.3s ease;
+          min-height: 180px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .dd-drop-zone.drag-over {
+          background: rgba(205, 133, 63, 0.25);
+          border-color: #b86b2c;
+          border-style: solid;
+          transform: scale(1.02);
+        }
+
+        .dd-zone-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          text-align: center;
+          margin-bottom: 0.8rem;
+          text-transform: capitalize;
+          color: #2c2c2c;
+        }
+
+        .dd-dropped-word {
+          background-color: #cd853f;
+          color: white;
+          padding: 0.6rem 1rem;
+          border-radius: 8px;
+          text-align: center;
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: 0.8rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .dd-zone-hint {
+          font-size: 0.85rem;
+          color: #666;
+          font-style: italic;
+          text-align: center;
+          margin-bottom: 0.8rem;
+          line-height: 1.4;
+        }
+
+        .dd-learn-btn {
+          width: 100%;
+          background-color: #e69950;
+          color: white;
+          border: none;
+          padding: 0.6rem 0.8rem;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+          margin-top: auto;
+          transition: all 0.3s ease;
+        }
+
+        .dd-learn-btn:hover:not(:disabled) {
+          background-color: #d68840;
+          transform: scale(1.02);
+        }
+
+        .dd-learn-btn:disabled {
+          background-color: #d3d3d3;
+          cursor: not-allowed;
+        }
+
+        .dd-feedback {
+          text-align: center;
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          padding: 0.8rem;
+          border-radius: 8px;
+          background-color: rgba(205, 133, 63, 0.1);
+        }
+
+        .dd-action-buttons {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .dd-hint-btn {
+          background-color: #16a34a;
+        }
+
+        .dd-hint-btn:hover {
+          background-color: #15803d;
+        }
+
+        .dd-reset-btn {
+          background-color: #dc2626;
+        }
+
+        .dd-reset-btn:hover {
+          background-color: #b91c1c;
+        }
+
+        .dd-completion-card {
+          background-color: rgba(205, 133, 63, 0.15);
+          border-radius: 12px;
+          padding: 2rem;
+          text-align: center;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .dd-completion-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #2c2c2c;
+          margin-bottom: 1rem;
+        }
+
+        .dd-completion-score {
+          font-size: 1.2rem;
+          color: #2c2c2c;
+          margin-bottom: 1.5rem;
+        }
+
+        .dd-modal-overlay {
+          position: fixed;
+          inset: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(4px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 999;
+          padding: 1rem;
+        }
+
+        .dd-modal-content {
+          background-color: white;
+          border-radius: 12px;
+          padding: 1.5rem;
+          max-width: 600px;
+          width: 100%;
+          max-height: 80vh;
+          overflow-y: auto;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+          position: relative;
+        }
+
+        .dd-modal-close {
+          position: absolute;
+          top: 0.8rem;
+          right: 1rem;
+          color: #6b7280;
+          font-size: 2rem;
+          font-weight: bold;
+          line-height: 1;
+          border: none;
+          background: none;
+          cursor: pointer;
+          padding: 0;
+          transition: color 0.3s ease;
+        }
+
+        .dd-modal-close:hover {
+          color: #374151;
+        }
+
+        .dd-modal-header {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: #2c2c2c;
+          margin-bottom: 1rem;
+        }
+
+        .dd-mcq-section {
+          background-color: #f9f9f9;
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .dd-mcq-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+
+        .dd-mcq-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #2c2c2c;
+        }
+
+        .dd-mcq-score {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #2c2c2c;
+        }
+
+        .dd-tab-container {
+          display: flex;
+          border-bottom: 2px solid #e2e8f0;
+          margin-bottom: 1rem;
+          gap: 0.2rem;
+        }
+
+        .dd-tab-button {
+          flex: 1;
+          padding: 0.6rem;
+          text-align: center;
+          font-weight: 600;
+          cursor: pointer;
+          border-radius: 8px 8px 0 0;
+          border: none;
+          font-size: 0.9rem;
+          transition: all 0.3s ease;
+        }
+
+        .dd-tab-button.active {
+          background-color: #4a90e2;
+          color: white;
+        }
+
+        .dd-tab-button:not(.active) {
+          background-color: #edf2f7;
+          color: #4a5568;
+        }
+
+        .dd-tab-button:not(.active):hover {
+          background-color: #e2e8f0;
+        }
+
+        .dd-mcq-options {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.8rem;
+          justify-content: center;
+        }
+
+        .dd-mcq-option {
+          padding: 0.6rem 1rem;
+          border-radius: 8px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          border: none;
+          font-size: 0.9rem;
+          color: white;
+        }
+
+        .dd-mcq-option:not(.selected) {
+          background-color: #3498db;
+        }
+
+        .dd-mcq-option:not(.selected):hover {
+          background-color: #2980b9;
+        }
+
+        .dd-mcq-option.selected {
+          background-color: #2ecc71;
+        }
+
+        .dd-mcq-feedback {
+          text-align: center;
+          margin-top: 1rem;
+          font-size: 0.9rem;
+          font-weight: 600;
+          padding: 0.5rem;
+          border-radius: 6px;
+        }
+
+        .dd-mcq-feedback.correct {
+          color: #2ecc71;
+          background-color: rgba(46, 204, 113, 0.1);
+        }
+
+        .dd-mcq-feedback.incorrect {
+          color: #e74c3c;
+          background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        .dd-mcq-hint {
+          text-align: center;
+          margin-top: 0.5rem;
+          font-size: 0.85rem;
+          font-style: italic;
+          color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+          .drag-drop-card {
+            padding: 1.5rem;
+          }
+          .dd-main-title {
+            font-size: 1.5rem;
+          }
+          .dd-drop-zones {
+            grid-template-columns: 1fr;
+          }
+          .dd-game-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+      `}</style>
+
+      <div className="drag-drop-wrapper">
+        <div className="drag-drop-card">
+          <div className="dd-game-header">
+            <div className="dd-title-badge">संस्कृतमणिः</div>
+            {!roundFinished && (
+              <div className="dd-score-badge">
+                <Award style={{ width: "1rem", height: "1rem" }} />
+                <span>Score: {sessionScore}</span>
+              </div>
+            )}
+          </div>
+
+          <h1 className="dd-main-title">Drag & Drop Each Word Where It Belongs</h1>
+
+          <div className="dd-controls">
+            <button className="dd-control-btn" onClick={() => window.history.back()}>
               <ArrowLeft style={{ width: "0.9rem", height: "0.9rem" }} /> Back
             </button>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.2rem",
-                backgroundColor: "#cd853f",
-                color: "#fff",
-                padding: "0.6rem 1.2rem",
-                borderRadius: "8px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                transition: "background 0.3s ease",
-                fontWeight: "600",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "1rem",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = "#b86b2c";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = "#cd853f";
-              }}
-              onClick={() => window.history.back()}
-            >
-              <BookOpen style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
-              Learning
+            <button className="dd-control-btn" onClick={() => window.history.back()}>
+              <BookOpen style={{ width: "0.9rem", height: "0.9rem" }} /> Learning
             </button>
           </div>
-        </div>
 
-        {!roundFinished && (
-          <div
-            style={{
-              backgroundColor: "rgba(244, 212, 168, 0.3)",
-              backdropFilter: "blur(10px)",
-              borderRadius: "0.4rem",
-              padding: "0.4rem",
-              marginBottom: "0.4rem",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-            }}
-          >
-            <div
-              style={{
-                textAlign: "center",
-                fontSize: "1.3rem",
-                fontWeight: "bold",
-                color: "#fff8dc",
-              }}
-            >
+          {!roundFinished && (
+            <div className="dd-question-badge">
               Question {qCount} / {TOTAL_QUESTIONS}
             </div>
-          </div>
-        )}
+          )}
 
-        {roundFinished ? (
-          <div
-            style={{
-              backgroundColor: "#f4d4a8",
-              borderRadius: "0.8rem",
-              padding: "1.5rem",
-              textAlign: "center",
-              boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-              margin: "0 auto",
-              maxWidth: "18rem",
-            }}
-          >
-            <h2
-              style={{
-                fontSize: "1.3rem",
-                fontWeight: "bold",
-                color: "#8b5a2b",
-                marginBottom: "0.6rem",
-              }}
-            >
-              Round Complete!
-            </h2>
-            <p
-              style={{
-                fontSize: "1.1rem",
-                color: "#8b5a2b",
-                marginBottom: "1.2rem",
-              }}
-            >
-              Final Score: {sessionScore} / {TOTAL_QUESTIONS}
-            </p>
-            <button
-              style={{
-                backgroundColor: "#cd853f",
-                color: "#fff",
-                padding: "0.6rem 1.2rem",
-                borderRadius: "0.6rem",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                transition: "background 0.3s ease",
-                fontSize: "0.9rem",
-                fontWeight: "600",
-                border: "none",
-                cursor: "pointer",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = "#b86b2c";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = "#cd853f";
-              }}
-              onClick={handlePlayAgain}
-            >
-              Play Again
-            </button>
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              flex: 1,
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "#f4d4a8",
-                borderRadius: "0.6rem",
-                padding: "0.6rem",
-                marginBottom: "0.4rem",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "1.3rem",
-                  textAlign: "center",
-                  color: "#8b5a2b",
-                  fontWeight: "bold",
-                  margin: 0,
-                }}
-              >
-                {currentSentence.sentence || "Loading..."}
+          {roundFinished ? (
+            <div className="dd-completion-card">
+              <h2 className="dd-completion-title">Round Complete!</h2>
+              <p className="dd-completion-score">
+                Final Score: {sessionScore} / {TOTAL_QUESTIONS}
               </p>
+              <button className="dd-control-btn" onClick={handlePlayAgain}>
+                Play Again
+              </button>
             </div>
+          ) : (
+            <>
+              <div className="dd-sentence-display">
+                {currentSentence.sentence || "Loading..."}
+              </div>
 
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                backdropFilter: "blur(10px)",
-                borderRadius: "0.6rem",
-                padding: "0.6rem",
-                marginBottom: "0.4rem",
-                minHeight: "50px",
-                border: "2px solid rgba(255, 255, 255, 0.2)",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.6rem",
-                  justifyContent: "center",
-                }}
-              >
-                {words.map((word, index) => (
+              <div className="dd-words-container">
+                <div className="dd-words-flex">
+                  {words.map((word, index) => (
+                    <div
+                      key={`${word}-${index}`}
+                      className="dd-draggable-word"
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, word)}
+                      onDragEnd={handleDragEnd}
+                    >
+                      {word}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="dd-drop-zones">
+                {["subject", "object", "verb"].map((zone) => (
                   <div
-                    key={`${word}-${index}`}
-                    draggable
-                    onDragStart={(e) => {
-                      handleDragStart(e, word);
-                    }}
-                    onDragEnd={handleDragEnd}
-                    style={{
-                      background: "rgba(255, 255, 255, 0.5)",
-                      color: "#8b5a2b",
-                      padding: "0.8rem 1.2rem",
-                      borderRadius: "10px",
-                      cursor: "grab",
-                      boxShadow: "0 5px 20px rgba(0,0,0,0.3)",
-                      transition: "transform 0.2s ease, background 0.3s",
-                      fontSize: "1.1rem",
-                      fontWeight: "600",
-                      userSelect: "none",
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.background =
-                        "rgba(255, 255, 255, 0.6)";
-                      e.currentTarget.style.transform = "scale(1.05)";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.background =
-                        "rgba(255, 255, 255, 0.5)";
-                      e.currentTarget.style.transform = "scale(1)";
-                    }}
+                    key={zone}
+                    className={`dd-drop-zone`}
+                    onDrop={(e) => handleDrop(e, zone)}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
                   >
-                    {word}
+                    <h3 className="dd-zone-title">{zone}</h3>
+                    {droppedWords[zone] && (
+                      <div className="dd-dropped-word">{droppedWords[zone]}</div>
+                    )}
+                    {hints[zone] && <p className="dd-zone-hint">{hints[zone]}</p>}
+                    <button
+                      className="dd-learn-btn"
+                      onClick={() => {
+                        const wordData = correctAnswers[zone];
+                        if (wordData) {
+                          initWordAnalysis(
+                            wordData,
+                            zone.charAt(0).toUpperCase() + zone.slice(1)
+                          );
+                        }
+                      }}
+                      disabled={!correctAnswers[zone]}
+                    >
+                      Learn More
+                    </button>
                   </div>
                 ))}
               </div>
-            </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "0.8rem",
-                marginBottom: "0.8rem",
-                overflow: "hidden",
-              }}
-            >
-              {["subject", "object", "verb"].map((zone) => (
-                <div
-                  key={zone}
-                  onDrop={(e) => handleDrop(e, zone)}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  style={{
-                    background: "rgba(255, 255, 255, 0.1)",
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
-                    borderRadius: "10px",
-                    padding: "0.8rem 1.2rem",
-                    transition: "all 0.3s ease",
-                    boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontSize: "1.3rem",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      marginBottom: "0.6rem",
-                      textTransform: "capitalize",
-                      color: "#fff8dc",
-                    }}
-                  >
-                    {zone}
-                  </h3>
-                  {droppedWords[zone] && (
-                    <div
-                      style={{
-                        backgroundColor: "#cd853f",
-                        color: "#fff",
-                        padding: "0.6rem 1rem",
-                        borderRadius: "10px",
-                        textAlign: "center",
-                        fontSize: "1.1rem",
-                        fontWeight: "600",
-                        marginBottom: "0.6rem",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                        width: "100%",
-                      }}
-                    >
-                      {droppedWords[zone]}
-                    </div>
-                  )}
-                  {hints[zone] && (
-                    <p
-                      style={{
-                        fontSize: "0.8rem",
-                        color: "rgba(255, 255, 255, 0.8)",
-                        fontStyle: "italic",
-                        textAlign: "center",
-                        marginBottom: "0.6rem",
-                      }}
-                    >
-                      {hints[zone]}
-                    </p>
-                  )}
-                  <button
-                    style={{
-                      width: "100%",
-                      backgroundColor: "#e69950",
-                      color: "#fff",
-                      padding: "0.5rem 0.8rem",
-                      borderRadius: "8px",
-                      transition: "background 0.3s ease",
-                      fontSize: "0.8rem",
-                      fontWeight: "600",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-                      marginTop: "auto",
-                      border: "none",
-                      cursor: "pointer",
-                      marginBottom: "1.5rem", // Increased bottom margin
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.backgroundColor = "#d68840";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.backgroundColor = "#e69950";
-                    }}
-                    onClick={() => {
-                      const wordData = correctAnswers[zone];
-                      if (wordData) {
-                        initWordAnalysis(
-                          wordData,
-                          zone.charAt(0).toUpperCase() + zone.slice(1)
-                        );
-                      }
-                    }}
-                    disabled={!correctAnswers[zone]}
-                  >
-                    Learn More
-                  </button>
+              {feedback && (
+                <div className="dd-feedback" style={{ color: feedbackColor }}>
+                  {feedback}
                 </div>
-              ))}
-            </div>
-
-            {feedback && (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "1.1rem",
-                  fontWeight: "bold",
-                  marginBottom: "0.8rem",
-                  textShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                  color: feedbackColor,
-                }}
-              >
-                {feedback}
-              </div>
-            )}
-
-            <div
-              style={{
-                display: "flex",
-                gap: "0.8rem",
-                justifyContent: "center",
-                overflow: "hidden",
-              }}
-            >
-              <button
-                style={{
-                  backgroundColor: "#16a34a",
-                  color: "#fff",
-                  padding: "0.6rem 1.2rem",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                  transition: "background 0.3s ease",
-                  fontSize: "0.9rem",
-                  fontWeight: "600",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = "#15803d";
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = "#16a34a";
-                }}
-                onClick={handleShowHints}
-              >
-                Show Hint
-              </button>
-              {showReset && (
-                <button
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.2rem",
-                    backgroundColor: "#dc2626",
-                    color: "#fff",
-                    padding: "0.6rem 1.2rem",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                    transition: "background 0.3s ease",
-                    fontSize: "0.9rem",
-                    fontWeight: "600",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = "#b91c1c";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = "#dc2626";
-                  }}
-                  onClick={handleReset}
-                >
-                  <RotateCcw style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
-                  Reset
-                </button>
               )}
-              <button
-                style={{
-                  backgroundColor: "#cd853f",
-                  color: "#fff",
-                  padding: "0.6rem 1.2rem",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
-                  transition: "background 0.3s ease",
-                  fontSize: "0.9rem",
-                  fontWeight: "600",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = "#b86b2c";
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = "#cd853f";
-                }}
-                onClick={handleNextSentence}
-              >
-                Next Sentence
-              </button>
-            </div>
-          </div>
-        )}
+
+              <div className="dd-action-buttons">
+                <button
+                  className="dd-control-btn dd-hint-btn"
+                  onClick={handleShowHints}
+                >
+                  Show Hint
+                </button>
+                {showReset && (
+                  <button
+                    className="dd-control-btn dd-reset-btn"
+                    onClick={handleReset}
+                  >
+                    <RotateCcw style={{ width: "0.9rem", height: "0.9rem" }} /> Reset
+                  </button>
+                )}
+                <button
+                  className="dd-control-btn"
+                  onClick={handleNextSentence}
+                >
+                  Next Sentence
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {modalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            backdropFilter: "blur(4px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 40,
-            padding: "1rem",
-            marginBottom: "1rem",
-          }}
-          onClick={() => setModalOpen(false)}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              borderRadius: "0.8rem",
-              padding: "1.2rem",
-              maxWidth: "38rem",
-              width: "100%",
-              maxHeight: "75vh",
-              overflowY: "auto",
-              boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-              position: "relative",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              style={{
-                position: "absolute",
-                top: "0.4rem",
-                right: "0.6rem",
-                color: "#6b7280",
-                fontSize: "1.8rem",
-                fontWeight: "bold",
-                lineHeight: 1,
-                border: "none",
-                background: "none",
-                cursor: "pointer",
-                padding: "0",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = "#374151";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = "#6b7280";
-              }}
-              onClick={() => setModalOpen(false)}
-            >
+        <div className="dd-modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="dd-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="dd-modal-close" onClick={() => setModalOpen(false)}>
               ×
             </button>
-            <h2
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#8b5a2b",
-                marginBottom: "0.8rem",
-                margin: "0 0 0.8rem 0",
-              }}
-            >
+            <h2 className="dd-modal-header">
               {wordAnalysisType} Analysis: {currentWordAnalysis?.form}
             </h2>
-            <div
-              style={{
-                backgroundColor: "#f4f4f4",
-                borderRadius: "0.4rem",
-                padding: "0.8rem",
-                marginBottom: "0.8rem",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "0.6rem",
-                }}
-              >
-                <h3
-                  style={{
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                    color: "#4a5568",
-                  }}
-                >
-                  Guess the{" "}
-                  {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+            <div className="dd-mcq-section">
+              <div className="dd-mcq-header">
+                <h3 className="dd-mcq-title">
+                  Guess the {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                 </h3>
-                <span
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                    color: "#2d3748",
-                  }}
-                >
-                  Score: {sessionScore}
-                </span>
+                <span className="dd-mcq-score">Score: {sessionScore}</span>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  borderBottom: "2px solid #e2e8f0",
-                  marginBottom: "0.6rem",
-                }}
-              >
+              <div className="dd-tab-container">
                 {[
                   "root",
                   "person",
@@ -1071,31 +1055,7 @@ const DragDropGame = () => {
                 ].map((tab) => (
                   <button
                     key={tab}
-                    style={{
-                      flex: 1,
-                      padding: "0.4rem 0.6rem",
-                      textAlign: "center",
-                      fontWeight: "600",
-                      color: activeTab === tab ? "#fff" : "#4a5568",
-                      transition: "all 0.3s ease",
-                      cursor: "pointer",
-                      backgroundColor:
-                        activeTab === tab ? "#4a90e2" : "#edf2f7",
-                      borderRadius: "0.3rem 0.3rem 0 0",
-                      marginRight: "2px",
-                      border: "none",
-                      fontSize: "0.8rem",
-                    }}
-                    onMouseOver={(e) => {
-                      if (activeTab !== tab) {
-                        e.currentTarget.style.backgroundColor = "#e2e8f0";
-                      }
-                    }}
-                    onMouseOut={(e) => {
-                      if (activeTab !== tab) {
-                        e.currentTarget.style.backgroundColor = "#edf2f7";
-                      }
-                    }}
+                    className={`dd-tab-button ${activeTab === tab ? "active" : ""}`}
                     onClick={() => handleTabChange(tab)}
                   >
                     {tab === "root"
@@ -1110,42 +1070,13 @@ const DragDropGame = () => {
                   </button>
                 ))}
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.6rem",
-                  justifyContent: "center",
-                }}
-              >
+              <div className="dd-mcq-options">
                 {getMcqOptions(activeTab).map((option, index) => (
                   <button
                     key={`${activeTab}-${option}-${index}`}
-                    style={{
-                      padding: "0.4rem 0.8rem",
-                      borderRadius: "0.4rem",
-                      fontWeight: "600",
-                      transition: "all 0.3s ease",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                      cursor: "pointer",
-                      backgroundColor:
-                        mcqAnswers[activeTab] === option
-                          ? "#2ecc71"
-                          : "#3498db",
-                      color: "#fff",
-                      border: "none",
-                      fontSize: "0.8rem",
-                    }}
-                    onMouseOver={(e) => {
-                      if (mcqAnswers[activeTab] !== option) {
-                        e.currentTarget.style.backgroundColor = "#2980b9";
-                      }
-                    }}
-                    onMouseOut={(e) => {
-                      if (mcqAnswers[activeTab] !== option) {
-                        e.currentTarget.style.backgroundColor = "#3498db";
-                      }
-                    }}
+                    className={`dd-mcq-option ${
+                      mcqAnswers[activeTab] === option ? "selected" : ""
+                    }`}
                     onClick={() => handleMcqSelect(activeTab, option)}
                   >
                     {option}
@@ -1154,39 +1085,23 @@ const DragDropGame = () => {
               </div>
               {mcqFeedback[activeTab] && (
                 <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "0.6rem",
-                    fontSize: "0.8rem",
-                    fontWeight: "600",
-                    color: mcqFeedback[activeTab].includes("Correct")
-                      ? "#2ecc71"
-                      : "#e74c3c",
-                    margin: "0.6rem 0 0 0",
-                  }}
+                  className={`dd-mcq-feedback ${
+                    mcqFeedback[activeTab].includes("Correct")
+                      ? "correct"
+                      : "incorrect"
+                  }`}
                 >
                   {mcqFeedback[activeTab]}
                 </p>
               )}
               {mcqHints[activeTab] && (
-                <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "0.4rem",
-                    fontSize: "0.7rem",
-                    fontStyle: "italic",
-                    color: "#7f8c8d",
-                    margin: "0.4rem 0 0 0",
-                  }}
-                >
-                  {mcqHints[activeTab]}
-                </p>
+                <p className="dd-mcq-hint">{mcqHints[activeTab]}</p>
               )}
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

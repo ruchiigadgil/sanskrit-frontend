@@ -453,7 +453,7 @@ const SankhyaTrivia = ({ score: propScore }) => {
           body {
             margin: 0;
             font-family: 'Noto Sans Devanagari', sans-serif;
-            background: linear-gradient(to bottom right, #f5d7a2, #d76d2b);
+            background: linear-gradient(135deg, #d76d2b, #f0c14b);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -470,28 +470,20 @@ const SankhyaTrivia = ({ score: propScore }) => {
 
           .sankhya-card {
             background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
-            padding: 1.5rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 100%;
-            max-width: 800px;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            max-width: 700px;
+            color: #2c2c2c;
             border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-          }
-
-          .sankhya-card:hover {
-            transform: translateY(-5px);
           }
 
           .game-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
             color: #2c2c2c;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
           }
@@ -499,33 +491,38 @@ const SankhyaTrivia = ({ score: propScore }) => {
           .controls {
             display: flex;
             gap: 1rem;
-            justify-content: flex-start;
-            margin-bottom: 0.5rem;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
           }
 
           .back-btn {
-            background-color: #c06c2c;
+            background-color: #cd853f;
             color: white;
             border: none;
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.95rem;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: background-color 0.3s, transform 0.2s;
           }
 
           .back-btn:hover {
-            background-color: #a85a24;
+            background-color: #b86b2c;
             transform: scale(1.05);
           }
 
           .info-panel {
+            margin: 1rem 0 1.5rem 0;
+            padding: 1rem;
+            background-color: rgba(205, 133, 63, 0.15);
+            border-radius: 10px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-around;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 1rem;
           }
 
           .question-count,
@@ -537,13 +534,14 @@ const SankhyaTrivia = ({ score: propScore }) => {
 
           .sentence-box {
             font-size: 1.4rem;
-            padding: 1rem;
+            padding: 1.2rem;
             background-color: #fffdf5;
-            border: 1px solid #ffd700;
-            border-radius: 8px;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
             color: #2c2c2c;
             font-weight: 500;
-            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
           }
 
           .options {
@@ -552,12 +550,15 @@ const SankhyaTrivia = ({ score: propScore }) => {
             justify-content: center;
             align-items: center;
             gap: 1rem;
+            margin-bottom: 1.5rem;
           }
 
           .option-group {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
           }
 
           .option-label {
@@ -571,6 +572,7 @@ const SankhyaTrivia = ({ score: propScore }) => {
           .option-buttons {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
           }
 
           .option {
@@ -579,21 +581,23 @@ const SankhyaTrivia = ({ score: propScore }) => {
             gap: 0.3rem;
             font-size: 0.95rem;
             color: #2c2c2c;
-            padding: 0.4rem 0.8rem;
-            border: 1px solid #c06c2c;
-            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            border: 2px solid #cd853f;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.2s;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.5);
             white-space: nowrap;
           }
 
           .option:hover {
-            background-color: rgba(192, 108, 44, 0.1);
-            transform: scale(1.03);
+            background-color: rgba(205, 133, 63, 0.2);
+            transform: translateY(-2px);
           }
 
           .option input {
             margin-right: 0.3rem;
+            cursor: pointer;
           }
 
           .button-group {
@@ -606,21 +610,22 @@ const SankhyaTrivia = ({ score: propScore }) => {
           .submit-btn,
           .next-btn,
           .hint-btn {
-            background-color: #c06c2c;
+            background-color: #cd853f;
             color: white;
             border: none;
-            padding: 0.6rem 1.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
           }
 
           .submit-btn:hover:not(:disabled),
           .next-btn:hover,
           .hint-btn:hover:not(:disabled) {
-            background-color: #a85a24;
+            background-color: #b86b2c;
             transform: scale(1.05);
           }
 
@@ -628,15 +633,42 @@ const SankhyaTrivia = ({ score: propScore }) => {
           .hint-btn:disabled {
             background-color: #d3d3d3;
             cursor: not-allowed;
+            transform: none;
           }
 
           .result {
             margin-top: 1rem;
+            padding: 1rem;
             white-space: pre-wrap;
             font-weight: 600;
             color: #2c2c2c;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: 1rem;
+            line-height: 1.6;
+            background-color: rgba(205, 133, 63, 0.1);
+            border-radius: 8px;
+          }
+
+          @media (max-width: 600px) {
+            .sankhya-card {
+              padding: 1.5rem;
+            }
+            .game-title {
+              font-size: 1.5rem;
+            }
+            .sentence-box {
+              font-size: 1.2rem;
+            }
+            .option-group {
+              flex-direction: column;
+              align-items: flex-start;
+            }
+            .controls {
+              flex-direction: column;
+            }
+            .info-panel {
+              flex-direction: column;
+              gap: 0.5rem;
+            }
           }
         `}</style>
       </div>

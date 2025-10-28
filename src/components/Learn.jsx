@@ -54,7 +54,7 @@ const Learn = () => {
   const styles = {
     container: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)',
+      background: 'linear-gradient(135deg, #d76d2b, #f0c14b)',
       padding: '15px',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       margin: 0,
@@ -92,7 +92,7 @@ const Learn = () => {
       margin: 0
     },
     backButton: {
-      background: 'linear-gradient(45deg, #8b4513, #a0522d)',
+      background: '#cd853f',
       color: 'white',
       border: 'none',
       padding: '8px 18px',
@@ -101,7 +101,7 @@ const Learn = () => {
       cursor: 'pointer',
       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       backdropFilter: 'blur(10px)',
-      boxShadow: '0 4px 15px rgba(139, 69, 19, 0.3)',
+      boxShadow: '0 4px 15px rgba(205, 133, 63, 0.3)',
       fontWeight: '500'
     },
     grammarSection: {
@@ -118,8 +118,8 @@ const Learn = () => {
       alignItems: 'stretch'
     },
     grammarCard: {
-      background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85))',
-      border: '2px solid rgba(139, 69, 19, 0.3)',
+      background: 'linear-gradient(to bottom right, #fff8e1, #ffe4b5)',
+      border: '2px solid rgba(0, 0, 0, 0.1)',
       borderRadius: '16px',
       padding: '18px 15px',
       display: 'flex',
@@ -143,7 +143,7 @@ const Learn = () => {
       transform: 'translateZ(20px)'
     },
     cardTitle: {
-      color: '#8b4513',
+      color: '#2c2c2c',
       fontSize: '1rem',
       fontWeight: '700',
       marginBottom: '6px',
@@ -154,7 +154,7 @@ const Learn = () => {
       textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
     },
     cardSubtitle: {
-      color: '#a0522d',
+      color: '#666',
       fontSize: '0.8rem',
       fontWeight: '500',
       lineHeight: '1.3',
@@ -164,16 +164,10 @@ const Learn = () => {
       opacity: 0.9
     },
     structureCard: {
-      borderLeft: '4px solid #ff6347',
-      background: 'linear-gradient(145deg, rgba(255, 99, 71, 0.05), rgba(255, 255, 255, 0.9))'
     },
     formsCard: {
-      borderLeft: '4px solid #ff8c00',
-      background: 'linear-gradient(145deg, rgba(255, 140, 0, 0.05), rgba(255, 255, 255, 0.9))'
     },
     tenseCard: {
-      borderLeft: '4px solid #ffd700',
-      background: 'linear-gradient(145deg, rgba(255, 215, 0, 0.05), rgba(255, 255, 255, 0.9))'
     },
     glowEffect: {
       position: 'absolute',
@@ -192,8 +186,8 @@ const Learn = () => {
   const handleCardHover = (e) => {
     const card = e.currentTarget;
     card.style.transform = 'translateY(-10px) rotateX(5deg) scale(1.02)';
-    card.style.boxShadow = '0 20px 40px rgba(139, 69, 19, 0.2)';
-    card.style.borderColor = 'rgba(139, 69, 19, 0.6)';
+    card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+    card.style.borderColor = 'rgba(0, 0, 0, 0.2)';
     
     const glowElement = card.querySelector('.glow-effect');
     if (glowElement) {
@@ -205,7 +199,7 @@ const Learn = () => {
     const card = e.currentTarget;
     card.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
     card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
-    card.style.borderColor = 'rgba(139, 69, 19, 0.3)';
+    card.style.borderColor = 'rgba(0, 0, 0, 0.1)';
     
     const glowElement = card.querySelector('.glow-effect');
     if (glowElement) {
@@ -214,15 +208,15 @@ const Learn = () => {
   };
 
   const handleButtonHover = (e) => {
-    e.target.style.background = 'linear-gradient(45deg, #a0522d, #cd853f)';
+    e.target.style.background = '#b86b2c';
     e.target.style.transform = 'translateY(-2px) scale(1.05)';
-    e.target.style.boxShadow = '0 8px 25px rgba(139, 69, 19, 0.4)';
+    e.target.style.boxShadow = '0 8px 25px rgba(205, 133, 63, 0.4)';
   };
 
   const handleButtonLeave = (e) => {
-    e.target.style.background = 'linear-gradient(45deg, #8b4513, #a0522d)';
+    e.target.style.background = '#cd853f';
     e.target.style.transform = 'translateY(0) scale(1)';
-    e.target.style.boxShadow = '0 4px 15px rgba(139, 69, 19, 0.3)';
+    e.target.style.boxShadow = '0 4px 15px rgba(205, 133, 63, 0.3)';
   };
 
   const getCardStyle = (category) => {

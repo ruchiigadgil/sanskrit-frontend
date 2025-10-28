@@ -9,7 +9,6 @@ const LearningModule = () => {
   const modules = [
     {
       title: "Structure",
-      emoji: "📐",
       sub: "Basic Sanskrit Sentence Structure",
       description: "Understand how Sanskrit sentences are formed and ordered.",
       content: (
@@ -28,7 +27,6 @@ const LearningModule = () => {
     },
     {
       title: "Persons & Numbers",
-      emoji: "👥",
       sub: "1st, 2nd, 3rd Person + Singular, Dual, Plural",
       description: "Learn how verbs and nouns adapt to person and number.",
       content: (
@@ -63,7 +61,6 @@ const LearningModule = () => {
     },
     {
       title: "Verb Conjugations",
-      emoji: "🛠️",
       sub: "Forming verbs using roots and suffixes",
       description: "Learn how to conjugate Sanskrit verbs for person and number.",
       content: (
@@ -86,7 +83,6 @@ const LearningModule = () => {
     },
     {
       title: "Tenses",
-      emoji: "⏳",
       sub: "Present, Past, and Future Tense",
       description: "Explore how time is expressed through verbs in Sanskrit.",
       content: (
@@ -115,7 +111,7 @@ const LearningModule = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>📘 Learning Modules</h2>
+      <h2 style={styles.title}>Learning Modules</h2>
       <button style={styles.button} onClick={() => navigate('/dashboard')}>
           ← Back to Dashboard
         </button>
@@ -130,7 +126,6 @@ const LearningModule = () => {
             onMouseEnter={() => setHoveredCard(idx)}
             onMouseLeave={() => setHoveredCard(null)}
           >
-            <div style={styles.emoji}>{mod.emoji}</div>
             <h3 style={styles.cardTitle}>{mod.title}</h3>
             <p style={styles.subtitle}>{mod.sub}</p>
             <p style={styles.description}>{mod.description}</p>
@@ -160,7 +155,7 @@ const styles = {
   container: {
     padding: "2rem",
     minHeight: "100vh",
-    background: "linear-gradient(to bottom right, #d88a2b, #e4a14e)",
+    background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
     color: "#fff",
     fontFamily: "'Segoe UI', sans-serif",
     display: "flex",
@@ -181,10 +176,10 @@ const styles = {
     padding: "1rem",
   },
   card: {
-    background: "rgba(255, 255, 255, 0.1)",
+    background: "linear-gradient(to bottom right, #fff8e1, #ffe4b5)",
     borderRadius: "20px",
     padding: "1.5rem",
-    boxShadow: "8px 8px 16px #b96f23, -8px -8px 16px #fcb55b",
+    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
     backdropFilter: "blur(6px)",
     transition: "all 0.3s ease",
     display: "flex",
@@ -196,32 +191,29 @@ const styles = {
     transform: "scale(1.03)",
     boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
   },
-  emoji: {
-    fontSize: "2rem",
-    marginBottom: "0.5rem",
-  },
   cardTitle: {
     fontSize: "1.35rem",
     marginBottom: "0.3rem",
+    color: "#2c2c2c",
   },
   subtitle: {
     fontSize: "1rem",
     fontWeight: "500",
-    color: "#ffe",
+    color: "#666",
     marginBottom: "0.6rem",
   },
   description: {
     fontSize: "0.95rem",
-    color: "#f8f8f8",
+    color: "#555",
     marginBottom: "1rem",
   },
   lesson: {
-    backgroundColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(205, 133, 63, 0.15)",
     borderRadius: "12px",
     padding: "1rem",
     textAlign: "left",
     fontSize: "0.95rem",
-    color: "#fff",
+    color: "#2c2c2c",
     marginBottom: "1rem",
     maxHeight: "240px",         
     overflowY: "auto",         
@@ -234,7 +226,7 @@ const styles = {
     paddingRight: "0.5rem",
   },
   button: {
-    backgroundColor: "#b96f23",
+    backgroundColor: "#cd853f",
     border: "none",
     padding: "0.5rem 1.2rem",
     borderRadius: "12px",
@@ -248,7 +240,7 @@ const styles = {
   },
   buttonHover: {
     transform: "scale(1.05)",
-    backgroundColor: "#d07a2a",
+    backgroundColor: "#b86b2c",
   },
 };
 

@@ -18,13 +18,13 @@ const LearnSubject = () => {
   const quizzes = [
     {
       question: "Translate: Rama reads",
-      options: ["रामम् पठति", "रामः पठति ✅", "रामे पठति"],
+      options: ["रामम् पठति", "रामः पठति", "रामे पठति"],
       correct: 1,
       explanation: "रामः is the subject (doer), so it takes Prathama Vibhakti",
     },
     {
       question: "Sita sings",
-      options: ["सीताम् गायति", "सीता गायति ✅", "सीते गायति"],
+      options: ["सीताम् गायति", "सीता गायति", "सीते गायति"],
       correct: 1,
       explanation: "सीता is the subject, so it stays in its Prathama form",
     },
@@ -63,8 +63,7 @@ const LearnSubject = () => {
   const styles = {
     container: {
       minHeight: "100vh",
-      background:
-        "linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)",
+      background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
       padding: "20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     },
@@ -96,7 +95,7 @@ const LearnSubject = () => {
     },
     progress: {
       height: "100%",
-      background: "linear-gradient(90deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       borderRadius: "4px",
       transition: "width 0.3s ease",
       width: `${((currentSection + 1) / sections.length) * 100}%`,
@@ -141,7 +140,7 @@ const LearnSubject = () => {
       textAlign: "center",
     },
     keyRule: {
-      background: "linear-gradient(45deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
       padding: "15px 20px",
       borderRadius: "15px",
@@ -149,10 +148,10 @@ const LearnSubject = () => {
       fontSize: "1.1rem",
       fontWeight: "600",
       marginBottom: "20px",
-      boxShadow: "0 8px 16px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 8px 16px rgba(205, 133, 63, 0.3)",
     },
     exampleBox: {
-      background: "linear-gradient(45deg, #ff6b35, #ff8a50)",
+      background: "#cd853f",
       color: "white",
       padding: "20px",
       borderRadius: "15px",
@@ -209,7 +208,7 @@ const LearnSubject = () => {
       width: "100%",
       height: "100%",
       backfaceVisibility: "hidden",
-      background: "linear-gradient(45deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
       borderRadius: "15px",
       display: "flex",
@@ -217,7 +216,7 @@ const LearnSubject = () => {
       justifyContent: "center",
       fontSize: "1.1rem",
       fontWeight: "600",
-      boxShadow: "0 8px 16px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 8px 16px rgba(205, 133, 63, 0.3)",
     },
     flipCardBack: {
       position: "absolute",
@@ -266,21 +265,21 @@ const LearnSubject = () => {
       textAlign: "left",
     },
     correctOption: {
-      background: "linear-gradient(45deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
-      borderColor: "#4CAF50",
+      borderColor: "#cd853f",
     },
     incorrectOption: {
-      background: "linear-gradient(45deg, #f44336, #ff5722)",
+      background: "#cd853f",
       color: "white",
-      borderColor: "#f44336",
+      borderColor: "#cd853f",
     },
     explanation: {
-      background: "rgba(76, 175, 80, 0.1)",
+      background: "rgba(205, 133, 63, 0.1)",
       padding: "15px",
       borderRadius: "10px",
       marginTop: "15px",
-      borderLeft: "4px solid #4CAF50",
+      borderLeft: "4px solid #cd853f",
     },
     navigationButtons: {
       display: "flex",
@@ -295,11 +294,11 @@ const LearnSubject = () => {
       fontSize: "1rem",
       fontWeight: "600",
       transition: "all 0.3s ease",
-      background: "linear-gradient(45deg, #8b4513, #a0522d)",
+      background: "#cd853f",
       color: "white",
     },
     tip: {
-      background: "linear-gradient(45deg, #2196F3, #03A9F4)",
+      background: "#cd853f",
       color: "white",
       padding: "12px 16px",
       borderRadius: "10px",
@@ -320,22 +319,22 @@ const LearnSubject = () => {
 
   const renderIntroSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎯 What is a Subject?</h2>
+      <h2 style={styles.sectionTitle}>What is a Subject?</h2>
       <div style={styles.keyRule}>
-        📖 Rule: Subject = Doer of the action
+        Rule: Subject = Doer of the action
         <br />
-        ➡️ In Sanskrit, this means the subject must be in{" "}
+        In Sanskrit, this means the subject must be in{" "}
         <strong>Prathama Vibhakti</strong>
       </div>
       <div style={styles.tip}>
-        🎯 <strong>Memory Tip:</strong> "Subject → Action → Prathama!"
+        <strong>Memory Tip:</strong> "Subject → Action → Prathama!"
       </div>
     </div>
   );
 
   const renderExampleSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📝 Visual Example</h2>
+      <h2 style={styles.sectionTitle}>Visual Example</h2>
       <div style={styles.exampleBox}>
         <span
           style={{
@@ -352,7 +351,7 @@ const LearnSubject = () => {
         </small>
       </div>
       <div style={styles.tip}>
-        💡 Subject form often ends in ः for masculine or stays unchanged for
+        Subject form often ends in ः for masculine or stays unchanged for
         feminine/neuter.
       </div>
     </div>
@@ -360,7 +359,7 @@ const LearnSubject = () => {
 
   const renderEndingsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📊 Subject Endings by Type</h2>
+      <h2 style={styles.sectionTitle}>Subject Endings by Type</h2>
       <table style={styles.table}>
         <thead>
           <tr>
@@ -391,7 +390,7 @@ const LearnSubject = () => {
 
   const renderPronounsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🙋‍♂️ Subject Pronouns</h2>
+      <h2 style={styles.sectionTitle}>Subject Pronouns</h2>
       <div style={styles.cardsContainer}>
         {pronounData.map((p, index) => (
           <div
@@ -418,7 +417,7 @@ const LearnSubject = () => {
 
   const renderQuizSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎮 Quiz Time</h2>
+      <h2 style={styles.sectionTitle}>Quiz Time</h2>
       {quizzes.map((quiz, index) => (
         <div key={index} style={styles.quizContainer}>
           <div style={styles.quizQuestion}>
@@ -439,7 +438,7 @@ const LearnSubject = () => {
               onClick={() => handleQuizAnswer(i)}
               disabled={showAnswer}
             >
-              {option.replace(" ✅", "")}
+              {option}
             </button>
           ))}
           {showAnswer && (
@@ -454,12 +453,12 @@ const LearnSubject = () => {
 
   const renderPracticeSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎉 Practice Time!</h2>
+      <h2 style={styles.sectionTitle}>Practice Time!</h2>
       <div style={styles.keyRule}>
-        ✅ Try making sentences using Prathama forms: <br />
+        Try making sentences using Prathama forms: <br />
         <strong>Subject + Verb</strong>
       </div>
-      <div style={styles.tip}>✍️ E.g. रामः गच्छति। माला गायति। अहम् पठामि।</div>
+      <div style={styles.tip}>E.g. रामः गच्छति। माला गायति। अहम् पठामि।</div>
     </div>
   );
 

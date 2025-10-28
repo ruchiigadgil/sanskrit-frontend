@@ -24,7 +24,7 @@ const LearnSanskritSentence = () => {
     {
       question: "Translate: 'The boy reads the book'",
       options: [
-        "बालकः पुस्तकम् पठति ✅",
+        "बालकः पुस्तकम् पठति",
         "बालकः पुस्तकः पठति",
         "बालकम् पुस्तकम् पठति"
       ],
@@ -34,7 +34,7 @@ const LearnSanskritSentence = () => {
     {
       question: "They (two) go to the village",
       options: [
-        "तौ ग्रामम् गच्छतः ✅",
+        "तौ ग्रामम् गच्छतः",
         "ते ग्रामम् गच्छति",
         "तौ ग्रामः गच्छतः"
       ],
@@ -128,7 +128,7 @@ const LearnSanskritSentence = () => {
       setQuizGame(prev => ({
         ...prev,
         attempts: prev.attempts + 1,
-        feedback: 'Correct! 🎉',
+        feedback: 'Correct!',
         isDropping: false,
       }));
     } else {
@@ -167,7 +167,7 @@ const LearnSanskritSentence = () => {
   const styles = {
     container: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)',
+      background: 'linear-gradient(135deg, #d76d2b, #f0c14b)',
       padding: '20px',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif'"
     },
@@ -199,7 +199,7 @@ const LearnSanskritSentence = () => {
     },
     progress: {
       height: '100%',
-      background: 'linear-gradient(90deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       borderRadius: '4px',
       transition: 'width 0.3s ease',
       width: `${((currentSection + 1) / sections.length) * 100}%`
@@ -244,7 +244,7 @@ const LearnSanskritSentence = () => {
       textAlign: 'center'
     },
     keyRule: {
-      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
       padding: '15px 20px',
       borderRadius: '15px',
@@ -252,10 +252,10 @@ const LearnSanskritSentence = () => {
       fontSize: '1.1rem',
       fontWeight: '600',
       marginBottom: '20px',
-      boxShadow: '0 8px 16px rgba(76, 175, 80, 0.3)'
+      boxShadow: '0 8px 16px rgba(205, 133, 63, 0.3)'
     },
     exampleBox: {
-      background: 'linear-gradient(45deg, #ff6b35, #ff8a50)',
+      background: '#cd853f',
       color: 'white',
       padding: '20px',
       borderRadius: '15px',
@@ -263,7 +263,7 @@ const LearnSanskritSentence = () => {
       fontSize: '1.5rem',
       fontWeight: '600',
       marginBottom: '20px',
-      boxShadow: '0 8px 16px rgba(255, 107, 53, 0.3)'
+      boxShadow: '0 8px 16px rgba(205, 133, 63, 0.3)'
     },
     table: {
       width: '100%',
@@ -274,7 +274,7 @@ const LearnSanskritSentence = () => {
       boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)'
     },
     tableHeader: {
-      background: 'linear-gradient(45deg, #8b4513, #a0522d)',
+      background: '#cd853f',
       color: 'white',
       padding: '15px',
       textAlign: 'center',
@@ -294,7 +294,7 @@ const LearnSanskritSentence = () => {
       backgroundColor: 'white'
     },
     draggable: {
-      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'black',
       padding: '15px',
       borderRadius: '10px',
@@ -308,7 +308,7 @@ const LearnSanskritSentence = () => {
       transition: 'transform 0.3s ease'
     },
     dropTarget: {
-      background: 'linear-gradient(45deg, #ff6b35, #ff8a50)',
+      background: '#cd853f',
       color: 'black',
       padding: '15px',
       borderRadius: '10px',
@@ -323,7 +323,7 @@ const LearnSanskritSentence = () => {
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
     },
     dropTargetHover: {
-      background: 'linear-gradient(45deg, #ff8a50, #ff6b35)',
+      background: '#b86b2c',
       transform: 'scale(1.05)'
     },
     feedback: {
@@ -340,7 +340,7 @@ const LearnSanskritSentence = () => {
       display: 'block',
       margin: '0 auto',
       padding: '10px 20px',
-      background: 'linear-gradient(45deg, #8b4513, #a0522d)',
+      background: '#cd853f',
       color: 'white',
       border: 'none',
       borderRadius: '10px',
@@ -373,21 +373,21 @@ const LearnSanskritSentence = () => {
       color: 'black'
     },
     correctOption: {
-      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'black',
-      borderColor: '#4CAF50'
+      borderColor: '#cd853f'
     },
     incorrectOption: {
-      background: 'linear-gradient(45deg, #f44336, #ff5722)',
+      background: '#cd853f',
       color: 'black',
-      borderColor: '#f44336'
+      borderColor: '#cd853f'
     },
     explanation: {
-      background: 'rgba(76, 175, 80, 0.1)',
+      background: 'rgba(205, 133, 63, 0.1)',
       padding: '15px',
       borderRadius: '10px',
       marginTop: '15px',
-      borderLeft: '4px solid #4CAF50',
+      borderLeft: '4px solid #cd853f',
       color: 'black'
     },
     navigationButtons: {
@@ -403,11 +403,11 @@ const LearnSanskritSentence = () => {
       fontSize: '1rem',
       fontWeight: '600',
       transition: 'all 0.3s ease',
-      background: 'linear-gradient(45deg, #8b4513, #a0522d)',
+      background: '#cd853f',
       color: 'white'
     },
     tip: {
-      background: 'linear-gradient(45deg, #2196F3, #03A9F4)',
+      background: '#cd853f',
       color: 'white',
       padding: '12px 16px',
       borderRadius: '10px',
@@ -416,7 +416,7 @@ const LearnSanskritSentence = () => {
       fontWeight: '500'
     },
     funFact: {
-      background: 'linear-gradient(45deg, #9C27B0, #AB47BC)',
+      background: '#cd853f',
       color: 'white',
       padding: '12px 16px',
       borderRadius: '10px',
@@ -429,23 +429,23 @@ const LearnSanskritSentence = () => {
 
   const renderIntroSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎯 Introduction to Sanskrit Sentence Structure</h2>
+      <h2 style={styles.sectionTitle}>Introduction to Sanskrit Sentence Structure</h2>
       <div style={styles.keyRule}>
-        📖 Sanskrit sentences typically follow Subject-Object-Verb (SOV) order.<br/>
-        ➡️ Key components: Subject (Prathama Vibhakti), Object (Dvitiya Vibhakti), and Verb.
+        Sanskrit sentences typically follow Subject-Object-Verb (SOV) order.<br/>
+        Key components: Subject (Prathama Vibhakti), Object (Dvitiya Vibhakti), and Verb.
       </div>
       <div style={styles.tip}>
-        🎯 <strong>Key Memory Aid:</strong> "Subject → Object → Verb" (Think: SOV like 'Save Our Village'!)
+        <strong>Key Memory Aid:</strong> "Subject → Object → Verb" (Think: SOV like 'Save Our Village'!)
       </div>
       <div style={styles.funFact}>
-        🎉 <strong>Fun Fact:</strong> Sanskrit sentences are flexible—word order (SOV, OSV, etc.) doesn’t change the meaning due to case endings!
+        <strong>Fun Fact:</strong> Sanskrit sentences are flexible—word order (SOV, OSV, etc.) doesn't change the meaning due to case endings!
       </div>
     </div>
   );
 
   const renderSubjectObjectSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📝 Subject and Object</h2>
+      <h2 style={styles.sectionTitle}>Subject and Object</h2>
       <div style={styles.exampleBox}>
         रामः <span style={{color: '#ffff00'}}>पुस्तकम्</span> पठति।
         <br/>
@@ -480,14 +480,14 @@ const LearnSanskritSentence = () => {
         </tbody>
       </table>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> Prathama Vibhakti marks the subject, Dvitiya marks the object. Dual forms are unique to Sanskrit!
+        <strong>Tip:</strong> Prathama Vibhakti marks the subject, Dvitiya marks the object. Dual forms are unique to Sanskrit!
       </div>
     </div>
   );
 
   const renderVerbsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🛠 Verbs in Sanskrit</h2>
+      <h2 style={styles.sectionTitle}>Verbs in Sanskrit</h2>
       <div style={styles.keyRule}>
         Verbs change based on person (first, second, third) and number (singular, dual, plural).
       </div>
@@ -512,16 +512,16 @@ const LearnSanskritSentence = () => {
         </tbody>
       </table>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> Verbs agree with the subject’s number and person. Dual verbs end in -तः.
+        <strong>Tip:</strong> Verbs agree with the subject's number and person. Dual verbs end in -तः.
       </div>
     </div>
   );
 
   const renderPersonNumberSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>👥 Person and Number</h2>
+      <h2 style={styles.sectionTitle}>Person and Number</h2>
       <div style={styles.keyRule}>
-        📖 Person (First, Second, Third) and Number (Singular, Dual, Plural) determine verb and pronoun forms.
+        Person (First, Second, Third) and Number (Singular, Dual, Plural) determine verb and pronoun forms.
       </div>
       <table style={styles.table}>
         <thead>
@@ -605,8 +605,8 @@ const LearnSanskritSentence = () => {
                   key={target.id}
                   style={{
                     ...styles.dropTarget,
-                    ...(quizGame.feedback && target.correct ? { background: 'linear-gradient(45deg, #4CAF50, #8BC34A)' } : {}),
-                    ...(quizGame.feedback && !target.correct ? { background: 'linear-gradient(45deg, #f44336, #ff5722)' } : {})
+                    ...(quizGame.feedback && target.correct ? { background: '#cd853f' } : {}),
+                    ...(quizGame.feedback && !target.correct ? { background: '#cd853f' } : {})
                   }}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, target.id)}
@@ -621,14 +621,14 @@ const LearnSanskritSentence = () => {
         )}
       </div>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> Drag the pronoun to the correct person and number! Use the table for hints.
+        <strong>Tip:</strong> Drag the pronoun to the correct person and number! Use the table for hints.
       </div>
     </div>
   );
 
   const renderQuizSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎮 Interactive Quiz</h2>
+      <h2 style={styles.sectionTitle}>Interactive Quiz</h2>
       {quizzes.map((quiz, quizIndex) => {
         const currentState = quizStates[quizIndex] || { answer: null, showAnswer: false };
         return (
@@ -647,7 +647,7 @@ const LearnSanskritSentence = () => {
                 onClick={() => handleQuizAnswer(quizIndex, optionIndex, optionIndex === quiz.correct)}
                 disabled={currentState.showAnswer}
               >
-                {option.replace(' ✅', '')}
+                {option}
               </button>
             ))}
             {currentState.showAnswer && (
@@ -663,13 +663,13 @@ const LearnSanskritSentence = () => {
 
   const renderPracticeSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎉 Practice Time!</h2>
+      <h2 style={styles.sectionTitle}>Practice Time!</h2>
       <div style={styles.keyRule}>
-        ✅ Try forming sentences with Subject (Prathama) + Object (Dvitiya) + Verb!<br/>
+        Try forming sentences with Subject (Prathama) + Object (Dvitiya) + Verb!<br/>
         Example: सः फलम् खादति (He eats the fruit).
       </div>
       <div style={styles.tip}>
-        🎴 <strong>Next Steps:</strong> Practice with flashcards, create your own sentences, or take a final test!
+        <strong>Next Steps:</strong> Practice with flashcards, create your own sentences, or take a final test!
       </div>
     </div>
   );

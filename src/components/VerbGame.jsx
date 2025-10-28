@@ -306,8 +306,8 @@ const VerbGame = ({ score: propScore }) => {
 
           body {
             margin: 0;
-            font-family: 'Noto Sans Devanagari', Mangal, sans-serif;
-            background: linear-gradient(to bottom right, #d76d2b, #f0c14b);
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            background: linear-gradient(135deg, #d76d2b, #f0c14b);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -320,87 +320,100 @@ const VerbGame = ({ score: propScore }) => {
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 1rem;
           }
 
           .verb-card {
-            background: linear-gradient(to bottom right, #ffedbc, #ffd194);
-            padding: 24px 36px;
+            background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
+            padding: 2rem;
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 640px;
-            max-width: 90%;
-            color: black;
+            width: 100%;
+            max-width: 700px;
+            color: #2c2c2c;
+            border: 1px solid rgba(0, 0, 0, 0.1);
           }
 
           .game-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: black;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #2c2c2c;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
           }
 
           .controls {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
           }
 
           .back-btn {
-            background-color: #d08444;
+            background-color: #cd853f;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: background-color 0.3s, transform 0.2s;
           }
 
           .back-btn:hover {
-            background-color: #c06c2c;
+            background-color: #b86b2c;
             transform: scale(1.05);
           }
 
           .info-panel {
-            margin: 1rem 0;
-            color: black;
+            margin: 1rem 0 1.5rem 0;
+            padding: 1rem;
+            background-color: rgba(205, 133, 63, 0.15);
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 1rem;
           }
 
           .question-count, .session-score {
-            margin: 0.5rem 0;
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 600;
+            color: #2c2c2c;
           }
 
           .error-message {
             margin-top: 1rem;
-            color: #ff6b6b;
-            font-size: 1rem;
+            color: #dc2626;
+            font-size: 0.95rem;
             font-weight: 500;
           }
 
           .sentence-box {
-            font-size: 1.3rem;
-            padding: 12px;
-            background-color: #fffbe6;
-            border: 1px solid #ffe58f;
+            font-size: 1.4rem;
+            padding: 1.2rem;
+            background-color: #fffdf5;
+            border: 2px solid #ffd700;
             border-radius: 10px;
-            margin-bottom: 20px;
-            color: black;
-            min-height: 50px;
+            margin-bottom: 1.5rem;
+            color: #2c2c2c;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
           }
 
           .options {
             display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
             width: 100%;
           }
 
@@ -408,52 +421,67 @@ const VerbGame = ({ score: propScore }) => {
             font-size: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: black;
-            width: 100%;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background-color 0.2s;
+            gap: 0.5rem;
+            color: #2c2c2c;
+            padding: 0.8rem 1rem;
+            border: 2px solid #cd853f;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.5);
           }
 
           .option:hover {
-            background-color: #fffbe6;
+            background-color: rgba(205, 133, 63, 0.2);
+            transform: translateX(5px);
+          }
+
+          .option input[type="radio"] {
+            cursor: pointer;
           }
 
           .option-text {
-            font-family: 'Noto Sans Devanagari', Mangal, sans-serif;
+            font-family: 'Noto Sans Devanagari', sans-serif;
             font-size: 1.2rem;
           }
 
           .submit-btn,
           .next-btn {
-            background-color: #d08444;
+            background-color: #cd853f;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 0.8rem 2rem;
             border-radius: 8px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
-            margin: 10px 5px;
+            margin: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
           }
 
           .submit-btn:hover:not(:disabled),
           .next-btn:hover {
-            background-color: #c06c2c;
+            background-color: #b86b2c;
             transform: scale(1.05);
           }
 
           .submit-btn:disabled {
-            background-color: #aaa;
+            background-color: #d3d3d3;
             cursor: not-allowed;
+            transform: none;
           }
 
           .result {
-            margin-top: 16px;
+            margin-top: 1rem;
+            padding: 1rem;
             white-space: pre-wrap;
-            font-weight: bold;
-            color: black;
+            font-weight: 600;
+            color: #2c2c2c;
+            font-size: 1rem;
+            line-height: 1.6;
+            background-color: rgba(205, 133, 63, 0.1);
+            border-radius: 8px;
           }
 
           .hint {
@@ -463,21 +491,29 @@ const VerbGame = ({ score: propScore }) => {
 
           @media (max-width: 600px) {
             .verb-card {
-              padding: 16px;
-              width: 90%;
+              padding: 1.5rem;
             }
             .game-title {
-              font-size: 24px;
+              font-size: 1.5rem;
             }
             .sentence-box {
-              font-size: 1.1rem;
+              font-size: 1.2rem;
+              padding: 1rem;
             }
             .option {
               font-size: 1rem;
+              padding: 0.6rem 0.8rem;
+            }
+            .controls {
+              flex-direction: column;
             }
             .submit-btn, .next-btn {
-              padding: 8px 16px;
+              padding: 0.6rem 1.5rem;
               font-size: 0.9rem;
+            }
+            .info-panel {
+              flex-direction: column;
+              gap: 0.5rem;
             }
           }
         `}</style>

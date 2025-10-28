@@ -19,7 +19,7 @@ const LearnPresentTense = () => {
       question: "What is the correct present tense form: 'I eat'?",
       options: [
         "अहम् खादति",
-        "अहम् खादामि ✅",
+        "अहम् खादामि",
         "अहम् खादन्ति"
       ],
       correct: 1,
@@ -30,7 +30,7 @@ const LearnPresentTense = () => {
       options: [
         "ते गच्छति",
         "ते गच्छतः", 
-        "ते गच्छन्ति ✅"
+        "ते गच्छन्ति"
       ],
       correct: 2,
       explanation: "Third person plural uses -अन्ति ending. ते गच्छन्ति = They go"
@@ -39,7 +39,7 @@ const LearnPresentTense = () => {
       question: "What is 'You both read' in Sanskrit?",
       options: [
         "युवाम् पठति",
-        "युवाम् पठथः ✅",
+        "युवाम् पठथः",
         "युवाम् पठन्ति"
       ],
       correct: 1,
@@ -81,7 +81,7 @@ const LearnPresentTense = () => {
   const styles = {
     container: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)',
+      background: 'linear-gradient(135deg, #d76d2b, #f0c14b)',
       padding: '20px',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       boxSizing: 'border-box'
@@ -132,11 +132,11 @@ const LearnPresentTense = () => {
     },
     progress: {
       height: '100%',
-      background: 'linear-gradient(90deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       borderRadius: '5px',
       transition: 'width 0.3s ease',
       width: `${((currentSection + 1) / sections.length) * 100}%`,
-      boxShadow: '0 2px 4px rgba(76, 175, 80, 0.3)'
+      boxShadow: '0 2px 4px rgba(205, 133, 63, 0.3)'
     },
     navigation: {
       display: 'flex',
@@ -186,7 +186,7 @@ const LearnPresentTense = () => {
       textShadow: '1px 1px 3px rgba(0, 0, 0, 0.1)'
     },
     keyRule: {
-      background: 'linear-gradient(135deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
       padding: '20px 25px',
       borderRadius: '18px',
@@ -194,11 +194,11 @@ const LearnPresentTense = () => {
       fontSize: '1.2rem',
       fontWeight: '600',
       marginBottom: '25px',
-      boxShadow: '0 10px 25px rgba(76, 175, 80, 0.3)',
+      boxShadow: '0 10px 25px rgba(205, 133, 63, 0.3)',
       lineHeight: '1.5'
     },
     exampleBox: {
-      background: 'linear-gradient(135deg, #ff6b35, #ff8a50)',
+      background: '#cd853f',
       color: 'white',
       padding: '25px',
       borderRadius: '18px',
@@ -206,11 +206,11 @@ const LearnPresentTense = () => {
       fontSize: '1.4rem',
       fontWeight: '600',
       marginBottom: '25px',
-      boxShadow: '0 10px 25px rgba(255, 107, 53, 0.3)',
+      boxShadow: '0 10px 25px rgba(205, 133, 63, 0.3)',
       lineHeight: '1.4'
     },
     formulaBox: {
-      background: 'linear-gradient(135deg, #9C27B0, #E91E63)',
+      background: '#cd853f',
       color: 'white',
       padding: '25px',
       borderRadius: '18px',
@@ -279,7 +279,7 @@ const LearnPresentTense = () => {
       width: '100%',
       height: '100%',
       backfaceVisibility: 'hidden',
-      background: 'linear-gradient(135deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
       borderRadius: '18px',
       display: 'flex',
@@ -288,7 +288,7 @@ const LearnPresentTense = () => {
       justifyContent: 'center',
       fontSize: '1.1rem',
       fontWeight: '700',
-      boxShadow: '0 8px 20px rgba(76, 175, 80, 0.3)',
+      boxShadow: '0 8px 20px rgba(205, 133, 63, 0.3)',
       padding: '15px',
       border: '2px solid rgba(255, 255, 255, 0.1)'
     },
@@ -298,7 +298,7 @@ const LearnPresentTense = () => {
       height: '100%',
       backfaceVisibility: 'hidden',
       transform: 'rotateY(180deg)',
-      background: 'linear-gradient(135deg, #ff6b35, #ff8a50)',
+      background: '#cd853f',
       color: 'white',
       borderRadius: '18px',
       display: 'flex',
@@ -307,7 +307,7 @@ const LearnPresentTense = () => {
       justifyContent: 'center',
       fontSize: '1rem',
       fontWeight: '600',
-      boxShadow: '0 8px 20px rgba(255, 107, 53, 0.3)',
+      boxShadow: '0 8px 20px rgba(205, 133, 63, 0.3)',
       padding: '15px',
       border: '2px solid rgba(255, 255, 255, 0.1)'
     },
@@ -342,36 +342,36 @@ const LearnPresentTense = () => {
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
     },
     correctOption: {
-      background: 'linear-gradient(135deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
-      borderColor: '#4CAF50',
-      boxShadow: '0 5px 15px rgba(76, 175, 80, 0.3)'
+      borderColor: '#cd853f',
+      boxShadow: '0 5px 15px rgba(205, 133, 63, 0.3)'
     },
     incorrectOption: {
-      background: 'linear-gradient(135deg, #f44336, #ff5722)',
+      background: '#cd853f',
       color: 'white',
-      borderColor: '#f44336',
-      boxShadow: '0 5px 15px rgba(244, 67, 54, 0.3)'
+      borderColor: '#cd853f',
+      boxShadow: '0 5px 15px rgba(205, 133, 63, 0.3)'
     },
     explanation: {
-      background: 'rgba(76, 175, 80, 0.1)',
+      background: 'rgba(205, 133, 63, 0.1)',
       padding: '18px',
       borderRadius: '12px',
       marginTop: '15px',
-      borderLeft: '4px solid #4CAF50',
+      borderLeft: '4px solid #cd853f',
       fontSize: '1rem',
       lineHeight: '1.5',
       color: '#333333'
     },
     tip: {
-      background: 'linear-gradient(135deg, #2196F3, #03A9F4)',
+      background: '#cd853f',
       color: 'white',
       padding: '15px 20px',
       borderRadius: '12px',
       margin: '15px 0',
       fontSize: '1rem',
       fontWeight: '500',
-      boxShadow: '0 5px 15px rgba(33, 150, 243, 0.3)',
+      boxShadow: '0 5px 15px rgba(205, 133, 63, 0.3)',
       lineHeight: '1.4'
     },
     navigationButtons: {
@@ -388,9 +388,9 @@ const LearnPresentTense = () => {
       fontSize: '1.1rem',
       fontWeight: '600',
       transition: 'all 0.3s ease',
-      background: 'linear-gradient(135deg, #8b4513, #a0522d)',
+      background: '#cd853f',
       color: 'white',
-      boxShadow: '0 5px 15px rgba(139, 69, 19, 0.3)',
+      boxShadow: '0 5px 15px rgba(205, 133, 63, 0.3)',
       minWidth: '120px'
     }
   };
@@ -431,13 +431,13 @@ const LearnPresentTense = () => {
   // Component render functions with enhanced styling
   const renderIntroSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>⏰ Present Tense - वर्तमान काल</h2>
+      <h2 style={styles.sectionTitle}>Present Tense - वर्तमान काल</h2>
       <div style={styles.keyRule}>
-        📖 Present Tense = Actions happening RIGHT NOW<br/>
-        ➡️ In Sanskrit: <strong>वर्तमान काल (Vartamāna Kāla)</strong>
+        Present Tense = Actions happening RIGHT NOW<br/>
+        In Sanskrit: <strong>वर्तमान काल (Vartamāna Kāla)</strong>
       </div>
       <div style={styles.tip}>
-        🎯 <strong>Key Memory Aid:</strong> "Right now, at this very moment!" (Think: <strong>Present = Now</strong>)
+        <strong>Key Memory Aid:</strong> "Right now, at this very moment!" (Think: <strong>Present = Now</strong>)
       </div>
       <div style={styles.exampleBox}>
         अहम् पुस्तकम् पठामि।
@@ -451,7 +451,7 @@ const LearnPresentTense = () => {
 
   const renderFormationSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🔧 How to Form Present Tense</h2>
+      <h2 style={styles.sectionTitle}> How to Form Present Tense</h2>
       <div style={styles.formulaBox}>
         Verb Root + Present Stem + Person Ending = Present Tense
         <br/>
@@ -461,13 +461,13 @@ const LearnPresentTense = () => {
       </div>
       
       <div style={styles.tip}>
-        📝 <strong>Step 1:</strong> Take the verb root (धातु) - like गम् (to go)
+         <strong>Step 1:</strong> Take the verb root (धातु) - like गम् (to go)
       </div>
       <div style={styles.tip}>
-        📝 <strong>Step 2:</strong> Add present stem - गम् becomes गच्छ्
+         <strong>Step 2:</strong> Add present stem - गम् becomes गच्छ्
       </div>
       <div style={styles.tip}>
-        📝 <strong>Step 3:</strong> Add person ending - गच्छ् + आमि = गच्छामि (I go)
+         <strong>Step 3:</strong> Add person ending - गच्छ् + आमि = गच्छामि (I go)
       </div>
       
       <div style={styles.exampleBox}>
@@ -482,7 +482,7 @@ const LearnPresentTense = () => {
 
   const renderEndingsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📊 Present Tense Endings</h2>
+      <h2 style={styles.sectionTitle}>Present Tense Endings</h2>
       <table style={styles.table}>
         <thead>
           <tr>
@@ -504,14 +504,14 @@ const LearnPresentTense = () => {
         </tbody>
       </table>
       <div style={styles.tip}>
-        ✅ <strong>Memory Trick:</strong> 1st person has 'आ' • 2nd person has 'स्/थ' • 3rd person has 'त्'
+        <strong>Memory Trick:</strong> 1st person has 'आ' • 2nd person has 'स्/थ' • 3rd person has 'त्'
       </div>
     </div>
   );
 
   const renderExamplesSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>💡 Common Verb Examples</h2>
+      <h2 style={styles.sectionTitle}>Common Verb Examples</h2>
       <div style={styles.cardsContainer}>
         {verbExamples.map((verb, index) => (
           <div key={index} style={styles.flipCard} onClick={() => handleCardFlip(index)}>
@@ -536,14 +536,14 @@ const LearnPresentTense = () => {
         ))}
       </div>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> Notice the pattern! Same endings work for all verbs • Just change the stem
+        <strong>Tip:</strong> Notice the pattern! Same endings work for all verbs • Just change the stem
       </div>
     </div>
   );
 
   const renderQuizSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎮 Test Your Knowledge</h2>
+      <h2 style={styles.sectionTitle}>Test Your Knowledge</h2>
       {quizzes.map((quiz, quizIndex) => {
         const currentState = quizStates[quizIndex] || { answer: null, showAnswer: false };
         return (
@@ -563,7 +563,7 @@ const LearnPresentTense = () => {
                 onClick={() => handleQuizAnswer(quizIndex, optionIndex, optionIndex === quiz.correct)}
                 disabled={currentState.showAnswer}
               >
-                {option.replace(' ✅', '')}
+                {option}
               </button>
             ))}
             {currentState.showAnswer && (
@@ -579,9 +579,9 @@ const LearnPresentTense = () => {
 
   const renderPracticeSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎉 Excellent Progress!</h2>
+      <h2 style={styles.sectionTitle}>Excellent Progress!</h2>
       <div style={styles.keyRule}>
-        ✅ <strong>You've Learned Present Tense!</strong><br/>
+        <strong>You've Learned Present Tense!</strong><br/>
         Now you can express actions happening right now in Sanskrit!
       </div>
       
@@ -596,11 +596,11 @@ const LearnPresentTense = () => {
       </div>
       
       <div style={styles.tip}>
-        🎯 <strong>Next Steps:</strong> Practice with more verbs • Learn past tense • Try compound sentences!
+        <strong>Next Steps:</strong> Practice with more verbs • Learn past tense • Try compound sentences!
       </div>
       
       <div style={styles.tip}>
-        📚 <strong>Pro Tip:</strong> Regular practice makes perfect! Try to form 5 sentences daily using present tense.
+        <strong>Pro Tip:</strong> Regular practice makes perfect! Try to form 5 sentences daily using present tense.
       </div>
     </div>
   );

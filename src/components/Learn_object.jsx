@@ -20,7 +20,7 @@ const LearnObject = () => {
       question: "Translate: Rama eats fruit",
       options: [
         "रामः फलः खादति",
-        "रामः फलम् खादति ✅",
+        "रामः फलम् खादति",
         "रामम् फलम् खादति"
       ],
       correct: 1,
@@ -30,7 +30,7 @@ const LearnObject = () => {
       question: "He helps both of us (2 people)",
       options: [
         "सः अस्मान् सहायं करोति",
-        "सः आवाम् सहायं करोति ✅", 
+        "सः आवाम् सहायं करोति", 
         "सः माम् सहायं करोति"
       ],
       correct: 1,
@@ -64,17 +64,17 @@ const LearnObject = () => {
 
   const pronounData = [
     { subject: "अहम् (I)", object: "माम् / माम् एव" },
-    { subject: "आवाम् (We 2)", object: "आवाम् ✅" },
+    { subject: "आवाम् (We 2)", object: "आवाम्" },
     { subject: "वयम् (We 3+)", object: "अस्मान्" },
     { subject: "त्वम् (You)", object: "त्वाम्" },
-    { subject: "युवाम् (You 2)", object: "युवाम् ✅" },
+    { subject: "युवाम् (You 2)", object: "युवाम्" },
     { subject: "यूयम् (You 3+)", object: "युष्मान्" }
   ];
 
   const styles = {
     container: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)',
+      background: 'linear-gradient(135deg, #d76d2b, #f0c14b)',
       padding: '20px',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
     },
@@ -106,7 +106,7 @@ const LearnObject = () => {
     },
     progress: {
       height: '100%',
-      background: 'linear-gradient(90deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       borderRadius: '4px',
       transition: 'width 0.3s ease',
       width: `${((currentSection + 1) / sections.length) * 100}%`
@@ -151,7 +151,7 @@ const LearnObject = () => {
       textAlign: 'center'
     },
     keyRule: {
-      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
       padding: '15px 20px',
       borderRadius: '15px',
@@ -159,10 +159,10 @@ const LearnObject = () => {
       fontSize: '1.1rem',
       fontWeight: '600',
       marginBottom: '20px',
-      boxShadow: '0 8px 16px rgba(76, 175, 80, 0.3)'
+      boxShadow: '0 8px 16px rgba(205, 133, 63, 0.3)'
     },
     exampleBox: {
-      background: 'linear-gradient(45deg, #ff6b35, #ff8a50)',
+      background: '#cd853f',
       color: 'white',
       padding: '20px',
       borderRadius: '15px',
@@ -170,7 +170,7 @@ const LearnObject = () => {
       fontSize: '1.5rem',
       fontWeight: '600',
       marginBottom: '20px',
-      boxShadow: '0 8px 16px rgba(255, 107, 53, 0.3)'
+      boxShadow: '0 8px 16px rgba(205, 133, 63, 0.3)'
     },
     table: {
       width: '100%',
@@ -219,7 +219,7 @@ const LearnObject = () => {
       width: '100%',
       height: '100%',
       backfaceVisibility: 'hidden',
-      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
       borderRadius: '15px',
       display: 'flex',
@@ -227,7 +227,7 @@ const LearnObject = () => {
       justifyContent: 'center',
       fontSize: '1.1rem',
       fontWeight: '600',
-      boxShadow: '0 8px 16px rgba(76, 175, 80, 0.3)'
+      boxShadow: '0 8px 16px rgba(205, 133, 63, 0.3)'
     },
     flipCardBack: {
       position: 'absolute',
@@ -235,7 +235,7 @@ const LearnObject = () => {
       height: '100%',
       backfaceVisibility: 'hidden',
       transform: 'rotateY(180deg)',
-      background: 'linear-gradient(45deg, #ff6b35, #ff8a50)',
+      background: '#cd853f',
       color: 'white',
       borderRadius: '15px',
       display: 'flex',
@@ -276,21 +276,21 @@ const LearnObject = () => {
       textAlign: 'left'
     },
     correctOption: {
-      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)',
+      background: '#cd853f',
       color: 'white',
-      borderColor: '#4CAF50'
+      borderColor: '#cd853f'
     },
     incorrectOption: {
-      background: 'linear-gradient(45deg, #f44336, #ff5722)',
+      background: '#cd853f',
       color: 'white',
-      borderColor: '#f44336'
+      borderColor: '#cd853f'
     },
     explanation: {
-      background: 'rgba(76, 175, 80, 0.1)',
+      background: 'rgba(205, 133, 63, 0.1)',
       padding: '15px',
       borderRadius: '10px',
       marginTop: '15px',
-      borderLeft: '4px solid #4CAF50'
+      borderLeft: '4px solid #cd853f'
     },
     navigationButtons: {
       display: 'flex',
@@ -305,11 +305,11 @@ const LearnObject = () => {
       fontSize: '1rem',
       fontWeight: '600',
       transition: 'all 0.3s ease',
-      background: 'linear-gradient(45deg, #8b4513, #a0522d)',
+      background: '#cd853f',
       color: 'white'
     },
     tip: {
-      background: 'linear-gradient(45deg, #2196F3, #03A9F4)',
+      background: '#cd853f',
       color: 'white',
       padding: '12px 16px',
       borderRadius: '10px',
@@ -333,20 +333,20 @@ const LearnObject = () => {
 
   const renderIntroSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎯 What is an Object?</h2>
+      <h2 style={styles.sectionTitle}>What is an Object?</h2>
       <div style={styles.keyRule}>
-        📖 Rule: Object = What receives the action in a sentence<br/>
-        ➡️ In Sanskrit, this means the object must be in <strong>Dvitiya Vibhakti</strong>
+        Rule: Object = What receives the action in a sentence<br/>
+        In Sanskrit, this means the object must be in <strong>Dvitiya Vibhakti</strong>
       </div>
       <div style={styles.tip}>
-        🎯 <strong>Key Memory Aid:</strong> "Action → Object → Dvitiya!" (Think: <strong>AOD</strong> like 'Call of Duty!')
+        <strong>Key Memory Aid:</strong> "Action → Object → Dvitiya!" (Think: <strong>AOD</strong> like 'Call of Duty!')
       </div>
     </div>
   );
 
   const renderExampleSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📝 Visual Example</h2>
+      <h2 style={styles.sectionTitle}>Visual Example</h2>
       <div style={styles.exampleBox}>
         रामः <span style={{color: '#ffff00', textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>सीताम्</span> पश्यति।
         <br/>
@@ -355,14 +355,14 @@ const LearnObject = () => {
         </small>
       </div>
       <div style={styles.tip}>
-        💡 Notice how सीता becomes सीताम् when it's the object of the sentence!
+        Notice how सीता becomes सीताम् when it's the object of the sentence!
       </div>
     </div>
   );
 
   const renderEndingsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📊 How Endings Change</h2>
+      <h2 style={styles.sectionTitle}>How Endings Change</h2>
       <table style={styles.table}>
         <thead>
           <tr>
@@ -386,14 +386,14 @@ const LearnObject = () => {
         </tbody>
       </table>
       <div style={styles.tip}>
-        ✅ <strong>Quick Tips:</strong> Masculine/Feminine add 'म्' (Singular) • Dual uses 'au/e' endings • Neuter Singular = no change!
+        <strong>Quick Tips:</strong> Masculine/Feminine add 'म्' (Singular) • Dual uses 'au/e' endings • Neuter Singular = no change!
       </div>
     </div>
   );
 
   const renderPronounsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>👥 Special Case: Pronouns</h2>
+      <h2 style={styles.sectionTitle}>Special Case: Pronouns</h2>
       <div style={styles.cardsContainer}>
         {pronounData.map((pronoun, index) => (
           <div key={index} style={styles.flipCard} onClick={() => handleCardFlip(index)}>
@@ -412,14 +412,14 @@ const LearnObject = () => {
         ))}
       </div>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> Dual forms (✅) stay the same as subject • Singular/Plural get new object forms
+        <strong>Tip:</strong> Dual forms stay the same as subject • Singular/Plural get new object forms
       </div>
     </div>
   );
 
   const renderQuizSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎮 Interactive Quiz</h2>
+      <h2 style={styles.sectionTitle}>Interactive Quiz</h2>
       {quizzes.map((quiz, quizIndex) => (
         <div key={quizIndex} style={styles.quizContainer}>
           <div style={styles.quizQuestion}>
@@ -436,7 +436,7 @@ const LearnObject = () => {
               onClick={() => handleQuizAnswer(optionIndex, optionIndex === quiz.correct)}
               disabled={showAnswer}
             >
-              {option.replace(' ✅', '')}
+              {option}
             </button>
           ))}
           {showAnswer && (
@@ -451,13 +451,13 @@ const LearnObject = () => {
 
   const renderPracticeSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎉 Congratulations!</h2>
+      <h2 style={styles.sectionTitle}>Congratulations!</h2>
       <div style={styles.keyRule}>
-        ✅ <strong>Mastered Dvitiya Vibhakti?</strong><br/>
+        <strong>Mastered Dvitiya Vibhakti?</strong><br/>
         Try building your own sentences using subject + object + verb!
       </div>
       <div style={styles.tip}>
-        🎴 <strong>What's Next:</strong> Practice with flashcards • Download worksheets • Take the final test!
+        <strong>What's Next:</strong> Practice with flashcards • Download worksheets • Take the final test!
       </div>
     </div>
   );

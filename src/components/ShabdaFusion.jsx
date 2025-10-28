@@ -191,136 +191,181 @@ const ShabdaFusion = ({ score: propScore }) => {
   
         body {
           font-family: 'Noto Sans Devanagari', sans-serif;
-          background: linear-gradient(135deg, #A0522D, #DAA520);
-          background-size: 200% 200%;
-          animation: gradientMove 15s ease infinite;
-          color: #fff;
+          background: linear-gradient(135deg, #d76d2b, #f0c14b);
           margin: 0;
           padding: 0;
-        }
-  
-        @keyframes gradientMove {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
   
         .shabda-fusion {
           padding: 2rem;
           text-align: center;
+          width: 100%;
+          max-width: 700px;
+          margin: 0 auto;
+        }
+
+        .shabda-card {
+          background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
+          padding: 2rem;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+          color: #2c2c2c;
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
   
         h1 {
-          font-size: 2.2rem;
-          color: #fff8dc;
-          margin-bottom: 1rem;
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+          font-size: 2rem;
+          font-weight: 700;
+          color: #2c2c2c;
+          margin-bottom: 1.5rem;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
   
         .controls {
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
+          display: flex;
+          justify-content: space-between;
+          gap: 1rem;
+          flex-wrap: wrap;
         }
         
-        .controls button + button {
-          margin-left: 1rem;
-          background-color: #d08444;
+        .controls button {
+          background-color: #cd853f;
+          color: white;
+          border: none;
+          padding: 0.6rem 1.2rem;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 0.95rem;
+          font-weight: 600;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+          transition: background-color 0.3s, transform 0.2s;
         }
 
-        .controls button + button:hover {
-          background-color: #c06c2c;
+        .controls button:hover {
+          background-color: #b86b2c;
+          transform: scale(1.05);
         }
   
         .info-panel {
-          margin: 1rem 0;
-          color: #fff8dc;
+          margin: 1rem 0 1.5rem 0;
+          padding: 1rem;
+          background-color: rgba(205, 133, 63, 0.15);
+          border-radius: 10px;
         }
   
         .root-info, .meaning, .hint, .score, .session-score {
           margin: 0.5rem 0;
-          font-size: 1.1rem;
+          font-size: 1rem;
+          font-weight: 500;
+          color: #2c2c2c;
         }
   
         .error-message {
           margin-top: 1rem;
-          color: #ff6b6b;
-          font-size: 1rem;
+          color: #dc2626;
+          font-size: 0.95rem;
           font-weight: 500;
         }
   
         .game-container {
           display: flex;
           justify-content: center;
-          gap: 4rem;
-          margin-top: 2rem;
+          gap: 2rem;
+          margin-top: 1.5rem;
+          flex-wrap: wrap;
         }
   
         .column {
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          min-width: 200px;
+        }
+
+        .column h3 {
+          font-size: 1.2rem;
+          color: #2c2c2c;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
         }
   
         .item {
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.5);
           padding: 1rem 1.5rem;
-          border-radius: 12px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
+          border: 2px solid #cd853f;
           font-size: 1.2rem;
           font-weight: 600;
-          color: #f5deb3;
+          color: #2c2c2c;
           cursor: pointer;
-          transition: transform 0.2s ease, background 0.3s;
-          box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .item:hover {
+          background: rgba(205, 133, 63, 0.2);
+          transform: translateY(-2px);
         }
   
         .item.selected {
-          border: 2px solid #fff8dc;
-          background-color: rgba(255, 255, 255, 0.2);
+          border: 3px solid #2c2c2c;
+          background-color: rgba(205, 133, 63, 0.3);
+          transform: scale(1.02);
         }
   
         .matched {
-          background: rgba(34, 139, 34, 0.4) !important;
-          color: #d4edda !important;
+          background: rgba(76, 175, 80, 0.3) !important;
+          color: #2c2c2c !important;
+          border-color: #4caf50 !important;
+          pointer-events: none;
         }
         
         .wrong {
-          background: rgba(255, 0, 0, 0.4) !important;
-          color: #ffdede !important;
-          transform: scale(1.03);
+          background: rgba(244, 67, 54, 0.3) !important;
+          color: #2c2c2c !important;
+          border-color: #f44336 !important;
         }
   
         .completion-message {
-          margin-top: 2rem;
-          font-size: 1.3rem;
-          font-weight: bold;
-          color: #fff;
-          display: ${showCompletionMessage ? "block" : "none"};
-        }
-  
-        button {
-          margin-top: 1rem;
-          padding: 0.8rem 1.5rem;
-          font-size: 1rem;
+          margin-top: 1.5rem;
+          padding: 1rem;
+          font-size: 1.2rem;
           font-weight: 600;
-          background: #cd853f;
-          color: #fff;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-          transition: background 0.3s ease;
+          color: #2c2c2c;
+          background-color: rgba(76, 175, 80, 0.2);
+          border-radius: 8px;
         }
-  
-        button:hover {
-          background: #b86b2c;
+
+        @media (max-width: 600px) {
+          .shabda-fusion {
+            padding: 1rem;
+          }
+          .shabda-card {
+            padding: 1.5rem;
+          }
+          h1 {
+            font-size: 1.5rem;
+          }
+          .game-container {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          .controls {
+            flex-direction: column;
+          }
         }
       `}</style>
 
       <div className="shabda-fusion">
         {isLoading ? (
-          <div>Loading game...</div>
+          <div className="shabda-card">Loading game...</div>
         ) : currentGame ? (
-          <>
+          <div className="shabda-card">
             <h1>Sanskrit Matching Game</h1>
 
             <div className="controls">
@@ -385,15 +430,14 @@ const ShabdaFusion = ({ score: propScore }) => {
               </div>
             </div>
 
-            <div
-              className="completion-message"
-              style={{ display: showCompletionMessage ? "block" : "none" }}
-            >
-              Well done! All matches correct!
-            </div>
-          </>
+            {showCompletionMessage && (
+              <div className="completion-message">
+                Well done! All matches correct!
+              </div>
+            )}
+          </div>
         ) : (
-          <div>
+          <div className="shabda-card">
             No game data available.{" "}
             <button onClick={() => fetchGameData()}>Retry</button>
           </div>

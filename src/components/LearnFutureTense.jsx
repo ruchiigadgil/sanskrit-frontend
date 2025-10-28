@@ -17,21 +17,21 @@ const LearnFutureTense = () => {
   const quizzes = [
     {
       question: "What is the correct future tense form: 'I will eat'?",
-      options: ["अहम् खादिष्यति", "अहम् खादिष्यामि ✅", "अहम् खादिष्यन्ति"],
+      options: ["अहम् खादिष्यति", "अहम् खादिष्यामि", "अहम् खादिष्यन्ति"],
       correct: 1,
       explanation:
         "First person singular uses -ष्यामि ending. अहम् खादिष्यामि = I will eat",
     },
     {
       question: "Translate: 'They (3+) will go'",
-      options: ["ते गमिष्यति", "ते गमिष्यतः", "ते गमिष्यन्ति ✅"],
+      options: ["ते गमिष्यति", "ते गमिष्यतः", "ते गमिष्यन्ति"],
       correct: 2,
       explanation:
         "Third person plural uses -ष्यन्ति ending. ते गमिष्यन्ति = They will go",
     },
     {
       question: "What is 'You both will read' in Sanskrit?",
-      options: ["युवाम् पठिष्यति", "युवाम् पठिष्यथः ✅", "युवाम् पठिष्यन्ति"],
+      options: ["युवाम् पठिष्यति", "युवाम् पठिष्यथः", "युवाम् पठिष्यन्ति"],
       correct: 1,
       explanation:
         "Second person dual uses -ष्यथः ending. युवाम् पठिष्यथः = You both will read",
@@ -77,8 +77,7 @@ const LearnFutureTense = () => {
   const styles = {
     container: {
       minHeight: "100vh",
-      background:
-        "linear-gradient(135deg, #ff8a50 0%, #ff6b35 25%, #f7931e 50%, #ffb347 75%, #daa520 100%)",
+      background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
       padding: "20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       boxSizing: "border-box",
@@ -103,7 +102,7 @@ const LearnFutureTense = () => {
       textShadow: "1px 1px 3px rgba(0, 0, 0, 0.3)",
     },
     backButton: {
-      background: "linear-gradient(45deg, #8b4513, #a0522d)",
+      background: "#cd853f",
       color: "white",
       border: "none",
       padding: "10px 20px",
@@ -112,7 +111,7 @@ const LearnFutureTense = () => {
       cursor: "pointer",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       backdropFilter: "blur(10px)",
-      boxShadow: "0 6px 20px rgba(139, 69, 19, 0.4)",
+      boxShadow: "0 6px 20px rgba(205, 133, 63, 0.4)",
       fontWeight: "600",
       marginBottom: "25px",
       display: "inline-block",
@@ -129,11 +128,11 @@ const LearnFutureTense = () => {
     },
     progress: {
       height: "100%",
-      background: "linear-gradient(90deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       borderRadius: "5px",
       transition: "width 0.3s ease",
       width: `${((currentSection + 1) / sections.length) * 100}%`,
-      boxShadow: "0 2px 4px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 2px 4px rgba(205, 133, 63, 0.3)",
     },
     navigation: {
       display: "flex",
@@ -183,7 +182,7 @@ const LearnFutureTense = () => {
       textShadow: "1px 1px 3px rgba(0, 0, 0, 0.1)",
     },
     keyRule: {
-      background: "linear-gradient(135deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
       padding: "20px 25px",
       borderRadius: "18px",
@@ -191,11 +190,11 @@ const LearnFutureTense = () => {
       fontSize: "1.2rem",
       fontWeight: "600",
       marginBottom: "25px",
-      boxShadow: "0 10px 25px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 10px 25px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.5",
     },
     exampleBox: {
-      background: "linear-gradient(135deg, #ff6b35, #ff8a50)",
+      background: "#cd853f",
       color: "white",
       padding: "25px",
       borderRadius: "18px",
@@ -203,11 +202,11 @@ const LearnFutureTense = () => {
       fontSize: "1.4rem",
       fontWeight: "600",
       marginBottom: "25px",
-      boxShadow: "0 10px 25px rgba(255, 107, 53, 0.3)",
+      boxShadow: "0 10px 25px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.4",
     },
     formulaBox: {
-      background: "linear-gradient(135deg, #9C27B0, #E91E63)",
+      background: "#cd853f",
       color: "white",
       padding: "25px",
       borderRadius: "18px",
@@ -215,7 +214,7 @@ const LearnFutureTense = () => {
       fontSize: "1.4rem",
       fontWeight: "600",
       marginBottom: "25px",
-      boxShadow: "0 10px 25px rgba(156, 39, 176, 0.3)",
+      boxShadow: "0 10px 25px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.4",
     },
     table: {
@@ -276,7 +275,7 @@ const LearnFutureTense = () => {
       width: "100%",
       height: "100%",
       backfaceVisibility: "hidden",
-      background: "linear-gradient(135deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
       borderRadius: "18px",
       display: "flex",
@@ -285,7 +284,7 @@ const LearnFutureTense = () => {
       justifyContent: "center",
       fontSize: "1.1rem",
       fontWeight: "700",
-      boxShadow: "0 8px 20px rgba(76, 175, 80, 0.3)",
+      boxShadow: "0 8px 20px rgba(205, 133, 63, 0.3)",
       padding: "15px",
       border: "2px solid rgba(255, 255, 255, 0.1)",
     },
@@ -295,7 +294,7 @@ const LearnFutureTense = () => {
       height: "100%",
       backfaceVisibility: "hidden",
       transform: "rotateY(180deg)",
-      background: "linear-gradient(135deg, #ff6b35, #ff8a50)",
+      background: "#cd853f",
       color: "white",
       borderRadius: "18px",
       display: "flex",
@@ -339,36 +338,36 @@ const LearnFutureTense = () => {
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
     },
     correctOption: {
-      background: "linear-gradient(135deg, #4CAF50, #8BC34A)",
+      background: "#cd853f",
       color: "white",
-      borderColor: "#4CAF50",
-      boxShadow: "0 5px 15px rgba(76, 175, 80, 0.3)",
+      borderColor: "#cd853f",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
     },
     incorrectOption: {
-      background: "linear-gradient(135deg, #f44336, #ff5722)",
+      background: "#cd853f",
       color: "white",
-      borderColor: "#f44336",
-      boxShadow: "0 5px 15px rgba(244, 67, 54, 0.3)",
+      borderColor: "#cd853f",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
     },
     explanation: {
-      background: "rgba(76, 175, 80, 0.1)",
+      background: "rgba(205, 133, 63, 0.1)",
       padding: "18px",
       borderRadius: "12px",
       marginTop: "15px",
-      borderLeft: "4px solid #4CAF50",
+      borderLeft: "4px solid #cd853f",
       fontSize: "1rem",
       lineHeight: "1.5",
       color: "#333333",
     },
     tip: {
-      background: "linear-gradient(135deg, #2196F3, #03A9F4)",
+      background: "#cd853f",
       color: "white",
       padding: "15px 20px",
       borderRadius: "12px",
       margin: "15px 0",
       fontSize: "1rem",
       fontWeight: "500",
-      boxShadow: "0 5px 15px rgba(33, 150, 243, 0.3)",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
       lineHeight: "1.4",
     },
     navigationButtons: {
@@ -385,9 +384,9 @@ const LearnFutureTense = () => {
       fontSize: "1.1rem",
       fontWeight: "600",
       transition: "all 0.3s ease",
-      background: "linear-gradient(135deg, #8b4513, #a0522d)",
+      background: "#cd853f",
       color: "white",
-      boxShadow: "0 5px 15px rgba(139, 69, 19, 0.3)",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
       minWidth: "120px",
     },
   };
@@ -427,14 +426,14 @@ const LearnFutureTense = () => {
 
   const renderIntroSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>⏳ Future Tense - लृट् लकार</h2>
+      <h2 style={styles.sectionTitle}>Future Tense - लृट् लकार</h2>
       <div style={styles.keyRule}>
-        📖 Future Tense = Actions that will happen
+        Future Tense = Actions that will happen
         <br />
-        ➡️ In Sanskrit: <strong>लृट् लकार (Lṛṭ Lakāra)</strong>
+        In Sanskrit: <strong>लृट् लकार (Lṛṭ Lakāra)</strong>
       </div>
       <div style={styles.tip}>
-        🎯 <strong>Key Memory Aid:</strong> "Tomorrow's actions start now!"
+        <strong>Key Memory Aid:</strong> "Tomorrow's actions start now!"
         (Think: <strong>Future = Forward</strong>)
       </div>
       <div style={styles.exampleBox}>
@@ -456,7 +455,7 @@ const LearnFutureTense = () => {
 
   const renderFormationSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🔧 How to Form Future Tense</h2>
+      <h2 style={styles.sectionTitle}> How to Form Future Tense</h2>
       <div style={styles.formulaBox}>
         Verb Root (Future Form) + Person Ending = Future Tense
         <br />
@@ -473,15 +472,15 @@ const LearnFutureTense = () => {
       </div>
 
       <div style={styles.tip}>
-        📝 <strong>Step 1:</strong> Take the verb root (धातु) - like गम् (to go)
+        <strong>Step 1:</strong> Take the verb root (धातु) - like गम् (to go)
       </div>
       <div style={styles.tip}>
-        📝 <strong>Step 2:</strong> Add ष्य - गम् becomes गमिष्य<br/>
-        ⚠️ Note: Adding ष्य does not always give the expected future stem. There are exceptions!
+        <strong>Step 2:</strong> Add ष्य - गम् becomes गमिष्य<br/>
+        Note: Adding ष्य does not always give the expected future stem. There are exceptions!
       </div>
 
       <div style={styles.tip}>
-        📝 <strong>Step 3:</strong> Add person ending - गमिष्य + मि = गमिष्यामि
+        <strong>Step 3:</strong> Add person ending - गमिष्य + मि = गमिष्यामि
         (I will go)
       </div>
 
@@ -504,7 +503,7 @@ const LearnFutureTense = () => {
 
   const renderEndingsSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>📊 Future Tense Endings</h2>
+      <h2 style={styles.sectionTitle}>Future Tense Endings</h2>
       <table style={styles.table}>
         <thead>
           <tr>
@@ -531,7 +530,7 @@ const LearnFutureTense = () => {
         </tbody>
       </table>
       <div style={styles.tip}>
-        ✅ <strong>Memory Trick:</strong> Add ष्य + same endings as present
+        <strong>Memory Trick:</strong> Add ष्य + same endings as present
         tense (आ, सि, ति etc.)
       </div>
     </div>
@@ -539,7 +538,7 @@ const LearnFutureTense = () => {
 
   const renderExamplesSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>💡 Common Verb Examples</h2>
+      <h2 style={styles.sectionTitle}>Common Verb Examples</h2>
       <div style={styles.cardsContainer}>
         {verbExamples.map((verb, index) => (
           <div
@@ -582,7 +581,7 @@ const LearnFutureTense = () => {
         ))}
       </div>
       <div style={styles.tip}>
-        💡 <strong>Tip:</strong> The ष्य suffix signals future action across all
+        <strong>Tip:</strong> The ष्य suffix signals future action across all
         verbs
       </div>
     </div>
@@ -590,7 +589,7 @@ const LearnFutureTense = () => {
 
   const renderQuizSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎮 Test Your Knowledge</h2>
+      <h2 style={styles.sectionTitle}>Test Your Knowledge</h2>
       {quizzes.map((quiz, quizIndex) => {
         const currentState = quizStates[quizIndex] || {
           answer: null,
@@ -625,7 +624,7 @@ const LearnFutureTense = () => {
                 }
                 disabled={currentState.showAnswer}
               >
-                {option.replace(" ✅", "")}
+                {option}
               </button>
             ))}
             {currentState.showAnswer && (
@@ -641,9 +640,9 @@ const LearnFutureTense = () => {
 
   const renderPracticeSection = () => (
     <div>
-      <h2 style={styles.sectionTitle}>🎉 Excellent Progress!</h2>
+      <h2 style={styles.sectionTitle}>Excellent Progress!</h2>
       <div style={styles.keyRule}>
-        ✅ <strong>You've Learned Future Tense!</strong>
+        <strong>You've Learned Future Tense!</strong>
         <br />
         Now you can express actions that will happen in Sanskrit!
       </div>
@@ -663,12 +662,12 @@ const LearnFutureTense = () => {
       </div>
 
       <div style={styles.tip}>
-        🎯 <strong>Next Steps:</strong> Practice with more verbs • Learn past
+        <strong>Next Steps:</strong> Practice with more verbs • Learn past
         tense • Try future predictions!
       </div>
 
       <div style={styles.tip}>
-        📚 <strong>Pro Tip:</strong> Imagine tomorrow’s plans and convert them
+        <strong>Pro Tip:</strong> Imagine tomorrow's plans and convert them
         to Sanskrit daily!
       </div>
     </div>
