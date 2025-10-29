@@ -161,6 +161,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    height: "auto",
   },
   title: {
     fontSize: "2.2rem",
