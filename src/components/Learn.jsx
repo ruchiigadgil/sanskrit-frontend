@@ -54,7 +54,7 @@ const Learn = () => {
   const styles = {
     container: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #d76d2b, #f0c14b)',
+      background: 'none',
       padding: '15px',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       margin: 0,

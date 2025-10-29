@@ -77,7 +77,7 @@ const LearnFutureTense = () => {
   const styles = {
     container: {
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
+      background: "none",
       padding: "20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       boxSizing: "border-box",
@@ -102,7 +102,7 @@ const LearnFutureTense = () => {
       textShadow: "1px 1px 3px rgba(0, 0, 0, 0.3)",
     },
     backButton: {
-      background: "#cd853f",
+      background: "linear-gradient(45deg, #8b4513, #a0522d)",
       color: "white",
       border: "none",
       padding: "10px 20px",
@@ -111,7 +111,7 @@ const LearnFutureTense = () => {
       cursor: "pointer",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       backdropFilter: "blur(10px)",
-      boxShadow: "0 6px 20px rgba(205, 133, 63, 0.4)",
+      boxShadow: "0 6px 20px rgba(139, 69, 19, 0.4)",
       fontWeight: "600",
       marginBottom: "25px",
       display: "inline-block",
@@ -240,7 +240,7 @@ const LearnFutureTense = () => {
       borderBottom: "1px solid #e0e0e0",
       fontSize: "1.1rem",
       fontWeight: "500",
-      color: "#333333",
+      color: "#333333", // Ensure text is not white
     },
     oddRow: {
       backgroundColor: "#f8f9fa",
@@ -422,6 +422,10 @@ const LearnFutureTense = () => {
 
   const handleBackToDashboard = () => {
     window.location.href = "/dashboard";
+  };
+
+  const handleBackToLearning = () => {
+    window.location.href = "/learn";
   };
 
   const renderIntroSection = () => (
@@ -698,14 +702,24 @@ const LearnFutureTense = () => {
         <h1 style={styles.title}>Sanskrit Future Tense</h1>
         <p style={styles.subtitle}>लृट् लकार - Actions to Come</p>
 
-        <button
-          style={styles.backButton}
-          onMouseEnter={handleButtonHover}
-          onMouseLeave={handleButtonLeave}
-          onClick={handleBackToDashboard}
-        >
-          ← Back to Dashboard
-        </button>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToDashboard}
+          >
+            ← Back to Dashboard
+          </button>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToLearning}
+          >
+            ← Back to Learning
+          </button>
+        </div>
 
         <div style={styles.progressBar}>
           <div style={styles.progress}></div>

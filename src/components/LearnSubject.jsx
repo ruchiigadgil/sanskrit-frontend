@@ -63,7 +63,7 @@ const LearnSubject = () => {
   const styles = {
     container: {
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
+      background: "none",
       padding: "20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     },
@@ -100,6 +100,21 @@ const LearnSubject = () => {
       transition: "width 0.3s ease",
       width: `${((currentSection + 1) / sections.length) * 100}%`,
     },
+    backButton: {
+      background: "linear-gradient(45deg, #8b4513, #a0522d)",
+      color: "white",
+      border: "none",
+      padding: "10px 20px",
+      borderRadius: "25px",
+      fontSize: "1rem",
+      cursor: "pointer",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      backdropFilter: "blur(10px)",
+      boxShadow: "0 6px 20px rgba(139, 69, 19, 0.4)",
+      fontWeight: "600",
+      marginBottom: "25px",
+      display: "inline-block",
+    },
     navigation: {
       display: "flex",
       justifyContent: "center",
@@ -107,21 +122,26 @@ const LearnSubject = () => {
       marginBottom: "30px",
     },
     navButton: {
-      padding: "8px 16px",
-      borderRadius: "20px",
+      padding: "10px 18px",
+      borderRadius: "25px",
       border: "none",
       cursor: "pointer",
-      fontSize: "0.9rem",
-      fontWeight: "500",
+      fontSize: "0.95rem",
+      fontWeight: "600",
       transition: "all 0.3s ease",
+      minWidth: "100px",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
     },
     activeNavButton: {
-      background: "white",
+      background: "linear-gradient(45deg, #ffffff, #f8f8f8)",
       color: "#ff6b35",
+      transform: "translateY(-2px)",
+      boxShadow: "0 6px 20px rgba(255, 107, 53, 0.3)",
     },
     inactiveNavButton: {
-      background: "rgba(255, 255, 255, 0.3)",
+      background: "rgba(255, 255, 255, 0.25)",
       color: "white",
+      backdropFilter: "blur(10px)",
     },
     contentCard: {
       maxWidth: "900px",
@@ -287,15 +307,17 @@ const LearnSubject = () => {
       marginTop: "30px",
     },
     navBtn: {
-      padding: "12px 24px",
+      padding: "12px 30px",
       border: "none",
       borderRadius: "25px",
       cursor: "pointer",
-      fontSize: "1rem",
+      fontSize: "1.1rem",
       fontWeight: "600",
       transition: "all 0.3s ease",
       background: "#cd853f",
       color: "white",
+      boxShadow: "0 5px 15px rgba(205, 133, 63, 0.3)",
+      minWidth: "120px",
     },
     tip: {
       background: "#cd853f",
@@ -316,6 +338,26 @@ const LearnSubject = () => {
     setQuizAnswer(optionIndex);
     setShowAnswer(true);
   };
+  const handleButtonHover = (e) => {
+    e.target.style.background = "linear-gradient(45deg, #a0522d, #cd853f)";
+    e.target.style.transform = "translateY(-3px) scale(1.05)";
+    e.target.style.boxShadow = "0 10px 30px rgba(139, 69, 19, 0.5)";
+  };
+
+  const handleButtonLeave = (e) => {
+    e.target.style.background = "linear-gradient(45deg, #8b4513, #a0522d)";
+    e.target.style.transform = "translateY(0) scale(1)";
+    e.target.style.boxShadow = "0 6px 20px rgba(139, 69, 19, 0.4)";
+  };
+
+  const handleBackToDashboard = () => {
+    window.location.href = "/dashboard";
+  };
+
+  const handleBackToLearning = () => {
+    window.location.href = "/learn";
+  };
+
 
   const renderIntroSection = () => (
     <div>
@@ -492,8 +534,27 @@ const LearnSubject = () => {
               ...styles.progress,
               width: `${((currentSection + 1) / sections.length) * 100}%`,
             }}
-          ></div>
+          ></div> 
         </div>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToDashboard}
+          >
+            ← Back to Dashboard
+          </button>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToLearning}
+          >
+            ← Back to Learning
+          </button>
+        </div>
+
         <div style={styles.navigation}>
           {["Intro", "Example", "Endings", "Pronouns", "Quiz", "Practice"].map(
             (label, index) => (

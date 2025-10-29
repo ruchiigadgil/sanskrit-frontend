@@ -81,7 +81,7 @@ const LearnPresentTense = () => {
   const styles = {
     container: {
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #d76d2b, #f0c14b)',
+      background: 'none',
       padding: '20px',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       boxSizing: 'border-box'
@@ -428,6 +428,10 @@ const LearnPresentTense = () => {
     window.location.href = '/dashboard';
   };
 
+  const handleBackToLearning = () => {
+    window.location.href = "/learn";
+  };
+
   // Component render functions with enhanced styling
   const renderIntroSection = () => (
     <div>
@@ -622,15 +626,25 @@ const LearnPresentTense = () => {
       <div style={styles.header}>
         <h1 style={styles.title}>Sanskrit Present Tense</h1>
         <p style={styles.subtitle}>वर्तमान काल - Actions Happening Now</p>
-        
-        <button 
-          style={styles.backButton}
-          onMouseEnter={handleButtonHover}
-          onMouseLeave={handleButtonLeave}
-          onClick={handleBackToDashboard}
-        >
-          ← Back to Dashboard
-        </button>
+
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToDashboard}
+          >
+            ← Back to Dashboard
+          </button>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToLearning}
+          >
+            ← Back to Learning
+          </button>
+        </div>
         
         <div style={styles.progressBar}>
           <div style={styles.progress}></div>

@@ -69,7 +69,7 @@ const LearnPastTense = () => {
   const styles = {
     container: {
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
+      background: "none",
       padding: "20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       boxSizing: "border-box",
@@ -232,7 +232,7 @@ const LearnPastTense = () => {
       borderBottom: "1px solid #e0e0e0",
       fontSize: "1.1rem",
       fontWeight: "500",
-      color: "#333333",
+      color: "#333333", // Ensure text is not white
     },
     oddRow: {
       backgroundColor: "#f8f9fa",
@@ -414,6 +414,10 @@ const LearnPastTense = () => {
 
   const handleBackToDashboard = () => {
     window.location.href = "/dashboard";
+  };
+
+  const handleBackToLearning = () => {
+    window.location.href = "/learn";
   };
 
   const renderIntroSection = () => (
@@ -688,14 +692,24 @@ const LearnPastTense = () => {
         <h1 style={styles.title}>Sanskrit Past Tense</h1>
         <p style={styles.subtitle}>लङ् लकार - Actions Done</p>
 
-        <button
-          style={styles.backButton}
-          onMouseEnter={handleButtonHover}
-          onMouseLeave={handleButtonLeave}
-          onClick={handleBackToDashboard}
-        >
-          ← Back to Dashboard
-        </button>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToDashboard}
+          >
+            ← Back to Dashboard
+          </button>
+          <button
+            style={styles.backButton}
+            onMouseEnter={handleButtonHover}
+            onMouseLeave={handleButtonLeave}
+            onClick={handleBackToLearning}
+          >
+            ← Back to Learning
+          </button>
+        </div>
 
         <div style={styles.progressBar}>
           <div style={styles.progress}></div>

@@ -94,6 +94,15 @@ function AuthWrapper() {
   return (
     <>
       <BrandHeader />
+      <div
+        style={{
+          minHeight: "100vh",
+          height: "auto",
+          display: "flex",
+          flexDirection: "column",
+           }}
+      >
+        <main style={{ flex: 1 }}>
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Landing />} />
@@ -164,6 +173,8 @@ function AuthWrapper() {
           }
         />
       </Routes>
+      </main>
+      </div>
     </>
   );
 }

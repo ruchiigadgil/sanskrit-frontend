@@ -155,7 +155,7 @@ const styles = {
   container: {
     padding: "2rem",
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #d76d2b, #f0c14b)",
+    background: "none",
     color: "#fff",
     fontFamily: "'Segoe UI', sans-serif",
     display: "flex",
