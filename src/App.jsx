@@ -98,8 +98,8 @@ function AuthWrapper() {
         style={{
           minHeight: "100vh",
           height: 'auto',
-          // display: "flex",
-          // flexDirection: "column",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <main style={{ flex: 1 }}>
