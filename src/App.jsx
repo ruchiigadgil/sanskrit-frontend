@@ -96,6 +96,7 @@ function AuthWrapper() {
       <BrandHeader />
       <div
         style={{
+          minHeight: '150vh',
           height: 'auto',
           display: "flex",
           flexDirection: "column",
