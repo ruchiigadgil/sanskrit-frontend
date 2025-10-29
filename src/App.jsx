@@ -100,7 +100,7 @@ function AuthWrapper() {
           height: 'auto',
           display: "flex",
           flexDirection: "column",
-           }}
+          }}
       >
         <main style={{ flex: 1 }}>
       <Routes>

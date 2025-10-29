@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LearnFutureTense = () => {
+  const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState(0);
   const [quizStates, setQuizStates] = useState({});
   const [flippedCards, setFlippedCards] = useState({});
@@ -421,11 +423,11 @@ const LearnFutureTense = () => {
   };
 
   const handleBackToDashboard = () => {
-    window.location.href = "/dashboard";
+    navigate("/dashboard");
   };
 
   const handleBackToLearning = () => {
-    window.location.href = "/learn";
+    navigate("/learn");
   };
 
   const renderIntroSection = () => (

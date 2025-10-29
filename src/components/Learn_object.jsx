@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const LearnObject = () => {
+  const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState('');
   const [showAnswer, setShowAnswer] = useState(false);
@@ -366,11 +368,11 @@ const LearnObject = () => {
   };
 
   const handleBackToDashboard = () => {
-    window.location.href = "/dashboard";
+    navigate("/dashboard");
   };
 
   const handleBackToLearning = () => {
-    window.location.href = "/learn";
+    navigate("/learn");
   };
   const renderIntroSection = () => (
     <div>

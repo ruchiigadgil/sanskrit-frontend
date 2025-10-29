@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const LearnSanskritSentence = () => {
+  const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState(0);
   const [quizStates, setQuizStates] = useState({});
   const [quizGame, setQuizGame] = useState({
@@ -176,11 +178,11 @@ const LearnSanskritSentence = () => {
   };
 
   const handleBackToDashboard = () => {
-    window.location.href = "/dashboard";
+    navigate("/dashboard");
   };
 
   const handleBackToLearning = () => {
-    window.location.href = "/learn";
+    navigate("/learn");
   };
 
 
