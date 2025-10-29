@@ -96,11 +96,11 @@ function AuthWrapper() {
       <BrandHeader />
       <div
         style={{
-          minHeight: '150vh',
+          minHeight: "100vh",
           height: 'auto',
-          display: "flex",
-          flexDirection: "column",
-          }}
+          // display: "flex",
+          // flexDirection: "column",
+        }}
       >
         <main style={{ flex: 1 }}>
       <Routes>
