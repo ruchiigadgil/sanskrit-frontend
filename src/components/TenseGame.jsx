@@ -328,7 +328,7 @@ const TenseGame = ({ score: propScore }) => {
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 100%;
-            max-width: 700px;
+            // max-width: 700px;
             color: #2c2c2c;
             border: 1px solid rgba(0, 0, 0, 0.1);
           }
