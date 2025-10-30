@@ -233,22 +233,64 @@ const DragDropGame = () => {
     setFeedbackColor(color);
   };
 
+  // const handleShowHints = () => {
+  //   if (!hintsShown) {
+  //     setHintsShown(true);
+  //     const newHints = {
+  //       subject: correctAnswers.subject
+  //         ? `Gender: ${correctAnswers.subject.gender}, Number: ${correctAnswers.subject.number}`
+  //         : "No subject in this sentence",
+  //       object: correctAnswers.object
+  //         ? `Gender: ${correctAnswers.object.gender}, Number: ${correctAnswers.object.number}`
+  //         : "No object in this sentence",
+  //       verb: `Class: ${correctAnswers.verb.class}, Meaning: "${correctAnswers.verb.meaning}", Person: ${correctAnswers.verb.person}, Number: ${correctAnswers.verb.number}`,
+  //     };
+  //     setHints(newHints);
+  //   }
+  // };
+
   const handleShowHints = () => {
     if (!hintsShown) {
       setHintsShown(true);
-      const newHints = {
-        subject: correctAnswers.subject
-          ? `Gender: ${correctAnswers.subject.gender}, Number: ${correctAnswers.subject.number}`
-          : "No subject in this sentence",
-        object: correctAnswers.object
-          ? `Gender: ${correctAnswers.object.gender}, Number: ${correctAnswers.object.number}`
-          : "No object in this sentence",
-        verb: `Class: ${correctAnswers.verb.class}, Meaning: "${correctAnswers.verb.meaning}", Person: ${correctAnswers.verb.person}, Number: ${correctAnswers.verb.number}`,
-      };
-      setHints(newHints);
+
+      // ---- helper to turn short codes into full words ----
+      const full = (code, map) => map[code] ?? code;
+
+      const genderMap = { masc: "Masculine", fem: "Feminine", neut: "Neuter" };
+      const numberMap = { sg: "singular", du: "dual", pl: "plural" };
+      const personMap = { 1: "1st", 2: "2nd", 3: "3rd" };
+
+      // ---- subject hint (sentence) ----
+      const subjectHint = correctAnswers.subject
+        ? `${full(correctAnswers.subject.gender, genderMap)} ${full(
+            correctAnswers.subject.number,
+            numberMap
+          )}`
+        : "No subject in this sentence";
+
+      // ---- object hint (sentence) ----
+      const objectHint = correctAnswers.object
+        ? `${full(correctAnswers.object.gender, genderMap)} ${full(
+            correctAnswers.object.number,
+            numberMap
+          )}`
+        : "No object in this sentence";
+
+      // ---- verb hint (sentence) ----
+      const verbHint = `The verb is ${full(
+        correctAnswers.verb.number,
+        numberMap
+      )} of ${full(correctAnswers.verb.person, personMap)} person meaning "${
+        correctAnswers.verb.meaning
+      }"`;
+
+      setHints({
+        subject: subjectHint,
+        object: objectHint,
+        verb: verbHint,
+      });
     }
   };
-
   const initWordAnalysis = (wordData, type) => {
     setCurrentWordAnalysis(wordData);
     setWordAnalysisType(type);
@@ -630,13 +672,20 @@ const DragDropGame = () => {
         }
 
         .dd-zone-hint {
-          font-size: 0.85rem;
-          color: #666;
-          font-style: italic;
-          text-align: center;
-          margin-bottom: 0.8rem;
-          line-height: 1.4;
-        }
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  font-style: normal;
+  font-weight: 500;
+  text-align: center;
+  margin: 0.8rem auto;
+  line-height: 1.6;
+  background-color: rgba(255, 248, 225, 0.85);
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(205, 133, 63, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  max-width: 90%;
+}
 
         .dd-learn-btn {
           width: 100%;
@@ -915,14 +964,23 @@ const DragDropGame = () => {
             )}
           </div>
 
-          <h1 className="dd-main-title">Drag & Drop Each Word Where It Belongs</h1>
+          <h1 className="dd-main-title">
+            Drag & Drop Each Word Where It Belongs
+          </h1>
 
           <div className="dd-controls">
-            <button className="dd-control-btn" onClick={() => window.history.back()}>
+            <button
+              className="dd-control-btn"
+              onClick={() => window.history.back()}
+            >
               <ArrowLeft style={{ width: "0.9rem", height: "0.9rem" }} /> Back
             </button>
-            <button className="dd-control-btn" onClick={() => window.history.back()}>
-              <BookOpen style={{ width: "0.9rem", height: "0.9rem" }} /> Learning
+            <button
+              className="dd-control-btn"
+              onClick={() => window.history.back()}
+            >
+              <BookOpen style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
+              Learning
             </button>
           </div>
 
@@ -936,7 +994,7 @@ const DragDropGame = () => {
             <div className="dd-completion-card">
               <h2 className="dd-completion-title">Round Complete!</h2>
               <p className="dd-completion-score">
-                Final Score: {sessionScore} / {TOTAL_QUESTIONS}
+                Final Score: {sessionScore} / 25
               </p>
               <button className="dd-control-btn" onClick={handlePlayAgain}>
                 Play Again
@@ -975,9 +1033,13 @@ const DragDropGame = () => {
                   >
                     <h3 className="dd-zone-title">{zone}</h3>
                     {droppedWords[zone] && (
-                      <div className="dd-dropped-word">{droppedWords[zone]}</div>
+                      <div className="dd-dropped-word">
+                        {droppedWords[zone]}
+                      </div>
                     )}
-                    {hints[zone] && <p className="dd-zone-hint">{hints[zone]}</p>}
+                    {hints[zone] && (
+                      <p className="dd-zone-hint">{hints[zone]}</p>
+                    )}
                     <button
                       className="dd-learn-btn"
                       onClick={() => {
@@ -1015,13 +1077,11 @@ const DragDropGame = () => {
                     className="dd-control-btn dd-reset-btn"
                     onClick={handleReset}
                   >
-                    <RotateCcw style={{ width: "0.9rem", height: "0.9rem" }} /> Reset
+                    <RotateCcw style={{ width: "0.9rem", height: "0.9rem" }} />{" "}
+                    Reset
                   </button>
                 )}
-                <button
-                  className="dd-control-btn"
-                  onClick={handleNextSentence}
-                >
+                <button className="dd-control-btn" onClick={handleNextSentence}>
                   Next Sentence
                 </button>
               </div>
@@ -1032,8 +1092,14 @@ const DragDropGame = () => {
 
       {modalOpen && (
         <div className="dd-modal-overlay" onClick={() => setModalOpen(false)}>
-          <div className="dd-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="dd-modal-close" onClick={() => setModalOpen(false)}>
+          <div
+            className="dd-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="dd-modal-close"
+              onClick={() => setModalOpen(false)}
+            >
               ×
             </button>
             <h2 className="dd-modal-header">
@@ -1042,7 +1108,8 @@ const DragDropGame = () => {
             <div className="dd-mcq-section">
               <div className="dd-mcq-header">
                 <h3 className="dd-mcq-title">
-                  Guess the {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                  Guess the{" "}
+                  {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                 </h3>
                 <span className="dd-mcq-score">Score: {sessionScore}</span>
               </div>
@@ -1055,7 +1122,9 @@ const DragDropGame = () => {
                 ].map((tab) => (
                   <button
                     key={tab}
-                    className={`dd-tab-button ${activeTab === tab ? "active" : ""}`}
+                    className={`dd-tab-button ${
+                      activeTab === tab ? "active" : ""
+                    }`}
                     onClick={() => handleTabChange(tab)}
                   >
                     {tab === "root"
