@@ -37,6 +37,7 @@ const DragDropGame = () => {
   const [selectedMcqAnswers, setSelectedMcqAnswers] = useState({}); // Track selected MCQ answers
 
   const draggedElement = useRef(null);
+  
 
   useEffect(() => {
     localStorage.removeItem("dragDropGameScore");
@@ -471,7 +472,7 @@ const DragDropGame = () => {
           background: linear-gradient(135deg, #d76d2b, #f0c14b);
           margin: 0;
           padding: 0;
-        }
+      }
 
         .drag-drop-wrapper {
           display: flex;
@@ -672,20 +673,20 @@ const DragDropGame = () => {
         }
 
         .dd-zone-hint {
-  font-size: 0.95rem;
-  color: #1a1a1a;
-  font-style: normal;
-  font-weight: 500;
-  text-align: center;
-  margin: 0.8rem auto;
-  line-height: 1.6;
-  background-color: rgba(255, 248, 225, 0.85);
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(205, 133, 63, 0.4);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  max-width: 90%;
-}
+          font-size: 0.95rem;
+          color: #1a1a1a;
+          font-style: normal;
+          font-weight: 500;
+          text-align: center;
+          margin: 0.8rem auto;
+          line-height: 1.6;
+          background-color: rgba(255, 248, 225, 0.85);
+          padding: 0.7rem 1rem;
+          border-radius: 10px;
+          border: 1px solid rgba(205, 133, 63, 0.4);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          max-width: 90%;
+        }
 
         .dd-learn-btn {
           width: 100%;
@@ -730,11 +731,11 @@ const DragDropGame = () => {
         }
 
         .dd-hint-btn {
-          background-color: #16a34a;
+          background-color: #eaaa2c;
         }
 
         .dd-hint-btn:hover {
-          background-color: #15803d;
+          background-color:rgb(178, 128, 28);
         }
 
         .dd-reset-btn {
@@ -832,6 +833,11 @@ const DragDropGame = () => {
           margin-bottom: 1rem;
         }
 
+        .orange-text {
+          color: #d66a16;
+          font-weight: 600;
+        }
+
         .dd-mcq-title {
           font-size: 1.1rem;
           font-weight: 600;
@@ -864,7 +870,7 @@ const DragDropGame = () => {
         }
 
         .dd-tab-button.active {
-          background-color: #4a90e2;
+          background-color: #e18837;
           color: white;
         }
 
@@ -897,16 +903,57 @@ const DragDropGame = () => {
         }
 
         .dd-mcq-option:not(.selected) {
-          background-color: #3498db;
+          background-color: #e7a32a;
         }
 
         .dd-mcq-option:not(.selected):hover {
-          background-color: #2980b9;
+          background-color:rgb(178, 128, 28);
         }
 
         .dd-mcq-option.selected {
-          background-color: #2ecc71;
+          background-color: #eaaa2c;
         }
+
+        .dd-next-wrapper {
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          margin-top: 16px;
+        }
+
+        .dd-next-button {
+          padding: 10px 18px;
+          background-color: #d66a16;
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.2s ease-in-out;
+          font-size: 15px;
+        }
+
+        .dd-next-button:hover:not(:disabled) {
+          background-color: #bf5e13;
+          transform: translateY(-1px);
+        }
+
+        .dd-next-button:disabled {
+          background-color: #c9c9c9;
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+
+
+        .dd-next-button:hover {
+          background-color: #bf5e13;
+          transform: translateY(-1px);
+        }
+
+        .dd-next-button:active {
+          transform: scale(0.97);
+        }
+
 
         .dd-mcq-feedback {
           text-align: center;
@@ -918,12 +965,12 @@ const DragDropGame = () => {
         }
 
         .dd-mcq-feedback.correct {
-          color: #2ecc71;
+          color:rgb(69, 142, 23);
           background-color: rgba(46, 204, 113, 0.1);
         }
 
         .dd-mcq-feedback.incorrect {
-          color: #e74c3c;
+          color:rgb(140, 34, 22);
           background-color: rgba(231, 76, 60, 0.1);
         }
 
@@ -1102,18 +1149,28 @@ const DragDropGame = () => {
             >
               ×
             </button>
-            <h2 className="dd-modal-header">
-              {wordAnalysisType} Analysis: {currentWordAnalysis?.form}
+            <div className="dd-modal-header">
+                <h4>Sentence</h4>
+                <h1>{currentSentence.sentence || "Loading..."}</h1>
+            </div>
+            <h2 className="dd-modal-header orange-text">
+              <h4>{wordAnalysisType}</h4>
+              <h1>{currentWordAnalysis?.form}</h1>
             </h2>
+
+
             <div className="dd-mcq-section">
               <div className="dd-mcq-header">
                 <h3 className="dd-mcq-title">
                   Guess the{" "}
                   {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                  {" "}of the {wordAnalysisType}
                 </h3>
                 <span className="dd-mcq-score">Score: {sessionScore}</span>
               </div>
-              <div className="dd-tab-container">
+
+              {/* Tabs */}
+              {/* <div className="dd-tab-container">
                 {[
                   "root",
                   "person",
@@ -1122,9 +1179,7 @@ const DragDropGame = () => {
                 ].map((tab) => (
                   <button
                     key={tab}
-                    className={`dd-tab-button ${
-                      activeTab === tab ? "active" : ""
-                    }`}
+                    className={`dd-tab-button ${activeTab === tab ? "active" : ""}`}
                     onClick={() => handleTabChange(tab)}
                   >
                     {tab === "root"
@@ -1138,7 +1193,51 @@ const DragDropGame = () => {
                       : "Tense"}
                   </button>
                 ))}
-              </div>
+              </div> */}
+
+              {/* Tabs */}
+            <div className="dd-tab-container">
+              {[
+                "root",
+                "person",
+                "number",
+                ...(wordAnalysisType === "Verb" ? ["tense"] : ["gender"]),
+              ].map((tab) => {
+                const tabOrder = [
+                  "root",
+                  "person",
+                  "number",
+                  ...(wordAnalysisType === "Verb" ? ["tense"] : ["gender"]),
+                ];
+                
+                const currentIndex = tabOrder.indexOf(activeTab);
+                const tabIndex = tabOrder.indexOf(tab);
+
+                const isTabEnabled =
+                  tabIndex <= currentIndex || mcqFeedback[tab]?.includes("Correct");
+
+                return (
+                  <button
+                    key={tab}
+                    className={`dd-tab-button ${activeTab === tab ? "active" : ""}`}
+                    disabled={!isTabEnabled} // disable lock
+                    onClick={() => isTabEnabled && handleTabChange(tab)}
+                  >
+                    {tab === "root"
+                      ? "Root"
+                      : tab === "person"
+                      ? "Person"
+                      : tab === "number"
+                      ? "Number"
+                      : tab === "gender"
+                      ? "Gender"
+                      : "Tense"}
+                  </button>
+                );
+              })}
+            </div>
+
+              {/* MCQ Options */}
               <div className="dd-mcq-options">
                 {getMcqOptions(activeTab).map((option, index) => (
                   <button
@@ -1152,21 +1251,60 @@ const DragDropGame = () => {
                   </button>
                 ))}
               </div>
+
+              {/* Feedback */}
               {mcqFeedback[activeTab] && (
-                <p
-                  className={`dd-mcq-feedback ${
-                    mcqFeedback[activeTab].includes("Correct")
-                      ? "correct"
-                      : "incorrect"
-                  }`}
-                >
+                <p className={`dd-mcq-feedback ${
+                  mcqFeedback[activeTab].includes("Correct") ? "correct" : "incorrect"
+                }`}>
                   {mcqFeedback[activeTab]}
                 </p>
               )}
+
               {mcqHints[activeTab] && (
                 <p className="dd-mcq-hint">{mcqHints[activeTab]}</p>
               )}
+
+              {/* NEXT / EXIT BUTTON */}
+              {/* Persistent Next / Exit Button */}
+            <div className="dd-next-wrapper">
+              <button
+                className="dd-next-button"
+                disabled={!mcqFeedback[activeTab]?.includes("Correct")}
+                onClick={() => {
+                  if (!mcqFeedback[activeTab]?.includes("Correct")) return;
+
+                  const tabOrder = [
+                    "root",
+                    "person",
+                    "number",
+                    ...(wordAnalysisType === "Verb" ? ["tense"] : ["gender"]),
+                  ];
+                  const currentIndex = tabOrder.indexOf(activeTab);
+
+                  if (currentIndex < tabOrder.length - 1) {
+                    handleTabChange(tabOrder[currentIndex + 1]);
+                  } else {
+                    setModalOpen(false)// Exit
+                  }
+                }}
+              >
+                {(() => {
+                  const tabOrder = [
+                    "root",
+                    "person",
+                    "number",
+                    ...(wordAnalysisType === "Verb" ? ["tense"] : ["gender"]),
+                  ];
+                  return activeTab === tabOrder[tabOrder.length - 1]
+                    ? "Exit"
+                    : "Next";
+                })()}
+              </button>
             </div>
+
+            </div>
+
           </div>
         </div>
       )}
