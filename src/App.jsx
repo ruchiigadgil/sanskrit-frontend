@@ -33,15 +33,15 @@ function BrandHeader() {
     <div
       style={{
         position: "fixed",
-        top: "5px",
-        left: "0.2%",
+        top: "15px",
+        left: "20px",
         zIndex: 2000,
-        fontSize: "2.5rem",
+        fontSize: "2rem",
         fontWeight: "bold",
         color: "white",
         fontFamily: "'Noto Serif Devanagari', serif",
-        backgroundColor: "rgba(113, 74, 16, 0.95)",
-        padding: "4px 12px rgba(83, 52, 7, 0.8)",
+        backgroundColor: "rgba(203, 148, 66, 0.8)",
+        padding: "4px 12px",
         borderRadius: "5px",
       }}
     >
