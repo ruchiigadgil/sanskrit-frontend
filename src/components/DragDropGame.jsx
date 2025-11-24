@@ -37,7 +37,9 @@ const DragDropGame = () => {
   const [selectedMcqAnswers, setSelectedMcqAnswers] = useState({}); // Track selected MCQ answers
 
   const draggedElement = useRef(null);
-  
+  const [showGuide, setShowGuide] = useState(true); // Show guide prompt initially
+  const [isGuideMode, setIsGuideMode] = useState(false); // Guide auto-play mode
+
 
   useEffect(() => {
     localStorage.removeItem("dragDropGameScore");
@@ -152,15 +154,21 @@ const DragDropGame = () => {
   };
 
   const handleDragStart = (e, word) => {
+    if (isGuideMode) return;
+
     e.dataTransfer.setData("text/plain", word);
     draggedElement.current = word;
   };
 
   const handleDragEnd = (e) => {
+    if (isGuideMode) return;
+
     e.target.style.opacity = "1";
   };
 
   const handleDrop = (e, dropZone) => {
+    if (isGuideMode) return;
+
     e.preventDefault();
     e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
     e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
@@ -178,15 +186,87 @@ const DragDropGame = () => {
   };
 
   const handleDragOver = (e) => {
+    if (isGuideMode) return;
+
     e.preventDefault();
     e.currentTarget.style.borderColor = "#4ade80";
     e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
   };
 
   const handleDragLeave = (e) => {
+    if (isGuideMode) return;
+
     e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.4)";
     e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
   };
+
+  // const startGuideMode = () => {
+  //   setIsGuideMode(true);
+  
+  //   // Auto place correct answers after fetch sets data
+  //   setTimeout(() => {
+  //     setDroppedWords({
+  //       subject: correctAnswers.subject?.form || "",
+  //       object: correctAnswers.object?.form || "",
+  //       verb: correctAnswers.verb?.form || ""
+  //     });
+  
+  //     setFeedback("Drag each word and place it in the correct box — Subject, Verb, or Object! Now you try", "#16a34a");
+  
+  //     // Allow user to proceed manually to next question
+  //   }, 600);
+  // };
+  
+  const startGuideMode = () => {
+    setIsGuideMode(true);
+  
+    const steps = [];
+  
+    if (correctAnswers.subject?.form) {
+      steps.push({
+        zone: "subject",
+        word: correctAnswers.subject.form
+      });
+    }
+    if (correctAnswers.object?.form) {
+      steps.push({
+        zone: "object",
+        word: correctAnswers.object.form
+      });
+    }
+    if (correctAnswers.verb?.form) {
+      steps.push({
+        zone: "verb",
+        word: correctAnswers.verb.form
+      });
+    }
+  
+    let i = 0;
+  
+    const animateStep = () => {
+      if (i >= steps.length) {
+        setFeedback(
+          "Now you try! Drag the words into the correct boxes.",
+          "#16a34a"
+        );
+        setIsGuideMode(false); // Allow user to drag now
+        return;
+      }
+  
+      const { zone, word } = steps[i];
+  
+      setTimeout(() => {
+        setDroppedWords(prev => ({ ...prev, [zone]: word }));
+        setWords(prev => prev.filter(w => w !== word));
+  
+        i++;
+        animateStep();
+      }, 1200); // delay between each move
+    };
+  
+    animateStep();
+  };
+  
 
   const checkCompletion = async (droppedWordsState) => {
     const hasObject = correctAnswers.object !== null;
@@ -233,6 +313,7 @@ const DragDropGame = () => {
     setFeedback(message);
     setFeedbackColor(color);
   };
+
 
   // const handleShowHints = () => {
   //   if (!hintsShown) {
@@ -981,6 +1062,56 @@ const DragDropGame = () => {
           font-style: italic;
           color: #7f8c8d;
         }
+        
+        .dd-guide-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background:rgb(127, 61, 10);
+  padding: 1.5rem 2rem;
+  border: 5px solid #d66a16;
+  color: #fff;
+  border-radius: 12px;
+  z-index: 9999;
+  text-align: center;
+}
+
+.dd-guide-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.dd-guide-btn {
+  background: #d66a16;
+  border: none;
+  padding: 0.6rem 1rem;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dd-guide-btn.dd-skip {
+  background: #d66a16;
+}
+
+.dd-guide-continue {
+  margin: 1rem auto;
+  display: block;
+  background: #d66a16;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+}
+
+
+.dd-word-animate {
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  opacity: 0.9;
+}
 
         @media (max-width: 768px) {
           .drag-drop-card {
@@ -1031,6 +1162,32 @@ const DragDropGame = () => {
             </button>
           </div>
 
+          {showGuide && (
+  <div className="dd-guide-popup">
+    <h2>How to Play?</h2>
+    <p>Drag each word into the correct box — Subject, Verb & Object.</p>
+    
+    <div className="dd-guide-buttons">
+      <button
+        className="dd-guide-btn"
+        onClick={() => {
+          setShowGuide(false);
+          startGuideMode();
+        }}
+      >
+        Show Me 👀
+      </button>
+
+      <button
+        className="dd-guide-btn dd-skip"
+        onClick={() => setShowGuide(false)}
+      >
+        Skip ➜
+      </button>
+    </div>
+  </div>
+)}
+
           {!roundFinished && (
             <div className="dd-question-badge">
               Question {qCount} / {TOTAL_QUESTIONS}
@@ -1053,7 +1210,7 @@ const DragDropGame = () => {
                 {currentSentence.sentence || "Loading..."}
               </div>
 
-              <div className="dd-words-container">
+              <div className="dd-words-container ${isGuideMode ? 'dd-word-animate' : ''}">
                 <div className="dd-words-flex">
                   {words.map((word, index) => (
                     <div
@@ -1105,6 +1262,18 @@ const DragDropGame = () => {
                   </div>
                 ))}
               </div>
+
+              {isGuideMode && (
+  <button
+    className="dd-guide-continue"
+    onClick={() => {
+      setIsGuideMode(false);
+      initGame(); // Start real game
+    }}
+  >
+    Ready!
+  </button>
+)}
 
               {feedback && (
                 <div className="dd-feedback" style={{ color: feedbackColor }}>
