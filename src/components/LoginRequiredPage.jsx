@@ -55,8 +55,8 @@ const LoginRequiredPage = () => {
 
     .error-container {
       position: relative;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      min-height: calc(100vh - 56px);
       background: linear-gradient(135deg, #A0522D 0%, #8B4513 25%, #DAA520 50%, #CD853F 75%, #F5DEB3 100%);
       background-size: 400% 400%;
       animation: gradientShift 12s ease infinite;

@@ -10,6 +10,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 import { tokenManager } from "./services/api";
 import TenseGame from "./components/TenseGame";
@@ -33,16 +34,22 @@ function BrandHeader() {
     <div
       style={{
         position: "fixed",
-        top: "15px",
-        left: "20px",
+        top: "12px",
+        left: "16px",
         zIndex: 2000,
-        fontSize: "2rem",
+        fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
         fontWeight: "bold",
         color: "white",
         fontFamily: "'Noto Serif Devanagari', serif",
-        backgroundColor: "rgba(203, 148, 66, 0.8)",
-        padding: "4px 12px",
-        borderRadius: "5px",
+        backgroundColor: "rgba(139, 69, 19, 0.85)",
+        padding: "4px 10px",
+        borderRadius: "6px",
+        backdropFilter: "blur(8px)",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+        maxWidth: "calc(100vw - 200px)",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
       }}
     >
       संस्कृतमणिः
@@ -54,6 +61,8 @@ function BrandHeader() {
 function AuthWrapper() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const isLanding = location.pathname === "/";
 
   useEffect(() => {
     const checkAuth = () => {
@@ -79,8 +88,8 @@ function AuthWrapper() {
     position: "fixed",
     top: 0,
     left: 0,
-    width: "100vw",
-    height: "100vh",
+    width: "100%",
+    height: "100%",
     backgroundImage: `url(${bgImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -92,7 +101,7 @@ function AuthWrapper() {
     return (
       <>
         {/* Background Layer */}
-        <div style={fixedBackgroundStyle} />
+        {!isLanding && <div style={fixedBackgroundStyle} />}
         {/* Loading Content */}
         <div
           style={{
@@ -112,8 +121,8 @@ function AuthWrapper() {
 
   return (
     <>
-      {/* GLOBAL BACKGROUND LAYER - Always visible, sits behind everything */}
-      <div style={fixedBackgroundStyle} />
+      {/* GLOBAL BACKGROUND LAYER - Hidden on landing page, visible everywhere else */}
+      {!isLanding && <div style={fixedBackgroundStyle} />}
 
       <BrandHeader />
       
@@ -124,9 +133,12 @@ function AuthWrapper() {
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
+          overflowX: "hidden",
         }}
       >
-        <main style={{ flex: 1, width: "100%" }}>
+        {/* Spacer so content doesn't hide behind fixed BrandHeader — not needed on landing */}
+        {!isLanding && <div style={{ height: "56px", flexShrink: 0 }} />}
+        <main style={{ flex: 1, width: "100%", overflowX: "hidden" }}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Landing />} />

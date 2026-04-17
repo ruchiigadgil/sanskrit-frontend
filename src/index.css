@@ -1,12 +1,27 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap');
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-size: 70%;
+}
+
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #ffffff;
+  font-family: 'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif;
   color: #222222;
   line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Prevent any element from causing horizontal scroll */
+#root {
+  overflow-x: hidden;
+  width: 100%;
 }

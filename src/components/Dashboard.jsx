@@ -169,14 +169,7 @@ const Dashboard = () => {
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Noto Sans Devanagari', sans-serif;
-      background: linear-gradient(135deg, #A0522D 0%, #8B4513 25%, #DAA520 50%, #CD853F 75%, #F5DEB3 100%);
-      background-size: 400% 400%;
-      animation: gradientFlow 15s ease infinite;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+    /* body styles removed — background handled by App.jsx */
 
     @keyframes gradientFlow {
       0% { background-position: 0% 50%; }
@@ -185,15 +178,15 @@ const Dashboard = () => {
     }
 
     .dashboard-container {
-      min-height: 100vh;
-      width: 100vw;
+      min-height: calc(100vh - 56px);
+      width: 100%;
+      max-width: 1100px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0 0.5rem;
+      padding: 0 1rem 2rem;
       margin: 0 auto;
-      max-width: 1100px;
       position: relative;
       transform: ${isLoaded ? "translateY(0)" : "translateY(30px)"};
       opacity: ${isLoaded ? 1 : 0};
@@ -283,26 +276,29 @@ const Dashboard = () => {
       justify-content: center;
       align-items: center;
       width: 100%;
-      margin-top: 2.5rem;
-      margin-bottom: 2.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
       animation: slideInDown 1s ease;
+      padding: 0 0.5rem;
     }
 
     .profile-section {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(25px);
-      padding: 1.5rem 2rem;
-      border-radius: 30px;
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 
+      box-shadow:
         0 20px 50px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
+      max-width: 100%;
     }
 
     .profile-section::before {
@@ -328,18 +324,19 @@ const Dashboard = () => {
     }
 
     .avatar {
-      width: 80px;
-      height: 80px;
+      width: clamp(55px, 10vw, 75px);
+      height: clamp(55px, 10vw, 75px);
+      flex-shrink: 0;
       border-radius: 50%;
       background: linear-gradient(135deg, #DAA520, #CD853F);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
-      box-shadow: 
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      box-shadow:
         0 10px 30px rgba(0, 0, 0, 0.2),
         0 0 30px rgba(218, 165, 32, 0.4);
-      border: 4px solid rgba(255, 255, 255, 0.3);
+      border: 3px solid rgba(255, 255, 255, 0.3);
       animation: avatarPulse 4s ease-in-out infinite;
     }
 
@@ -356,17 +353,18 @@ const Dashboard = () => {
 
     .welcome-text {
       color: #fff;
-      font-size: 2rem;
+      font-size: clamp(1.1rem, 3.5vw, 1.8rem);
       font-weight: 700;
-      margin-bottom: 0.5rem;
-      text-shadow: 
+      margin-bottom: 0.3rem;
+      text-shadow:
         0 0 20px rgba(255, 255, 255, 0.5),
         0 2px 10px rgba(0, 0, 0, 0.3);
+      word-break: break-word;
     }
 
     .sanskrit-text {
       color: #F5DEB3;
-      font-size: 1.4rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
       font-weight: 500;
       text-shadow: 0 0 15px rgba(245, 222, 179, 0.8);
       animation: textGlow 3s ease-in-out infinite alternate;
@@ -395,8 +393,8 @@ const Dashboard = () => {
       gap: 1rem;
       animation: fadeInUp 1s ease 0.3s both;
       min-width: 0;
-      width: 600px;
-      height: 150px;
+      width: 100%;
+      flex: 1;
     }
 
     @keyframes fadeInUp {
@@ -405,7 +403,7 @@ const Dashboard = () => {
     }
 
     .flip-card {
-      width: 170px;
+      width: 100%;
       height: 140px;
       perspective: 800px;
       position: relative;
@@ -413,6 +411,7 @@ const Dashboard = () => {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      min-width: 0;
     }
 
     .flip-card-inner {
@@ -711,20 +710,24 @@ const Dashboard = () => {
         flex-direction: column;
         align-items: center;
         gap: 1.2rem;
-        max-width: 98vw;
+        width: 100%;
       }
       .sidebar {
         order: 2;
         min-width: 0;
-        max-width: 100vw;
+        max-width: 100%;
         width: 100%;
+      }
+      .dashboard-grid {
+        width: 100%;
+        order: 1;
       }
     }
 
     @media (max-width: 768px) {
       .dashboard-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
+        gap: 0.7rem;
         width: 100%;
       }
       .header {
@@ -733,22 +736,32 @@ const Dashboard = () => {
         text-align: center;
       }
       .dashboard-container {
-        padding: 0.2rem;
+        padding: 0 0.5rem 1.5rem;
+      }
+      .flip-card {
+        height: 120px;
       }
     }
 
     @media (max-width: 480px) {
       .dashboard-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
         width: 100%;
       }
       .flip-card {
-        height: 110px;
-        width: 98vw;
+        height: 100px;
       }
       .main-content {
-        max-width: 100vw;
+        width: 100%;
         padding: 0;
+      }
+      .card-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+      }
+      .card-title {
+        font-size: 0.85rem;
       }
     }
 

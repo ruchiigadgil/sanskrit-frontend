@@ -302,41 +302,30 @@ const TenseGame = ({ score: propScore }) => {
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
 
-          body {
-            margin: 0;
-            font-family: 'Noto Sans Devanagari', sans-serif;
-            background: linear-gradient(135deg, #d76d2b, #f0c14b);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-          }
-
           .tense-game-wrapper {
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
+            align-items: flex-start;
+            min-height: calc(100vh - 56px);
+            padding: 1.5rem 1rem;
           }
 
           .tense-card {
             background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 100%;
-            // max-width: 700px;
+            max-width: 660px;
             color: #2c2c2c;
             border: 1px solid rgba(0, 0, 0, 0.1);
           }
 
           .game-title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             color: #2c2c2c;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
           }
@@ -416,12 +405,12 @@ const TenseGame = ({ score: propScore }) => {
           }
 
           .option {
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             color: #2c2c2c;
-            padding: 0.8rem 1.2rem;
+            padding: 0.65rem 1rem;
             border: 2px solid #cd853f;
             border-radius: 8px;
             cursor: pointer;

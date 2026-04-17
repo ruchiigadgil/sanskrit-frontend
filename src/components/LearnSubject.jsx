@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 const LearnSubject = () => {
   const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState(0);
-  const [quizAnswer, setQuizAnswer] = useState("");
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [quizStates, setQuizStates] = useState({});
   const [flippedCards, setFlippedCards] = useState({});
 
   const sections = [
@@ -75,14 +74,14 @@ const LearnSubject = () => {
     },
     title: {
       color: "white",
-      fontSize: "2rem",
+      fontSize: "1.6rem",
       fontWeight: "700",
       marginBottom: "10px",
       textShadow: "3px 3px 6px rgba(0, 0, 0, 0.4)",
     },
     subtitle: {
       color: "rgba(255, 255, 255, 0.9)",
-      fontSize: "1.2rem",
+      fontSize: "1rem",
       fontWeight: "500",
       marginBottom: "20px",
     },
@@ -150,7 +149,7 @@ const LearnSubject = () => {
       margin: "0 auto",
       background: "rgba(255, 255, 255, 0.95)",
       borderRadius: "20px",
-      padding: "30px",
+      padding: "20px",
       boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
       backdropFilter: "blur(20px)",
     },
@@ -287,14 +286,14 @@ const LearnSubject = () => {
       textAlign: "left",
     },
     correctOption: {
-      background: "#cd853f",
+      background: "#22c55e",
       color: "white",
-      borderColor: "#cd853f",
+      borderColor: "#22c55e",
     },
     incorrectOption: {
-      background: "#cd853f",
+      background: "#ef4444",
       color: "white",
-      borderColor: "#cd853f",
+      borderColor: "#ef4444",
     },
     explanation: {
       background: "rgba(205, 133, 63, 0.1)",
@@ -336,9 +335,11 @@ const LearnSubject = () => {
     setFlippedCards((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  const handleQuizAnswer = (optionIndex) => {
-    setQuizAnswer(optionIndex);
-    setShowAnswer(true);
+  const handleQuizAnswer = (quizIndex, optionIndex) => {
+    setQuizStates((prev) => ({
+      ...prev,
+      [quizIndex]: { answer: optionIndex, showAnswer: true },
+    }));
   };
   const handleButtonHover = (e) => {
     e.target.style.background = "linear-gradient(45deg, #a0522d, #cd853f)";
@@ -462,36 +463,39 @@ const LearnSubject = () => {
   const renderQuizSection = () => (
     <div>
       <h2 style={styles.sectionTitle}>Quiz Time</h2>
-      {quizzes.map((quiz, index) => (
-        <div key={index} style={styles.quizContainer}>
-          <div style={styles.quizQuestion}>
-            Quiz {index + 1}: {quiz.question}
-          </div>
-          {quiz.options.map((option, i) => (
-            <button
-              key={i}
-              style={{
-                ...styles.optionButton,
-                ...(showAnswer && i === quiz.correct
-                  ? styles.correctOption
-                  : {}),
-                ...(showAnswer && quizAnswer === i && i !== quiz.correct
-                  ? styles.incorrectOption
-                  : {}),
-              }}
-              onClick={() => handleQuizAnswer(i)}
-              disabled={showAnswer}
-            >
-              {option}
-            </button>
-          ))}
-          {showAnswer && (
-            <div style={styles.explanation}>
-              <strong>Explanation:</strong> {quiz.explanation}
+      {quizzes.map((quiz, quizIndex) => {
+        const currentState = quizStates[quizIndex] || { answer: null, showAnswer: false };
+        return (
+          <div key={quizIndex} style={styles.quizContainer}>
+            <div style={styles.quizQuestion}>
+              Quiz {quizIndex + 1}: {quiz.question}
             </div>
-          )}
-        </div>
-      ))}
+            {quiz.options.map((option, i) => (
+              <button
+                key={i}
+                style={{
+                  ...styles.optionButton,
+                  ...(currentState.showAnswer && i === quiz.correct
+                    ? styles.correctOption
+                    : {}),
+                  ...(currentState.showAnswer && currentState.answer === i && i !== quiz.correct
+                    ? styles.incorrectOption
+                    : {}),
+                }}
+                onClick={() => handleQuizAnswer(quizIndex, i)}
+                disabled={currentState.showAnswer}
+              >
+                {option}
+              </button>
+            ))}
+            {currentState.showAnswer && (
+              <div style={styles.explanation}>
+                <strong>Explanation:</strong> {quiz.explanation}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 
@@ -570,8 +574,7 @@ const LearnSubject = () => {
                 }}
                 onClick={() => {
                   setCurrentSection(index);
-                  setShowAnswer(false);
-                  setQuizAnswer("");
+                  setQuizStates({});
                 }}
               >
                 {label}

@@ -165,6 +165,13 @@ const LearnSanskritSentence = () => {
       isDropping: false,
     }));
   };
+  const handleQuizAnswer = (quizIndex, optionIndex) => {
+    setQuizStates((prev) => ({
+      ...prev,
+      [quizIndex]: { answer: optionIndex, showAnswer: true },
+    }));
+  };
+
   const handleButtonHover = (e) => {
     e.target.style.background = "linear-gradient(45deg, #a0522d, #cd853f)";
     e.target.style.transform = "translateY(-3px) scale(1.05)";
@@ -199,14 +206,14 @@ const LearnSanskritSentence = () => {
     },
     title: {
       color: 'white',
-      fontSize: '2rem',
+      fontSize: '1.6rem',
       fontWeight: '700',
       marginBottom: '10px',
       textShadow: '3px 3px 6px rgba(0, 0, 0, 0.4)'
     },
     subtitle: {
       color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '1.2rem',
+      fontSize: '1rem',
       fontWeight: '500',
       marginBottom: '20px'
     },
@@ -259,7 +266,7 @@ const LearnSanskritSentence = () => {
       margin: '0 auto',
       background: 'rgba(255, 255, 255, 0.95)',
       borderRadius: '20px',
-      padding: '30px',
+      padding: '20px',
       boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
       backdropFilter: 'blur(20px)'
     },
@@ -400,14 +407,14 @@ const LearnSanskritSentence = () => {
       color: 'black'
     },
     correctOption: {
-      background: '#cd853f',
-      color: 'black',
-      borderColor: '#cd853f'
+      background: '#22c55e',
+      color: 'white',
+      borderColor: '#22c55e'
     },
     incorrectOption: {
-      background: '#cd853f',
-      color: 'black',
-      borderColor: '#cd853f'
+      background: '#ef4444',
+      color: 'white',
+      borderColor: '#ef4444'
     },
     explanation: {
       background: 'rgba(205, 133, 63, 0.1)',

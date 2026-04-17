@@ -53,13 +53,12 @@ const Learn = () => {
 
   const styles = {
     container: {
-      minHeight: '100vh',
+      minHeight: 'calc(100vh - 56px)',
       background: 'none',
       padding: '15px',
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      fontFamily: "'Noto Sans Devanagari', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       margin: 0,
       boxSizing: 'border-box',
-      overflow: 'hidden'
     },
     header: {
       textAlign: 'center',
@@ -107,15 +106,12 @@ const Learn = () => {
     grammarSection: {
       maxWidth: '1000px',
       margin: '0 auto',
-      height: 'calc(100vh - 160px)'
     },
     grammarGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(3, 1fr)',
       gap: '18px',
       padding: '10px',
-      height: '100%',
-      alignItems: 'stretch'
     },
     grammarCard: {
       background: 'linear-gradient(to bottom right, #fff8e1, #ffe4b5)',
@@ -233,32 +229,37 @@ const Learn = () => {
     return baseStyle;
   };
 
-  // Responsive adjustments
-  const mediaQuery = window.matchMedia('(max-width: 768px)');
-  const mobileQuery = window.matchMedia('(max-width: 480px)');
-  
-  if (mobileQuery.matches) {
-    styles.grammarGrid.gridTemplateColumns = 'repeat(2, 1fr)';
-    styles.grammarGrid.gap = '12px';
-    styles.sanskritTitle.fontSize = '1.3rem';
-    styles.titleText.fontSize = '1.1rem';
-    styles.grammarCard.padding = '15px 10px';
-    styles.cardTitle.fontSize = '0.9rem';
-    styles.cardSubtitle.fontSize = '0.7rem';
-    styles.cardIcon.fontSize = '1.5rem';
-  } else if (mediaQuery.matches) {
-    styles.grammarGrid.gridTemplateColumns = 'repeat(2, 1fr)';
-    styles.grammarGrid.gap = '15px';
-    styles.sanskritTitle.fontSize = '1.4rem';
-    styles.titleText.fontSize = '1.2rem';
-    styles.grammarCard.padding = '16px 12px';
-    styles.cardTitle.fontSize = '0.95rem';
-    styles.cardSubtitle.fontSize = '0.75rem';
-    styles.cardIcon.fontSize = '1.7rem';
-  }
+  const learnResponsiveCSS = `
+    .learn-grammar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      padding: 10px;
+    }
+    .learn-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media (max-width: 768px) {
+      .learn-grammar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+    }
+    @media (max-width: 480px) {
+      .learn-grammar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 6px;
+      }
+      .learn-card-title { font-size: 0.88rem !important; }
+      .learn-card-subtitle { font-size: 0.7rem !important; }
+      .learn-card-icon { font-size: 1.5rem !important; }
+    }
+  `;
 
   return (
     <div style={styles.container}>
+      <style>{learnResponsiveCSS}</style>
       <header style={styles.header}>
         <div style={styles.pageTitle}>
           <span style={styles.icon}>📚</span>
@@ -275,20 +276,21 @@ const Learn = () => {
       </header>
 
       <section style={styles.grammarSection}>
-        <div style={styles.grammarGrid}>
+        <div className="learn-grammar-grid">
           {grammarTopics.map((topic, index) => (
             <Link
               key={index}
               to={topic.link}
+              className="learn-card"
               style={getCardStyle(topic.category)}
               onMouseEnter={handleCardHover}
               onMouseLeave={handleCardLeave}
             >
               <div className="glow-effect" style={styles.glowEffect}></div>
-              <div style={styles.cardIcon}>{topic.icon}</div>
-              <h3 style={styles.cardTitle}>{topic.title}</h3>
+              <div className="learn-card-icon" style={styles.cardIcon}>{topic.icon}</div>
+              <h3 className="learn-card-title" style={styles.cardTitle}>{topic.title}</h3>
               {topic.subtitle && (
-                <p style={styles.cardSubtitle}>{topic.subtitle}</p>
+                <p className="learn-card-subtitle" style={styles.cardSubtitle}>{topic.subtitle}</p>
               )}
             </Link>
           ))}

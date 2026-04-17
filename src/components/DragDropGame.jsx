@@ -548,24 +548,17 @@ const DragDropGame = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
 
-        body {
-          font-family: 'Noto Sans Devanagari', sans-serif;
-          background: linear-gradient(135deg, #d76d2b, #f0c14b);
-          margin: 0;
-          padding: 0;
-      }
-
         .drag-drop-wrapper {
           display: flex;
           justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          padding: 1rem;
+          align-items: flex-start;
+          min-height: calc(100vh - 56px);
+          padding: 1.5rem 1rem;
         }
 
         .drag-drop-card {
           background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
-          padding: 2rem;
+          padding: 1.5rem;
           border-radius: 16px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
           width: 100%;
@@ -606,7 +599,7 @@ const DragDropGame = () => {
         }
 
         .dd-main-title {
-          font-size: 2rem;
+          font-size: 1.6rem;
           font-weight: 700;
           margin-bottom: 1rem;
           color: #2c2c2c;
@@ -655,7 +648,7 @@ const DragDropGame = () => {
         }
 
         .dd-sentence-display {
-          font-size: 1.4rem;
+          font-size: 1.2rem;
           padding: 1.2rem;
           background-color: #fffdf5;
           border: 2px solid #ffd700;
@@ -867,11 +860,12 @@ const DragDropGame = () => {
           border-radius: 12px;
           padding: 1.5rem;
           max-width: 600px;
-          width: 100%;
-          max-height: 80vh;
+          width: calc(100% - 2rem);
+          max-height: calc(100vh - 4rem);
           overflow-y: auto;
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
           position: relative;
+          -webkit-overflow-scrolling: touch;
         }
 
         .dd-modal-close {
@@ -1068,13 +1062,15 @@ const DragDropGame = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background:rgb(127, 61, 10);
-  padding: 1.5rem 2rem;
-  border: 5px solid #d66a16;
+  background: rgb(127, 61, 10);
+  padding: 1.5rem;
+  border: 4px solid #d66a16;
   color: #fff;
   border-radius: 12px;
   z-index: 9999;
   text-align: center;
+  width: min(400px, calc(100vw - 2rem));
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
 }
 
 .dd-guide-buttons {
@@ -1115,10 +1111,10 @@ const DragDropGame = () => {
 
         @media (max-width: 768px) {
           .drag-drop-card {
-            padding: 1.5rem;
+            padding: 1.2rem;
           }
           .dd-main-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
           }
           .dd-drop-zones {
             grid-template-columns: 1fr;
@@ -1126,6 +1122,49 @@ const DragDropGame = () => {
           .dd-game-header {
             flex-direction: column;
             align-items: flex-start;
+          }
+          .dd-sentence-display {
+            font-size: 1.2rem;
+            padding: 1rem;
+          }
+          .dd-draggable-word {
+            font-size: 1rem;
+            padding: 0.6rem 0.9rem;
+          }
+          .dd-tab-button {
+            font-size: 0.8rem;
+            padding: 0.5rem 0.3rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .drag-drop-card {
+            padding: 0.8rem;
+            border-radius: 12px;
+          }
+          .dd-main-title {
+            font-size: 1.1rem;
+          }
+          .dd-sentence-display {
+            font-size: 1.05rem;
+            padding: 0.8rem;
+          }
+          .dd-draggable-word {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.7rem;
+          }
+          .dd-control-btn {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.9rem;
+          }
+          .dd-zone-title {
+            font-size: 1rem;
+          }
+          .dd-drop-zone {
+            min-height: 140px;
+          }
+          .dd-controls {
+            gap: 0.5rem;
           }
         }
       `}</style>

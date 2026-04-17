@@ -189,36 +189,26 @@ const ShabdaFusion = ({ score: propScore }) => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
   
-        body {
-          font-family: 'Noto Sans Devanagari', sans-serif;
-          background: linear-gradient(135deg, #d76d2b, #f0c14b);
-          margin: 0;
-          padding: 0;
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-  
         .shabda-fusion {
-          padding: 2rem;
+          padding: 1.5rem 1rem;
           text-align: center;
           width: 100%;
           max-width: 700px;
           margin: 0 auto;
+          min-height: calc(100vh - 56px);
         }
 
         .shabda-card {
           background: linear-gradient(to bottom right, #fff8e1, #ffe4b5);
-          padding: 2rem;
+          padding: 1.5rem;
           border-radius: 16px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
           color: #2c2c2c;
           border: 1px solid rgba(0, 0, 0, 0.1);
         }
   
-        h1 {
-          font-size: 2rem;
+        .shabda-card h1 {
+          font-size: 1.6rem;
           font-weight: 700;
           color: #2c2c2c;
           margin-bottom: 1.5rem;
@@ -343,13 +333,13 @@ const ShabdaFusion = ({ score: propScore }) => {
 
         @media (max-width: 600px) {
           .shabda-fusion {
-            padding: 1rem;
+            padding: 0.8rem;
           }
           .shabda-card {
-            padding: 1.5rem;
+            padding: 1.2rem;
           }
-          h1 {
-            font-size: 1.5rem;
+          .shabda-card h1 {
+            font-size: 1.4rem;
           }
           .game-container {
             flex-direction: column;
@@ -357,6 +347,24 @@ const ShabdaFusion = ({ score: propScore }) => {
           }
           .controls {
             flex-direction: column;
+          }
+          .column {
+            min-width: 0;
+            width: 100%;
+          }
+          .item {
+            font-size: 1rem;
+            padding: 0.8rem 1rem;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .shabda-card h1 {
+            font-size: 1.2rem;
+          }
+          .item {
+            font-size: 0.9rem;
+            padding: 0.6rem 0.8rem;
           }
         }
       `}</style>

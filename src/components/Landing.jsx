@@ -69,8 +69,8 @@ const Landing = ({ onBegin }) => {
 
     .landing-container {
       position: relative;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      min-height: 100vh;
       background: linear-gradient(135deg, #A0522D 0%, #8B4513 25%, #DAA520 50%, #CD853F 75%, #F5DEB3 100%);
       background-size: 400% 400%;
       animation: gradientShift 12s ease infinite;
@@ -209,6 +209,8 @@ const Landing = ({ onBegin }) => {
       position: relative;
       overflow: hidden;
       max-width: 480px;
+      width: calc(100% - 2rem);
+      margin: 0 1rem;
     }
 
     .glass-container:hover {
@@ -259,11 +261,12 @@ const Landing = ({ onBegin }) => {
     .description {
       font-size: clamp(0.95rem, 1.8vw, 1.1rem);
       color: rgba(255, 255, 255, 0.8);
-      max-width: 320px;
+      max-width: 340px;
       line-height: 1.5;
-      margin-bottom: 1.2rem;
+      margin: 0 auto 1.2rem auto;
       animation: fadeInUp 1s ease 1s both;
-      margin-left: 45px;
+      text-align: center;
+      padding: 0 0.5rem;
     }
 
     @keyframes fadeInUp {
@@ -370,27 +373,34 @@ const Landing = ({ onBegin }) => {
     }
 
     @media (max-width: 768px) {
-      .glass-container { padding: 1.2rem 0.7rem; margin: 0 0.5rem; max-width: 98vw; }
-      .main-title { font-size: clamp(1.2rem, 4vw, 2.2rem); }
-      .subtitle { font-size: clamp(0.9rem, 2vw, 1.1rem); }
-      .description { font-size: clamp(0.8rem, 1.2vw, 0.95rem); }
-      
+      .glass-container { padding: 1.2rem 0.7rem; max-width: calc(100% - 2rem); }
+      .main-title { font-size: clamp(1.4rem, 5vw, 2.2rem); }
+      .subtitle { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
+      .description { font-size: clamp(0.85rem, 2vw, 0.95rem); max-width: 100%; }
+
       .auth-buttons {
-        top: 1rem;
-        right: 1rem;
-        gap: 0.5rem;
+        top: 0.7rem;
+        right: 0.7rem;
+        gap: 0.4rem;
       }
-      
+
       .auth-button {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
       }
+    }
+
+    @media (max-width: 480px) {
+      .glass-container { padding: 1rem 0.6rem; }
+      .main-title { font-size: clamp(1.2rem, 6vw, 1.8rem); }
+      .auth-buttons { gap: 0.3rem; }
+      .auth-button { padding: 0.35rem 0.6rem; font-size: 0.7rem; }
     }
   `;
 
   return (
     <>
-    <section style={{ height: "100vh", position: "relative", zIndex: 1 }}>
+    <section style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
       <style>{styles}</style>
       <div className="landing-container">
         <div className="parallax-bg" />
